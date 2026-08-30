@@ -13,9 +13,9 @@ SAHAY.BUILD = '2026.08.30';
 // Supabase Configuration (use env vars in production)
 // NEVER expose service-role key in client
 SAHAY.config = {
-  supabaseUrl: '', // Set via environment: SAHAY_SUPABASE_URL
-  supabaseAnonKey: '', // Set via environment: SAHAY_SUPABASE_ANON_KEY
-  groqApiKey: '', // Set via environment: SAHAY_GROQ_API_KEY
+  supabaseUrl: (window.SAHAY_ENV && window.SAHAY_ENV.SUPABASE_URL) || '',
+  supabaseAnonKey: (window.SAHAY_ENV && window.SAHAY_ENV.SUPABASE_PUBLISHABLE_KEY) || '',
+  groqApiKey: (window.SAHAY_ENV && window.SAHAY_ENV.GROQ_API_KEY) || '',
   groqModel: 'llama-3.1-8b-instant',
 };
 

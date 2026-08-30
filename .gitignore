@@ -34,3 +34,4 @@ Thumbs.db
 # Private agent files (if any)
 .agents/
 .gemini/
+sahay-ai-app/env.js

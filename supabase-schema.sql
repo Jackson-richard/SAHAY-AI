@@ -70,3 +70,19 @@ CREATE POLICY "Allow anonymous update profiles" ON public.profiles FOR UPDATE TO
 CREATE POLICY "Allow anonymous read alerts" ON public.alerts FOR SELECT TO anon USING (true);
 CREATE POLICY "Allow anonymous update alerts" ON public.alerts FOR UPDATE TO anon USING (true) WITH CHECK (true);
 CREATE POLICY "Allow anonymous insert alerts" ON public.alerts FOR INSERT TO anon WITH CHECK (true);
+
+-- Create interventions table
+CREATE TABLE IF NOT EXISTS public.interventions (
+    id UUID PRIMARY KEY DEFAULT uuid_generate_v4(),
+    case_id UUID REFERENCES public.cases(id) ON DELETE CASCADE,
+    profile_id UUID REFERENCES public.profiles(id) ON DELETE CASCADE,
+    action VARCHAR(255) NOT NULL,
+    notes TEXT,
+    created_at TIMESTAMP WITH TIME ZONE DEFAULT timezone('utc'::text, now())
+);
+
+ALTER TABLE public.interventions ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Allow anonymous read interventions" ON public.interventions FOR SELECT TO anon USING (true);
+CREATE POLICY "Allow anonymous insert interventions" ON public.interventions FOR INSERT TO anon WITH CHECK (true);
+CREATE POLICY "Allow anonymous update interventions" ON public.interventions FOR UPDATE TO anon USING (true) WITH CHECK (true);
