@@ -1,0 +1,13 @@
+{
+  "appId": "com.sahayai.app",
+  "appName": "SAHAY-AI",
+  "webDir": "sahay-ai-app",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "allowMixedContent": true,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": true
+  }
+}

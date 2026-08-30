@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SAHAY-AI – Choose your preferred language to continue." />
+  <title>Language Selection – SAHAY-AI</title>
+  <script src="assets/tailwind.min.js"></script>
+
+
+  <link href="assets/google-fonts.css" rel="stylesheet" />
+  <link href="assets/material-symbols.css" rel="stylesheet" />
+  <script id="tw-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { "primary": "#006b5f", "on-primary": "#ffffff", "primary-container": "#14b8a6", "on-primary-container": "#00423b", "primary-fixed": "#71f8e4", "secondary": "#515f74", "on-secondary": "#ffffff", "secondary-container": "#d5e3fc", "error": "#ba1a1a", "on-error": "#ffffff", "error-container": "#ffdad6", "on-error-container": "#93000a", "background": "#f8f9fa", "on-background": "#191c1d", "surface": "#f8f9fa", "on-surface": "#191c1d", "surface-variant": "#e1e3e4", "on-surface-variant": "#3c4947", "surface-container-lowest": "#ffffff", "surface-container-low": "#f3f4f5", "surface-container": "#edeeef", "surface-container-high": "#e7e8e9", "surface-container-highest": "#e1e3e4", "outline": "#6c7a77", "outline-variant": "#bbcac6", "surface-tint": "#006b5f" },
+          borderRadius: { "DEFAULT": "0.5rem", "sm": "0.25rem", "md": "0.75rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+          spacing: { "base": "4px", "xs": "8px", "sm": "12px", "md": "16px", "lg": "24px", "xl": "32px", "touch-target": "48px", "container-margin": "16px" },
+          fontFamily: { "display": ["Public Sans", "sans-serif"], "headline": ["Public Sans", "sans-serif"], "body": ["Inter", "sans-serif"], "label": ["Inter", "sans-serif"] },
+          fontSize: { "display-lg": ["32px", { lineHeight: "40px", fontWeight: "700", letterSpacing: "-0.02em" }], "headline-lg": ["24px", { lineHeight: "32px", fontWeight: "600" }], "headline-md": ["20px", { lineHeight: "28px", fontWeight: "600" }], "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }], "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }], "label-lg": ["14px", { lineHeight: "20px", fontWeight: "600", letterSpacing: "0.01em" }], "label-sm": ["12px", { lineHeight: "16px", fontWeight: "500" }] }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .icon-fill {
+      font-variation-settings: 'FILL' 1;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .lang-option {
+      transition: border-color 0.15s, background-color 0.15s;
+    }
+
+    .lang-option.selected {
+      border-color: #006b5f;
+      background-color: #f3f4f5;
+    }
+
+    input[type="radio"] {
+      accent-color: #006b5f;
+    }
+
+    .btn-continue {
+      transition: background-color 0.15s, transform 0.1s;
+    }
+
+    .btn-continue:active {
+      transform: scale(0.97);
+    }
+  </style>
+</head>
+
+<body class="bg-background min-h-screen flex flex-col items-center justify-center font-body text-on-background">
+
+  <main
+    class="w-full max-w-md px-container-margin py-xl flex flex-col min-h-screen justify-between md:min-h-fit md:bg-surface-container-lowest md:shadow-sm md:rounded-xl md:p-xl md:my-xl">
+    <div class="flex-1 flex flex-col">
+
+      <!-- Header -->
+      <div class="text-center mb-xl pt-lg">
+        <div
+          class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary-container text-on-primary-container mb-lg">
+          <span class="material-symbols-outlined icon-fill" style="font-size:36px;">language</span>
+        </div>
+        <h1 class="font-display text-display-lg text-on-surface mb-sm" data-i18n="choose_language_title">Choose your
+          language</h1>
+        <p class="font-body text-body-lg text-on-surface-variant" data-i18n="choose_language_desc">Select the language
+          you are most comfortable with.</p>
+      </div>
+
+      <!-- Language Options (6 Supported Languages) -->
+      <fieldset class="space-y-sm flex-1" aria-label="Language selection">
+        <legend class="sr-only" data-i18n="choose_language_title">Choose a language</legend>
+
+        <!-- English -->
+        <label id="lang-en"
+          class="lang-option flex items-center justify-between bg-surface-container-lowest border border-outline-variant p-md rounded-xl cursor-pointer hover:bg-surface-container-low min-h-[64px]"
+          for="radio-en">
+          <div class="flex items-center gap-md">
+            <input id="radio-en" class="w-5 h-5" name="language" type="radio" value="en" />
+            <div>
+              <span class="font-body text-body-md font-semibold text-on-surface block">English</span>
+              <span class="font-label text-label-sm text-on-surface-variant">Default Language</span>
+            </div>
+          </div>
+          <span class="font-label text-label-sm font-bold text-primary">EN</span>
+        </label>
+
+        <!-- Tamil -->
+        <label id="lang-ta"
+          class="lang-option flex items-center justify-between bg-surface-container-lowest border border-outline-variant p-md rounded-xl cursor-pointer hover:bg-surface-container-low min-h-[64px]"
+          for="radio-ta">
+          <div class="flex items-center gap-md">
+            <input id="radio-ta" class="w-5 h-5" name="language" type="radio" value="ta" />
+            <div>
+              <span class="font-body text-body-md font-semibold text-on-surface block">தமிழ்</span>
+              <span class="font-label text-label-sm text-on-surface-variant">Tamil</span>
+            </div>
+          </div>
+          <span class="font-label text-label-sm font-bold text-primary">த</span>
+        </label>
+
+        <!-- Hindi -->
+        <label id="lang-hi"
+          class="lang-option flex items-center justify-between bg-surface-container-lowest border border-outline-variant p-md rounded-xl cursor-pointer hover:bg-surface-container-low min-h-[64px]"
+          for="radio-hi">
+          <div class="flex items-center gap-md">
+            <input id="radio-hi" class="w-5 h-5" name="language" type="radio" value="hi" />
+            <div>
+              <span class="font-body text-body-md font-semibold text-on-surface block">हिन्दी</span>
+              <span class="font-label text-label-sm text-on-surface-variant">Hindi</span>
+            </div>
+          </div>
+          <span class="font-label text-label-sm font-bold text-primary">अ</span>
+        </label>
+
+        <!-- Telugu -->
+        <label id="lang-te"
+          class="lang-option flex items-center justify-between bg-surface-container-lowest border border-outline-variant p-md rounded-xl cursor-pointer hover:bg-surface-container-low min-h-[64px]"
+          for="radio-te">
+          <div class="flex items-center gap-md">
+            <input id="radio-te" class="w-5 h-5" name="language" type="radio" value="te" />
+            <div>
+              <span class="font-body text-body-md font-semibold text-on-surface block">తెలుగు</span>
+              <span class="font-label text-label-sm text-on-surface-variant">Telugu</span>
+            </div>
+          </div>
+          <span class="font-label text-label-sm font-bold text-primary">తె</span>
+        </label>
+
+        <!-- Kannada -->
+        <label id="lang-kn"
+          class="lang-option flex items-center justify-between bg-surface-container-lowest border border-outline-variant p-md rounded-xl cursor-pointer hover:bg-surface-container-low min-h-[64px]"
+          for="radio-kn">
+          <div class="flex items-center gap-md">
+            <input id="radio-kn" class="w-5 h-5" name="language" type="radio" value="kn" />
+            <div>
+              <span class="font-body text-body-md font-semibold text-on-surface block">ಕನ್ನಡ</span>
+              <span class="font-label text-label-sm text-on-surface-variant">Kannada</span>
+            </div>
+          </div>
+          <span class="font-label text-label-sm font-bold text-primary">ಕ</span>
+        </label>
+
+        <!-- Malayalam -->
+        <label id="lang-ml"
+          class="lang-option flex items-center justify-between bg-surface-container-lowest border border-outline-variant p-md rounded-xl cursor-pointer hover:bg-surface-container-low min-h-[64px]"
+          for="radio-ml">
+          <div class="flex items-center gap-md">
+            <input id="radio-ml" class="w-5 h-5" name="language" type="radio" value="ml" />
+            <div>
+              <span class="font-body text-body-md font-semibold text-on-surface block">മലയാളം</span>
+              <span class="font-label text-label-sm text-on-surface-variant">Malayalam</span>
+            </div>
+          </div>
+          <span class="font-label text-label-sm font-bold text-primary">മ</span>
+        </label>
+      </fieldset>
+    </div>
+
+    <!-- CTA -->
+    <div class="pt-xl pb-lg mt-auto">
+      <button id="btn-continue"
+        class="btn-continue w-full bg-primary text-on-primary font-label text-label-lg rounded-full min-h-[56px] flex items-center justify-center gap-xs hover:bg-surface-tint">
+        <span data-i18n="continue">Continue</span>
+        <span class="material-symbols-outlined">arrow_forward</span>
+      </button>
+    </div>
+  </main>
+
+  <script src="translations.js"></script>
+  <script src="shared.js"></script>
+  <script>
+    const radios = document.querySelectorAll('input[type="radio"]');
+    const allLabels = document.querySelectorAll('.lang-option');
+
+    function updateSelection(value) {
+      allLabels.forEach(label => {
+        label.classList.remove('selected', 'border-2', 'border-primary');
+        label.classList.add('border', 'border-outline-variant');
+      });
+      const selected = document.getElementById('lang-' + value);
+      if (selected) {
+        selected.classList.add('selected', 'border-2', 'border-primary');
+        selected.classList.remove('border', 'border-outline-variant');
+      }
+      SAHAY.setLanguage(value);
+    }
+
+    // Init from state/localStorage
+    const currentLang = SAHAY.state.language || 'en';
+    const currentRadio = document.querySelector(`input[value="${currentLang}"]`);
+    if (currentRadio) currentRadio.checked = true;
+    updateSelection(currentLang);
+
+    radios.forEach(radio => {
+      radio.addEventListener('change', () => updateSelection(radio.value));
+    });
+
+    document.getElementById('btn-continue').addEventListener('click', () => {
+      if (!SAHAY.state.isRegistered) {
+        window.location.href = 'register.html';
+      } else if (!SAHAY.state.isConsented) {
+        window.location.href = 'consent.html';
+      } else {
+        window.location.href = 'home.html';
+      }
+    });
+  </script>
+</body>
+
+</html>

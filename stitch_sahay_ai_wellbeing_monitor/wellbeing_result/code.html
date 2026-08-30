@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Check-in Complete - Wellbeing Result</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@400;600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#f3f4f5",
+                        "surface-container": "#edeeef",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#e7e8e9",
+                        "on-primary-container": "#00423b",
+                        "primary-fixed-dim": "#4fdbc8",
+                        "primary-fixed": "#71f8e4",
+                        "on-tertiary-fixed": "#00201d",
+                        "on-surface": "#191c1d",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#d9dadb",
+                        "on-primary-fixed": "#00201c",
+                        "tertiary-container": "#44b5a8",
+                        "inverse-surface": "#2e3132",
+                        "secondary": "#515f74",
+                        "secondary-fixed-dim": "#b9c7df",
+                        "surface-container-highest": "#e1e3e4",
+                        "tertiary-fixed-dim": "#6bd8cb",
+                        "on-tertiary-container": "#00423c",
+                        "inverse-on-surface": "#f0f1f2",
+                        "on-secondary-container": "#57657a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#0d1c2e",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e1e3e4",
+                        "inverse-primary": "#4fdbc8",
+                        "on-primary-fixed-variant": "#005048",
+                        "primary": "#006b5f",
+                        "secondary-fixed": "#d5e3fc",
+                        "background": "#f8f9fa",
+                        "surface-tint": "#006b5f",
+                        "secondary-container": "#d5e3fc",
+                        "primary-container": "#14b8a6",
+                        "on-tertiary-fixed-variant": "#005049",
+                        "tertiary-fixed": "#89f5e7",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "outline": "#6c7a77",
+                        "on-secondary-fixed-variant": "#3a485b",
+                        "on-surface-variant": "#3c4947",
+                        "outline-variant": "#bbcac6",
+                        "surface": "#f8f9fa",
+                        "error": "#ba1a1a",
+                        "on-background": "#191c1d",
+                        "tertiary": "#006a61",
+                        "surface-bright": "#f8f9fa"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "xs": "8px",
+                        "sm": "12px",
+                        "container-margin": "16px",
+                        "base": "4px",
+                        "xl": "32px",
+                        "touch-target": "48px",
+                        "md": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Public Sans"],
+                        "headline-lg": ["Public Sans"],
+                        "label-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Public Sans"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "display-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+</head>
+<body class="bg-background text-on-background font-body-md antialiased pb-24 pt-20 flex flex-col min-h-screen">
+<!-- TopAppBar -->
+<header class="bg-surface text-primary font-headline-md font-headline-lg font-bold fixed top-0 w-full bg-surface text-on-surface-variant hover:bg-surface-container-low transition-colors active:scale-95 duration-150 flex items-center justify-between px-md h-touch-target z-50">
+<button aria-label="Clinical Notes" class="w-touch-target h-touch-target flex items-center justify-center rounded-full hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined" data-icon="clinical_notes">clinical_notes</span>
+</button>
+<span class="font-headline-lg text-headline-lg font-bold text-primary tracking-tight">SAHAY-AI</span>
+<button aria-label="Settings" class="w-touch-target h-touch-target flex items-center justify-center rounded-full hover:bg-surface-container transition-colors">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</header>
+<main class="flex-grow px-container-margin md:max-w-2xl md:mx-auto w-full flex flex-col gap-xl">
+<!-- Header Section -->
+<section class="text-center pt-lg">
+<h1 class="font-display-lg text-display-lg text-on-surface mb-sm">Check-in Complete</h1>
+<div class="inline-flex items-center gap-xs bg-orange-100 text-orange-900 px-sm py-xs rounded-full mb-md border border-orange-200 shadow-sm">
+<span class="material-symbols-outlined text-orange-600" data-icon="warning" style="font-variation-settings: 'FILL' 1;">warning</span>
+<span class="font-label-lg text-label-lg">WELLBEING CONCERN - ELEVATED</span>
+</div>
+<p class="font-body-lg text-body-lg text-on-surface-variant max-w-md mx-auto">
+                Some wellbeing-related signals have increased compared with your previous check-ins.
+            </p>
+</section>
+<!-- Signal Cards Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-2 gap-md">
+<div class="bg-surface-container-lowest rounded-xl p-md shadow-sm border border-outline-variant flex items-start gap-md">
+<div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-orange-700" data-icon="psychology">psychology</span>
+</div>
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface mb-base">Fear-related signal</h3>
+<div class="flex items-center gap-xs text-orange-700 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]" data-icon="arrow_upward">arrow_upward</span>
+                        Increased
+                    </div>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-md shadow-sm border border-outline-variant flex items-start gap-md">
+<div class="w-12 h-12 rounded-full bg-orange-100 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-orange-700" data-icon="bedtime">bedtime</span>
+</div>
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface mb-base">Sleep difficulty</h3>
+<div class="flex items-center gap-xs text-orange-700 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]" data-icon="arrow_upward">arrow_upward</span>
+                        Increased
+                    </div>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-md shadow-sm border border-outline-variant flex items-start gap-md md:col-span-2">
+<div class="w-12 h-12 rounded-full bg-red-100 flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-red-700" data-icon="gpp_bad">gpp_bad</span>
+</div>
+<div class="flex-grow">
+<h3 class="font-label-lg text-label-lg text-on-surface mb-base">Safety concern</h3>
+<div class="flex items-center gap-xs text-red-700 font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]" data-icon="warning">warning</span>
+                        Detected
+                    </div>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-md shadow-sm border border-outline-variant flex items-start gap-md md:col-span-2">
+<div class="w-12 h-12 rounded-full bg-surface-container flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="trending_up">trending_up</span>
+</div>
+<div class="flex-grow">
+<h3 class="font-label-lg text-label-lg text-on-surface mb-base">Recent trend</h3>
+<div class="flex items-center gap-xs text-on-surface-variant font-label-sm text-label-sm">
+<span class="material-symbols-outlined text-[16px]" data-icon="arrow_upward">arrow_upward</span>
+                        Increasing
+                    </div>
+</div>
+</div>
+</section>
+<!-- Actions -->
+<section class="flex flex-col gap-sm pt-sm">
+<p class="text-center font-label-sm text-label-sm text-on-surface-variant mb-sm">
+                This is not a medical diagnosis.
+            </p>
+<button class="w-full bg-primary-container text-on-primary-container h-touch-target rounded-full font-label-lg text-label-lg hover:opacity-90 transition-opacity flex items-center justify-center shadow-sm">
+                View My Journey
+            </button>
+<button class="w-full bg-surface-container-lowest text-on-surface border border-outline-variant h-touch-target rounded-full font-label-lg text-label-lg hover:bg-surface-container-low transition-colors flex items-center justify-center shadow-sm">
+                Get Support
+            </button>
+<button class="w-full bg-error-container text-on-error-container mt-md border border-error h-touch-target rounded-full font-label-lg text-label-lg hover:bg-red-200 transition-colors flex items-center justify-center shadow-sm font-bold">
+                 Safe Exit
+            </button>
+</section>
+</main>
+<!-- BottomNavBar -->
+<nav class="bg-surface-container-lowest text-primary font-label-sm font-headline-md fixed bottom-0 w-full z-50 bg-surface-container-lowest shadow-sm hover:bg-surface-container-high active:scale-90 duration-200 fixed bottom-0 left-0 w-full flex justify-around items-center px-container-margin py-xs md:hidden border-t border-outline-variant">
+<button aria-label="Home" class="flex flex-col items-center justify-center text-on-surface-variant w-16 h-touch-target">
+<span class="material-symbols-outlined mb-1" data-icon="home">home</span>
+<span>Home</span>
+</button>
+<button aria-label="Chat" class="flex flex-col items-center justify-center text-on-surface-variant w-16 h-touch-target">
+<span class="material-symbols-outlined mb-1" data-icon="chat_bubble">chat_bubble</span>
+<span>Chat</span>
+</button>
+<!-- Active State Logic Applied to "Journey" based on the "View My Journey" button intent -->
+<button aria-label="Journey" class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-4 py-1 w-20 h-touch-target">
+<span class="material-symbols-outlined mb-1" data-icon="auto_graph" style="font-variation-settings: 'FILL' 1;">auto_graph</span>
+<span>Journey</span>
+</button>
+<button aria-label="Support" class="flex flex-col items-center justify-center text-on-surface-variant w-16 h-touch-target">
+<span class="material-symbols-outlined mb-1" data-icon="contact_support">contact_support</span>
+<span>Support</span>
+</button>
+<button aria-label="Profile" class="flex flex-col items-center justify-center text-on-surface-variant w-16 h-touch-target">
+<span class="material-symbols-outlined mb-1" data-icon="person">person</span>
+<span>Profile</span>
+</button>
+</nav>
+</body></html>

@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="SAHAY-AI Voice Check-in." />
+    <title>Voice Check-in – SAHAY-AI</title>
+    <script src="assets/tailwind.min.js"></script>
+    <link href="assets/google-fonts.css" rel="stylesheet" />
+    <link href="assets/material-symbols.css" rel="stylesheet" />
+    <script id="tw-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { "primary": "#006b5f", "on-primary": "#ffffff", "primary-container": "#14b8a6", "on-primary-container": "#00423b", "background": "#f8f9fa", "on-background": "#191c1d", "surface": "#f8f9fa", "on-surface": "#191c1d", "outline-variant": "#bbcac6" },
+                    fontFamily: { "display": ["Public Sans", "sans-serif"], "body": ["Inter", "sans-serif"], "label": ["Inter", "sans-serif"] }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 48;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f8f9fa;
+        }
+
+        .pulse-ring {
+            animation: pulse 1.5s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.9);
+                opacity: 0.8;
+            }
+
+            100% {
+                transform: scale(1.5);
+                opacity: 0;
+            }
+        }
+
+        .transcript-bubble {
+            animation: slideUp 0.3s ease-out forwards;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+</head>
+
+<body
+    class="bg-background text-on-background min-h-screen flex flex-col items-center justify-center relative overflow-hidden">
+    <button
+        class="absolute top-4 left-4 w-12 h-12 flex items-center justify-center text-primary rounded-full hover:bg-surface-variant transition-colors z-50 shadow-sm border border-outline-variant bg-surface"
+        onclick="window.location.href='home.html'" aria-label="Cancel">
+        <span class="material-symbols-outlined" style="font-size: 24px;">close</span>
+    </button>
+
+    <div class="flex-1 w-full max-w-md mx-auto flex flex-col items-center justify-center p-6 relative">
+        <div id="ai-ring" class="absolute w-40 h-40 bg-primary-container rounded-full pulse-ring hidden"></div>
+        <div id="user-ring" class="absolute w-40 h-40 bg-orange-200 rounded-full pulse-ring hidden"></div>
+
+        <button
+            class="relative w-32 h-32 bg-white rounded-full flex items-center justify-center shadow-lg border-4 border-primary z-10 mb-8 active:scale-95 transition-transform"
+            id="btn-mic" onclick="startInteraction()">
+            <span id="mic-icon" class="material-symbols-outlined text-primary" style="font-size:64px;">mic</span>
+        </button>
+
+        <p id="status-text" class="font-label text-lg text-primary font-bold mb-2 uppercase tracking-widest">Tap to
+            start</p>
+        <div id="demo-label"
+            class="hidden mb-6 px-3 py-1 bg-yellow-100 text-yellow-800 rounded-full font-label text-xs uppercase tracking-wider border border-yellow-300 shadow-sm font-bold">
+            Demo Mode / Fallback</div>
+
+        <div id="transcript-area" class="w-full text-center space-y-4 max-h-[300px] overflow-y-auto mt-4 px-4 pb-12">
+            <!-- Transcripts go here -->
+        </div>
+    </div>
+
+    <script src="translations.js"></script>
+    <script src="shared.js"></script>
+    <script>
+        const transcriptArea = document.getElementById('transcript-area');
+        const aiRing = document.getElementById('ai-ring');
+        const userRing = document.getElementById('user-ring');
+        const statusText = document.getElementById('status-text');
+        const btnMic = document.getElementById('btn-mic');
+        const demoLabel = document.getElementById('demo-label');
+
+        let chatLog = [];
+        let currentTurn = 0;
+        const MAX_TURNS = 5;
+        let isInteracting = false;
+        let fallbackMode = false;
+        let SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+
+        function showMessage(role, text) {
+            const div = document.createElement('div');
+            div.className = `transcript-bubble text-lg ${role === 'ai' ? 'text-primary font-semibold' : 'text-gray-700 italic'}`;
+            div.textContent = text;
+            transcriptArea.appendChild(div);
+            chatLog.push({ role, text });
+            transcriptArea.scrollTop = transcriptArea.scrollHeight;
+        }
+
+        function setUIState(state) {
+            aiRing.classList.add('hidden');
+            userRing.classList.add('hidden');
+
+            if (state === 'idle') {
+                statusText.textContent = fallbackMode ? "TAP TO CONTINUE DEMO" : "TAP TO SPEAK";
+                btnMic.disabled = false;
+            } else if (state === 'ai') {
+                aiRing.classList.remove('hidden');
+                statusText.textContent = "SAHAY IS SPEAKING...";
+                btnMic.disabled = true;
+            } else if (state === 'user') {
+                userRing.classList.remove('hidden');
+                statusText.textContent = fallbackMode ? "SIMULATING USER..." : "LISTENING...";
+                btnMic.disabled = true;
+            } else if (state === 'processing') {
+                statusText.textContent = "ANALYZING...";
+                btnMic.disabled = true;
+            }
+        }
+
+        async function handleAIResponse(userMsg = "") {
+            setUIState('ai');
+            try {
+                const aiText = await SAHAY.getAIResponse(chatLog, userMsg);
+                showMessage('ai', aiText);
+
+                // Try Web Speech Synthesis
+                if ('speechSynthesis' in window && !fallbackMode) {
+                    const utterance = new SpeechSynthesisUtterance(aiText);
+                    utterance.lang = SAHAY.state.language === 'en' ? 'en-US' : (SAHAY.state.language + '-IN');
+                    utterance.onend = () => {
+                        readyForUserInput();
+                    };
+                    window.speechSynthesis.speak(utterance);
+                } else {
+                    setTimeout(readyForUserInput, aiText.length * 50 + 500);
+                }
+            } catch (e) {
+                showMessage('ai', SAHAY.t('error_ai_response') || "I am having trouble connecting right now.");
+                setTimeout(readyForUserInput, 2000);
+            }
+        }
+
+        function finishCheckin() {
+            setUIState('processing');
+            try {
+                const data = SAHAY.processCheckin(chatLog, 'voice');
+                sessionStorage.setItem('currentAnalysis', JSON.stringify(data));
+                window.location.href = 'result.html';
+            } catch (err) {
+                console.error(err);
+                window.location.href = 'result.html';
+            }
+        }
+
+        function readyForUserInput() {
+            if (currentTurn >= MAX_TURNS) {
+                finishCheckin();
+                return;
+            }
+
+            setUIState('idle');
+
+            if (fallbackMode) {
+                // Auto click for demo mode after delay
+                setTimeout(startInteraction, 1000);
+            } else {
+                // Automatically start listening
+                startRealListening();
+            }
+        }
+
+        function startRealListening() {
+            if (!SpeechRecognition) return;
+            const recognition = new SpeechRecognition();
+            recognition.lang = SAHAY.state.language === 'en' ? 'en-US' : (SAHAY.state.language + '-IN');
+            recognition.interimResults = false;
+            recognition.maxAlternatives = 1;
+
+            setUIState('user');
+
+            recognition.onresult = (event) => {
+                const text = event.results[0][0].transcript;
+                showMessage('user', text);
+                currentTurn++;
+                handleAIResponse(text);
+            };
+
+            recognition.onerror = (event) => {
+                console.warn('Speech recognition error', event.error);
+                fallbackMode = true;
+                demoLabel.classList.remove('hidden');
+                setUIState('idle'); // Provide fallback option
+            };
+
+            try {
+                recognition.start();
+            } catch (e) {
+                fallbackMode = true;
+                demoLabel.classList.remove('hidden');
+                setUIState('idle');
+            }
+        }
+
+        // Fixed mock replies for demo
+        const mockReplies = [
+            "Honestly, I haven't been doing well. I'm very anxious.",
+            "Yes, I wake up a lot because I have bad dreams.",
+            "No, that's all. I just feel scared sometimes.",
+            "Thank you.",
+            "Bye."
+        ];
+
+        function startInteraction() {
+            if (!isInteracting) {
+                isInteracting = true;
+
+                // Initial setup check
+                if (!SpeechRecognition || SAHAY.state.isDemoMode) {
+                    fallbackMode = true;
+                    demoLabel.classList.remove('hidden');
+                }
+
+                handleAIResponse("");
+            } else if (fallbackMode && statusText.textContent === "TAP TO CONTINUE DEMO") {
+                setUIState('user');
+                setTimeout(() => {
+                    const text = mockReplies[currentTurn % mockReplies.length];
+                    showMessage('user', text);
+                    currentTurn++;
+                    handleAIResponse(text);
+                }, 1500);
+            }
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Journey Screen</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Public+Sans:wght@600;700&amp;family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+          darkMode: "class",
+          theme: {
+            extend: {
+              "colors": {
+                      "surface-container-low": "#f3f4f5",
+                      "surface-container": "#edeeef",
+                      "on-primary": "#ffffff",
+                      "surface-container-high": "#e7e8e9",
+                      "on-primary-container": "#00423b",
+                      "primary-fixed-dim": "#4fdbc8",
+                      "primary-fixed": "#71f8e4",
+                      "on-tertiary-fixed": "#00201d",
+                      "on-surface": "#191c1d",
+                      "error-container": "#ffdad6",
+                      "surface-dim": "#d9dadb",
+                      "on-primary-fixed": "#00201c",
+                      "tertiary-container": "#44b5a8",
+                      "inverse-surface": "#2e3132",
+                      "secondary": "#515f74",
+                      "secondary-fixed-dim": "#b9c7df",
+                      "surface-container-highest": "#e1e3e4",
+                      "tertiary-fixed-dim": "#6bd8cb",
+                      "on-tertiary-container": "#00423c",
+                      "inverse-on-surface": "#f0f1f2",
+                      "on-secondary-container": "#57657a",
+                      "surface-container-lowest": "#ffffff",
+                      "on-secondary-fixed": "#0d1c2e",
+                      "on-secondary": "#ffffff",
+                      "on-error": "#ffffff",
+                      "surface-variant": "#e1e3e4",
+                      "inverse-primary": "#4fdbc8",
+                      "on-primary-fixed-variant": "#005048",
+                      "primary": "#006b5f",
+                      "secondary-fixed": "#d5e3fc",
+                      "background": "#f8f9fa",
+                      "surface-tint": "#006b5f",
+                      "secondary-container": "#d5e3fc",
+                      "primary-container": "#14b8a6",
+                      "on-tertiary-fixed-variant": "#005049",
+                      "tertiary-fixed": "#89f5e7",
+                      "on-tertiary": "#ffffff",
+                      "on-error-container": "#93000a",
+                      "outline": "#6c7a77",
+                      "on-secondary-fixed-variant": "#3a485b",
+                      "on-surface-variant": "#3c4947",
+                      "outline-variant": "#bbcac6",
+                      "surface": "#f8f9fa",
+                      "error": "#ba1a1a",
+                      "on-background": "#191c1d",
+                      "tertiary": "#006a61",
+                      "surface-bright": "#f8f9fa"
+              },
+              "borderRadius": {
+                      "DEFAULT": "0.25rem",
+                      "lg": "0.5rem",
+                      "xl": "0.75rem",
+                      "full": "9999px"
+              },
+              "spacing": {
+                      "lg": "24px",
+                      "xs": "8px",
+                      "sm": "12px",
+                      "container-margin": "16px",
+                      "base": "4px",
+                      "xl": "32px",
+                      "touch-target": "48px",
+                      "md": "16px"
+              },
+              "fontFamily": {
+                      "headline-md": ["Public Sans"],
+                      "headline-lg": ["Public Sans"],
+                      "label-lg": ["Inter"],
+                      "body-lg": ["Inter"],
+                      "display-lg": ["Public Sans"],
+                      "label-sm": ["Inter"],
+                      "body-md": ["Inter"]
+              },
+              "fontSize": {
+                      "headline-md": ["20px", {"lineHeight": "28px", "fontWeight": "600"}],
+                      "headline-lg": ["24px", {"lineHeight": "32px", "fontWeight": "600"}],
+                      "label-lg": ["14px", {"lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600"}],
+                      "body-lg": ["18px", {"lineHeight": "28px", "fontWeight": "400"}],
+                      "display-lg": ["32px", {"lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700"}],
+                      "label-sm": ["12px", {"lineHeight": "16px", "fontWeight": "500"}],
+                      "body-md": ["16px", {"lineHeight": "24px", "fontWeight": "400"}]
+              }
+            }
+          }
+        }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .fill-icon {
+            font-variation-settings: 'FILL' 1;
+        }
+        
+        /* Subtle animation for the active timeline dot */
+        @keyframes pulse-ring {
+            0% { transform: scale(0.8); opacity: 0.5; }
+            100% { transform: scale(1.5); opacity: 0; }
+        }
+        .active-dot::before {
+            content: '';
+            position: absolute;
+            inset: -4px;
+            border-radius: 50%;
+            background-color: var(--tw-colors-primary);
+            animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+        }
+    </style>
+</head>
+<body class="bg-background text-on-background min-h-screen font-body-md antialiased pb-24 md:pb-0">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full bg-surface dark:bg-on-surface flex items-center justify-between px-md h-touch-target w-full z-50">
+<button aria-label="clinical_notes" class="w-touch-target h-touch-target flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors active:scale-95 duration-150 rounded-full">
+<span class="material-symbols-outlined" data-icon="clinical_notes">clinical_notes</span>
+</button>
+<h1 class="font-headline-lg text-headline-lg font-bold text-primary dark:text-primary-fixed tracking-tight">SAHAY-AI</h1>
+<button aria-label="settings" class="w-touch-target h-touch-target flex items-center justify-center text-on-surface-variant hover:bg-surface-container-low transition-colors active:scale-95 duration-150 rounded-full">
+<span class="material-symbols-outlined" data-icon="settings">settings</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="pt-[80px] px-container-margin max-w-3xl mx-auto space-y-lg">
+<!-- Header -->
+<div class="mb-xl">
+<h2 class="font-display-lg text-display-lg text-on-surface">My wellbeing journey</h2>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">Tracking your progress and case status.</p>
+</div>
+<!-- Wellbeing Concern Index Graph Card -->
+<section class="bg-surface-container-lowest rounded-xl p-md shadow-sm border border-surface-variant">
+<div class="flex justify-between items-center mb-lg">
+<h3 class="font-headline-md text-headline-md text-on-surface">Wellbeing Concern Index</h3>
+<span class="material-symbols-outlined text-on-surface-variant" data-icon="monitoring">monitoring</span>
+</div>
+<!-- CSS/SVG Graph Construction -->
+<div class="relative w-full h-[200px] mb-lg bg-surface-bright rounded-lg border border-surface-variant overflow-hidden">
+<!-- Grid Lines -->
+<div class="absolute inset-0 flex flex-col justify-between py-4 px-8">
+<div class="w-full border-t border-surface-variant border-dashed"></div>
+<div class="w-full border-t border-surface-variant border-dashed"></div>
+<div class="w-full border-t border-surface-variant border-dashed"></div>
+<div class="w-full border-t border-surface-variant border-dashed"></div>
+</div>
+<!-- SVG Line Chart (Mapping W1:32, W2:39, W3:51, W4:67 to coordinates) -->
+<!-- Assuming Y goes from 0 to 100 top to bottom (SVG coords), 100 - value -->
+<svg class="absolute inset-0 w-full h-full" preserveaspectratio="none" viewbox="0 0 100 100">
+<!-- Area fill under line -->
+<path d="M10,68 L36,61 L63,49 L90,33 L90,100 L10,100 Z" fill="#14b8a6" fill-opacity="0.1"></path>
+<!-- Line -->
+<path d="M10,68 L36,61 L63,49 L90,33" fill="none" stroke="#006b5f" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></path>
+<!-- Data Points -->
+<circle cx="10" cy="68" fill="#ffffff" r="3" stroke="#006b5f" stroke-width="2"></circle>
+<circle cx="36" cy="61" fill="#ffffff" r="3" stroke="#006b5f" stroke-width="2"></circle>
+<circle cx="63" cy="49" fill="#ffffff" r="3" stroke="#006b5f" stroke-width="2"></circle>
+<circle cx="90" cy="33" fill="#ffffff" r="3" stroke="#006b5f" stroke-width="2"></circle>
+</svg>
+<!-- X Axis Labels -->
+<div class="absolute bottom-2 w-full flex justify-between px-[10%] text-label-sm font-label-sm text-on-surface-variant">
+<span>W1</span>
+<span>W2</span>
+<span>W3</span>
+<span>W4</span>
+</div>
+</div>
+<!-- Legend / Labels -->
+<div class="flex flex-wrap gap-xs justify-center">
+<div class="flex items-center gap-base bg-surface-container py-1 px-3 rounded-full">
+<div class="w-3 h-3 rounded-full bg-green-500"></div>
+<span class="font-label-sm text-label-sm text-on-surface">Stable</span>
+</div>
+<div class="flex items-center gap-base bg-surface-container py-1 px-3 rounded-full">
+<div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+<span class="font-label-sm text-label-sm text-on-surface">Increasing</span>
+</div>
+<div class="flex items-center gap-base bg-surface-container py-1 px-3 rounded-full">
+<div class="w-3 h-3 rounded-full bg-orange-500"></div>
+<span class="font-label-sm text-label-sm text-on-surface">Elevated</span>
+</div>
+</div>
+</section>
+<!-- Case Lifecycle Timeline Card -->
+<section class="bg-surface-container-lowest rounded-xl p-md shadow-sm border border-surface-variant">
+<h3 class="font-headline-md text-headline-md text-on-surface mb-lg">Case Lifecycle</h3>
+<div class="relative pl-sm">
+<!-- Vertical Track -->
+<div class="absolute left-[19px] top-4 bottom-4 w-[2px] bg-surface-variant"></div>
+<!-- Timeline Items -->
+<div class="space-y-lg relative z-10">
+<!-- Registration (Completed) -->
+<div class="flex items-start gap-md">
+<div class="flex flex-col items-center mt-1">
+<div class="w-4 h-4 rounded-full bg-primary flex items-center justify-center shrink-0 shadow-sm border-2 border-surface-container-lowest">
+<span class="material-symbols-outlined text-[10px] text-on-primary font-bold">check</span>
+</div>
+</div>
+<div>
+<h4 class="font-label-lg text-label-lg text-on-surface">Registration</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Completed</p>
+</div>
+</div>
+<!-- Investigation (Active) -->
+<div class="flex items-start gap-md">
+<div class="flex flex-col items-center mt-1">
+<div class="relative active-dot w-4 h-4 rounded-full bg-surface-container-lowest border-2 border-primary shrink-0 z-10">
+<div class="absolute inset-[3px] rounded-full bg-primary"></div>
+</div>
+</div>
+<div>
+<h4 class="font-label-lg text-label-lg text-primary font-bold">Investigation</h4>
+<p class="font-body-md text-body-md text-primary-fixed-dim text-sm">Active</p>
+</div>
+</div>
+<!-- Trial (Pending) -->
+<div class="flex items-start gap-md opacity-60">
+<div class="flex flex-col items-center mt-1">
+<div class="w-4 h-4 rounded-full bg-surface-container-lowest border-2 border-outline-variant shrink-0"></div>
+</div>
+<div>
+<h4 class="font-label-lg text-label-lg text-on-surface">Trial</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Pending</p>
+</div>
+</div>
+<!-- Compensation (Pending) -->
+<div class="flex items-start gap-md opacity-60">
+<div class="flex flex-col items-center mt-1">
+<div class="w-4 h-4 rounded-full bg-surface-container-lowest border-2 border-outline-variant shrink-0"></div>
+</div>
+<div>
+<h4 class="font-label-lg text-label-lg text-on-surface">Compensation</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Pending</p>
+</div>
+</div>
+<!-- Rehabilitation (Pending) -->
+<div class="flex items-start gap-md opacity-60">
+<div class="flex flex-col items-center mt-1">
+<div class="w-4 h-4 rounded-full bg-surface-container-lowest border-2 border-outline-variant shrink-0"></div>
+</div>
+<div>
+<h4 class="font-label-lg text-label-lg text-on-surface">Rehabilitation</h4>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm">Pending</p>
+</div>
+</div>
+</div>
+</div>
+</section>
+<!-- Footer Text -->
+<div class="text-center py-xl border-t border-surface-variant opacity-70">
+<p class="font-body-md text-body-md text-on-surface-variant flex items-center justify-center gap-xs">
+<span class="material-symbols-outlined text-[18px]">psychology</span>
+                AI notices. Humans support.
+            </p>
+</div>
+</main>
+<!-- BottomNavBar (Hidden on md and up, typical for this pattern context) -->
+<nav class="md:hidden fixed bottom-0 left-0 w-full flex justify-around items-center px-container-margin py-xs bg-surface-container-lowest dark:bg-on-surface shadow-sm z-50">
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-90 duration-200 w-16 py-2 rounded-xl">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-label-sm text-label-sm mt-1">Home</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-90 duration-200 w-16 py-2 rounded-xl">
+<span class="material-symbols-outlined" data-icon="chat_bubble">chat_bubble</span>
+<span class="font-label-sm text-label-sm mt-1">Chat</span>
+</button>
+<!-- Active Tab: Journey -->
+<button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-4 py-1 hover:bg-surface-container-high transition-all active:scale-90 duration-200 w-20">
+<span class="material-symbols-outlined fill-icon" data-icon="auto_graph">auto_graph</span>
+<span class="font-label-sm text-label-sm mt-1 font-bold">Journey</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-90 duration-200 w-16 py-2 rounded-xl">
+<span class="material-symbols-outlined" data-icon="contact_support">contact_support</span>
+<span class="font-label-sm text-label-sm mt-1">Support</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-90 duration-200 w-16 py-2 rounded-xl">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-label-sm text-label-sm mt-1">Profile</span>
+</button>
+</nav>
+</body></html>

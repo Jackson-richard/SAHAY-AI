@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SAHAY-AI - Home</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;family=Public+Sans:wght@600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "surface-container-low": "#f3f4f5",
+                        "surface-container": "#edeeef",
+                        "on-primary": "#ffffff",
+                        "surface-container-high": "#e7e8e9",
+                        "on-primary-container": "#00423b",
+                        "primary-fixed-dim": "#4fdbc8",
+                        "primary-fixed": "#71f8e4",
+                        "on-tertiary-fixed": "#00201d",
+                        "on-surface": "#191c1d",
+                        "error-container": "#ffdad6",
+                        "surface-dim": "#d9dadb",
+                        "on-primary-fixed": "#00201c",
+                        "tertiary-container": "#44b5a8",
+                        "inverse-surface": "#2e3132",
+                        "secondary": "#515f74",
+                        "secondary-fixed-dim": "#b9c7df",
+                        "surface-container-highest": "#e1e3e4",
+                        "tertiary-fixed-dim": "#6bd8cb",
+                        "on-tertiary-container": "#00423c",
+                        "inverse-on-surface": "#f0f1f2",
+                        "on-secondary-container": "#57657a",
+                        "surface-container-lowest": "#ffffff",
+                        "on-secondary-fixed": "#0d1c2e",
+                        "on-secondary": "#ffffff",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#e1e3e4",
+                        "inverse-primary": "#4fdbc8",
+                        "on-primary-fixed-variant": "#005048",
+                        "primary": "#006b5f",
+                        "secondary-fixed": "#d5e3fc",
+                        "background": "#f8f9fa",
+                        "surface-tint": "#006b5f",
+                        "secondary-container": "#d5e3fc",
+                        "primary-container": "#14b8a6",
+                        "on-tertiary-fixed-variant": "#005049",
+                        "tertiary-fixed": "#89f5e7",
+                        "on-tertiary": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "outline": "#6c7a77",
+                        "on-secondary-fixed-variant": "#3a485b",
+                        "on-surface-variant": "#3c4947",
+                        "outline-variant": "#bbcac6",
+                        "surface": "#f8f9fa",
+                        "error": "#ba1a1a",
+                        "on-background": "#191c1d",
+                        "tertiary": "#006a61",
+                        "surface-bright": "#f8f9fa"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "lg": "24px",
+                        "xs": "8px",
+                        "sm": "12px",
+                        "container-margin": "16px",
+                        "base": "4px",
+                        "xl": "32px",
+                        "touch-target": "48px",
+                        "md": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-md": ["Public Sans"],
+                        "headline-lg": ["Public Sans"],
+                        "label-lg": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "display-lg": ["Public Sans"],
+                        "label-sm": ["Inter"],
+                        "body-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-md": ["20px", { "lineHeight": "28px", "fontWeight": "600" }],
+                        "headline-lg": ["24px", { "lineHeight": "32px", "fontWeight": "600" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "display-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "label-sm": ["12px", { "lineHeight": "16px", "fontWeight": "500" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; color: #191c1d; padding-bottom: 80px; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+    </style>
+</head>
+<body class="bg-background min-h-screen relative">
+<!-- TopAppBar -->
+<header class="bg-surface dark:bg-on-surface fixed top-0 w-full z-50 flat no shadows flex items-center justify-between px-md h-touch-target w-full z-50">
+<div class="flex items-center gap-2 text-primary dark:text-primary-fixed hover:bg-surface-container-low transition-colors active:scale-95 duration-150 p-2 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">clinical_notes</span>
+</div>
+<h1 class="font-headline-lg text-headline-lg font-bold text-primary dark:text-primary-fixed">SAHAY-AI</h1>
+<div class="flex items-center gap-2 text-primary dark:text-primary-fixed hover:bg-surface-container-low transition-colors active:scale-95 duration-150 p-2 rounded-lg cursor-pointer">
+<span class="material-symbols-outlined">settings</span>
+</div>
+</header>
+<!-- Main Content -->
+<main class="pt-20 px-container-margin pb-24 max-w-2xl mx-auto space-y-xl">
+<!-- Welcome Section -->
+<section class="space-y-sm mt-md">
+<div class="flex items-center gap-4">
+<img alt="SAHAY-AI Logo" class="w-16 h-16 rounded-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAifb52GHby03xFXP0r8XQs_HYbQIj_GNMA2xkkgepfloEnRmVlmoGPW3IYmeWB4UuRkcwtOwgNSQR1RzbVXg6S95MrLCh0h35Od6LpGiiI9y2SgB5_Kpv6sq5_fLxzyLZtw9nRWIbuErDjvq4GWMXSlqHIavONk1Gkc9ZcovyktcuVeMsnrDaUH-cmnd3ZxHyiGn4mOnYHcHRSQ3HdNElgvyjei3LVRPa7WrBqfkguDgve93M3mitd"/>
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Good evening,</h2>
+<p class="font-body-lg text-body-lg text-on-surface-variant">How are you doing today?</p>
+</div>
+</div>
+</section>
+<!-- Main Card: Check-in -->
+<section class="bg-surface-container-lowest rounded-xl p-container-margin shadow-sm flex flex-col items-center text-center space-y-lg">
+<div class="space-y-xs">
+<p class="font-label-lg text-label-lg text-outline">TODAY'S CHECK-IN</p>
+<h3 class="font-headline-md text-headline-md text-on-surface">Take a moment to tell us how you are feeling.</h3>
+</div>
+<button class="w-full bg-primary-container text-on-primary font-label-lg text-label-lg rounded-xl h-touch-target flex items-center justify-center transition-transform active:scale-95">
+                Start Check-in
+            </button>
+</section>
+<!-- Secondary Options Bento Grid -->
+<section class="grid grid-cols-1 md:grid-cols-3 gap-sm">
+<div class="bg-surface-container-lowest rounded-xl p-container-margin shadow-sm border border-surface-variant hover:bg-surface-container-low transition-colors cursor-pointer active:scale-95 flex flex-col items-start gap-xs">
+<span class="material-symbols-outlined text-primary text-3xl">chat_bubble</span>
+<div>
+<h4 class="font-label-lg text-label-lg text-on-surface">CHAT</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Talk to SAHAY</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-container-margin shadow-sm border border-surface-variant hover:bg-surface-container-low transition-colors cursor-pointer active:scale-95 flex flex-col items-start gap-xs">
+<span class="material-symbols-outlined text-primary text-3xl">mic</span>
+<div>
+<h4 class="font-label-lg text-label-lg text-on-surface">VOICE</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Speak instead of typing</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-container-margin shadow-sm border border-surface-variant hover:bg-surface-container-low transition-colors cursor-pointer active:scale-95 flex flex-col items-start gap-xs">
+<span class="material-symbols-outlined text-primary text-3xl">phone_in_talk</span>
+<div>
+<h4 class="font-label-lg text-label-lg text-on-surface">SCHEDULED CALL</h4>
+<p class="font-body-md text-body-md text-on-surface-variant">Receive a phone check-in</p>
+</div>
+</div>
+</section>
+<!-- Status Indicators -->
+<section class="flex flex-col gap-sm">
+<div class="bg-surface-container-lowest rounded-xl p-container-margin shadow-sm flex items-center justify-between">
+<span class="font-body-md text-body-md text-on-surface-variant">LAST CHECK-IN:</span>
+<span class="font-label-lg text-label-lg text-on-surface">3 days ago</span>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-container-margin shadow-sm flex items-center justify-between">
+<span class="font-body-md text-body-md text-on-surface-variant">CURRENT WELLBEING:</span>
+<span class="font-label-lg text-label-lg text-on-surface flex items-center gap-2">🟢 Stable</span>
+</div>
+</section>
+</main>
+<!-- BottomNavBar (Mobile Only) -->
+<nav class="md:hidden bg-surface-container-lowest dark:bg-on-surface shadow-sm fixed bottom-0 left-0 w-full flex justify-around items-center px-container-margin py-xs z-50">
+<!-- Active: Home -->
+<div class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-4 py-1 hover:bg-surface-container-high transition-all active:scale-90 duration-200 cursor-pointer">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">home</span>
+<span class="font-label-sm text-label-sm">Home</span>
+</div>
+<!-- Inactive -->
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-90 duration-200 cursor-pointer px-4 py-1 rounded-xl">
+<span class="material-symbols-outlined">chat_bubble</span>
+<span class="font-label-sm text-label-sm mt-1">Chat</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-90 duration-200 cursor-pointer px-4 py-1 rounded-xl">
+<span class="material-symbols-outlined">auto_graph</span>
+<span class="font-label-sm text-label-sm mt-1">Journey</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-90 duration-200 cursor-pointer px-4 py-1 rounded-xl">
+<span class="material-symbols-outlined">contact_support</span>
+<span class="font-label-sm text-label-sm mt-1">Support</span>
+</div>
+<div class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-surface-container-high transition-all active:scale-90 duration-200 cursor-pointer px-4 py-1 rounded-xl">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-sm text-label-sm mt-1">Profile</span>
+</div>
+</nav>
+</body></html>

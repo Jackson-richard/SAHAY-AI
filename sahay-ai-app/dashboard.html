@@ -1,0 +1,474 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SAHAY-AI Support Team Dashboard – Monitor cases, alerts, and wellbeing trends." />
+  <title>Support Dashboard – SAHAY-AI</title>
+  <script src="assets/tailwind.min.js"></script>
+
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Public+Sans:wght@600;700&display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    rel="stylesheet" />
+  <script id="tw-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { "primary": "#006b5f", "on-primary": "#ffffff", "primary-container": "#14b8a6", "on-primary-container": "#00423b", "primary-fixed": "#71f8e4", "primary-fixed-dim": "#4fdbc8", "secondary": "#515f74", "on-secondary": "#ffffff", "secondary-container": "#d5e3fc", "on-secondary-container": "#57657a", "error": "#ba1a1a", "on-error": "#ffffff", "error-container": "#ffdad6", "on-error-container": "#93000a", "background": "#f8f9fa", "on-background": "#191c1d", "surface": "#f8f9fa", "on-surface": "#191c1d", "surface-variant": "#e1e3e4", "on-surface-variant": "#3c4947", "surface-container-lowest": "#ffffff", "surface-container-low": "#f3f4f5", "surface-container": "#edeeef", "surface-container-high": "#e7e8e9", "surface-container-highest": "#e1e3e4", "outline": "#6c7a77", "outline-variant": "#bbcac6", "surface-tint": "#006b5f", "inverse-surface": "#2e3132", "inverse-on-surface": "#f0f1f2" },
+          borderRadius: { "DEFAULT": "0.5rem", "sm": "0.25rem", "md": "0.75rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+          spacing: { "base": "4px", "xs": "8px", "sm": "12px", "md": "16px", "lg": "24px", "xl": "32px", "touch-target": "48px", "container-margin": "16px" },
+          fontFamily: { "display": ["Public Sans", "sans-serif"], "headline": ["Public Sans", "sans-serif"], "body": ["Inter", "sans-serif"], "label": ["Inter", "sans-serif"] },
+          fontSize: { "display-lg": ["32px", { lineHeight: "40px", fontWeight: "700", letterSpacing: "-0.02em" }], "headline-lg": ["24px", { lineHeight: "32px", fontWeight: "600" }], "headline-md": ["20px", { lineHeight: "28px", fontWeight: "600" }], "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }], "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }], "label-lg": ["14px", { lineHeight: "20px", fontWeight: "600", letterSpacing: "0.01em" }], "label-sm": ["12px", { lineHeight: "16px", fontWeight: "500" }] }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .icon-fill {
+      font-variation-settings: 'FILL' 1;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    .stat-card {
+      transition: transform 0.1s;
+    }
+
+    .stat-card:hover {
+      transform: translateY(-2px);
+    }
+
+    .case-row {
+      transition: background-color 0.15s;
+      cursor: pointer;
+    }
+
+    .case-row:hover {
+      background-color: #f3f4f5;
+    }
+
+    .filter-chip {
+      transition: background-color 0.15s;
+      cursor: pointer;
+    }
+
+    .filter-chip.active {
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+      color: #191c1d;
+      font-weight: 600;
+    }
+
+    .status-dot-stable {
+      background: #22c55e;
+    }
+
+    .status-dot-increasing {
+      background: #eab308;
+    }
+
+    .status-dot-elevated {
+      background: #f97316;
+    }
+
+    .badge-stable {
+      background: #dcfce7;
+      color: #166534;
+    }
+
+    .badge-increasing {
+      background: #fef9c3;
+      color: #854d0e;
+    }
+
+    .badge-elevated {
+      background: #ffedd5;
+      color: #9a3412;
+    }
+
+    .sparkline {
+      height: 24px;
+    }
+  </style>
+</head>
+
+<body class="bg-background text-on-background min-h-screen pb-lg">
+
+  <!-- Top App Bar with Language Selector -->
+  <header
+    class="fixed top-0 w-full bg-surface z-50 flex items-center justify-between px-md border-b border-outline-variant"
+    style="height:56px;">
+    <button
+      class="w-touch-target h-touch-target flex items-center justify-center text-primary hover:bg-surface-container-low rounded-full transition-colors"
+      onclick="window.location.href='profile.html'" aria-label="Back">
+      <span class="material-symbols-outlined">arrow_back</span>
+    </button>
+    <span class="font-headline text-headline-lg font-bold text-primary" data-i18n="support_dashboard_menu">Support
+      Dashboard</span>
+    <div class="flex items-center gap-xs">
+      <div id="header-lang-container"></div>
+      <button
+        class="w-touch-target h-touch-target flex items-center justify-center text-primary hover:bg-surface-container-low rounded-full transition-colors"
+        aria-label="Notifications">
+        <span class="material-symbols-outlined">notifications</span>
+      </button>
+    </div>
+  </header>
+
+  <main class="pt-[72px] px-container-margin max-w-5xl mx-auto space-y-lg">
+
+    <!-- Dashboard Header -->
+    <div>
+      <h1 class="font-display text-display-lg text-on-surface" data-i18n="dash_title">Case Monitoring</h1>
+      <p class="font-body text-body-md text-on-surface-variant mt-xs" data-i18n="dash_subtitle">Authorized personnel
+        view · Smt. Ananya Krishnan</p>
+    </div>
+
+    <!-- Summary Stats -->
+    <div class="grid grid-cols-2 md:grid-cols-4 gap-sm">
+      <div
+        class="stat-card bg-surface-container-lowest rounded-xl p-md shadow-sm border border-outline-variant text-center">
+        <p class="font-display text-headline-lg text-primary font-bold">4</p>
+        <p class="font-label text-label-sm text-on-surface-variant mt-xs" data-i18n="stat_active_cases">Active Cases</p>
+      </div>
+      <div
+        class="stat-card bg-surface-container-lowest rounded-xl p-md shadow-sm border border-outline-variant text-center">
+        <p class="font-display text-headline-lg text-error font-bold">1</p>
+        <p class="font-label text-label-sm text-on-surface-variant mt-xs" data-i18n="stat_alerts">Alerts</p>
+      </div>
+      <div
+        class="stat-card bg-surface-container-lowest rounded-xl p-md shadow-sm border border-outline-variant text-center">
+        <p class="font-display text-headline-lg text-orange-500 font-bold">2</p>
+        <p class="font-label text-label-sm text-on-surface-variant mt-xs" data-i18n="stat_needs_review">Needs Review</p>
+      </div>
+      <div
+        class="stat-card bg-surface-container-lowest rounded-xl p-md shadow-sm border border-outline-variant text-center">
+        <p class="font-display text-headline-lg text-green-600 font-bold">1</p>
+        <p class="font-label text-label-sm text-on-surface-variant mt-xs" data-i18n="stat_stable">Stable</p>
+      </div>
+    </div>
+
+    <!-- Alert Banner -->
+    <div class="bg-error-container border border-error rounded-xl p-md flex items-start gap-sm">
+      <span class="material-symbols-outlined icon-fill text-error flex-shrink-0 mt-0.5">warning</span>
+      <div class="flex-grow">
+        <p class="font-label text-label-lg text-on-error-container" data-i18n="dash_alert_title">Safety concern detected
+          — Priya S. (VCT-2024-00847)</p>
+        <p class="font-body text-body-md text-on-error-container opacity-80 mt-base" data-i18n="dash_alert_desc">
+          Elevated distress with safety concern. Human review recommended within 24 hours.</p>
+      </div>
+      <button class="flex-shrink-0 bg-error text-on-error font-label text-label-sm px-sm py-xs rounded-full"
+        onclick="reviewCase('VCT-2024-00847')" data-i18n="action_review_now">Review Now</button>
+    </div>
+
+    <!-- Filter & Search -->
+    <div class="flex flex-col sm:flex-row gap-sm">
+      <div class="flex-grow relative">
+        <span class="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-on-surface-variant"
+          style="font-size:20px;">search</span>
+        <input id="search-input" type="text" placeholder="Search by name or case ID…"
+          data-i18n-placeholder="search_placeholder"
+          class="w-full pl-10 pr-md py-sm border border-outline-variant rounded-xl font-body text-body-md text-on-surface bg-surface-container-lowest focus:border-primary focus:ring-1 focus:ring-primary outline-none"
+          oninput="filterCases()" />
+      </div>
+      <div class="flex bg-surface-container-low rounded-full p-1 gap-1 flex-shrink-0">
+        <button class="filter-chip active px-sm py-xs rounded-full font-label text-label-sm" data-filter="all"
+          onclick="setFilter(this)" data-i18n="filter_all">All</button>
+        <button class="filter-chip px-sm py-xs rounded-full font-label text-label-sm text-on-surface-variant"
+          data-filter="elevated" onclick="setFilter(this)" data-i18n="filter_elevated">Elevated</button>
+        <button class="filter-chip px-sm py-xs rounded-full font-label text-label-sm text-on-surface-variant"
+          data-filter="increasing" onclick="setFilter(this)" data-i18n="filter_increasing">Increasing</button>
+        <button class="filter-chip px-sm py-xs rounded-full font-label text-label-sm text-on-surface-variant"
+          data-filter="stable" onclick="setFilter(this)" data-i18n="filter_stable">Stable</button>
+      </div>
+    </div>
+
+    <!-- Case List -->
+    <section class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant overflow-hidden">
+      <div class="px-md py-sm border-b border-outline-variant flex items-center justify-between">
+        <h2 class="font-headline text-headline-md text-on-surface" data-i18n="monitored_cases_title">Monitored Cases
+        </h2>
+        <span id="case-count" class="font-label text-label-sm text-on-surface-variant">4 cases</span>
+      </div>
+
+      <!-- Table header (desktop) -->
+      <div
+        class="hidden md:grid grid-cols-12 gap-sm px-md py-xs border-b border-outline-variant bg-surface-container-low font-label text-label-sm text-on-surface-variant">
+        <div class="col-span-3" data-i18n="col_name">Name / Case ID</div>
+        <div class="col-span-2" data-i18n="col_status">Status</div>
+        <div class="col-span-2" data-i18n="col_last_checkin">Last Check-in</div>
+        <div class="col-span-3" data-i18n="col_trend">4-Week Trend</div>
+        <div class="col-span-2 text-right" data-i18n="col_actions">Actions</div>
+      </div>
+
+      <div id="case-list"></div>
+
+      <!-- Empty state -->
+      <div id="empty-state" class="hidden p-xl text-center">
+        <span class="material-symbols-outlined text-on-surface-variant" style="font-size:48px;">search_off</span>
+        <p class="font-body text-body-md text-on-surface-variant mt-sm" data-i18n="no_cases_found">No cases match your
+          filter.</p>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div class="text-center py-lg border-t border-surface-variant">
+      <p class="font-body text-body-md text-on-surface-variant opacity-60 flex items-center justify-center gap-xs">
+        <span class="material-symbols-outlined" style="font-size:18px;">lock</span>
+        <span data-i18n="authorized_access_only">Authorized access only. All actions are logged.</span>
+      </p>
+    </div>
+  </main>
+
+  <!-- Case Detail Modal -->
+  <div id="case-modal"
+    class="hidden fixed inset-0 bg-black/40 z-[100] flex items-end md:items-center justify-center p-0 md:p-md"
+    role="dialog" aria-modal="true">
+    <div
+      class="bg-surface-container-lowest rounded-t-2xl md:rounded-2xl w-full max-w-xl p-xl max-h-[80vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-md">
+        <h2 id="case-modal-title" class="font-headline text-headline-md text-on-surface"></h2>
+        <button onclick="document.getElementById('case-modal').classList.add('hidden')"
+          class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-container" aria-label="Close">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div id="case-modal-body" class="space-y-md"></div>
+      <div class="flex gap-sm mt-lg">
+        <button class="flex-1 bg-primary text-on-primary font-label text-label-lg h-touch-target rounded-full shadow-sm"
+          onclick="markReviewed()" data-i18n="btn_mark_reviewed">Mark as Reviewed</button>
+        <button
+          class="flex-1 bg-surface-container-low text-on-surface font-label text-label-lg h-touch-target rounded-full"
+          onclick="document.getElementById('case-modal').classList.add('hidden')" data-i18n="close">Close</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div id="toast"
+    class="hidden fixed bottom-6 left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface px-lg py-sm rounded-full font-label text-label-lg shadow-lg z-[200] flex items-center gap-xs whitespace-nowrap">
+    <span class="material-symbols-outlined icon-fill text-green-400" style="font-size:18px;">check_circle</span>
+    <span id="toast-msg"></span>
+  </div>
+
+  <script src="translations.js"></script>
+  <script src="shared.js"></script>
+  <script>
+    SAHAY.renderGlobalLanguageDropdown('header-lang-container');
+
+    let activeFilter = 'all';
+    let currentCaseId = '';
+
+    let cases = [];
+
+    async function loadCases() {
+      cases = await SAHAY.getDashboardCasesAsync();
+      renderCases();
+      updateStats();
+    }
+
+    function updateStats() {
+      const active = cases.length;
+      const alerts = cases.reduce((acc, c) => acc + c.alertCount, 0);
+      const needsReview = cases.filter(c => c.reviewNeeded).length;
+      const stable = cases.filter(c => c.status === 'stable').length;
+
+      let statsContainer = document.querySelectorAll('.stat-card .text-headline-lg');
+      if (statsContainer.length >= 4) {
+        statsContainer[0].textContent = active;
+        statsContainer[1].textContent = alerts;
+        statsContainer[2].textContent = needsReview;
+        statsContainer[3].textContent = stable;
+      }
+    }
+
+    function createSparkline(trend, status) {
+      const max = 100;
+      const w = 120, h = 24;
+      const step = w / (trend.length - 1);
+      const points = trend.map((v, i) => `${i * step},${h - (v / max) * h}`);
+      const areaPoints = [...points, `${w},${h}`, `0,${h}`];
+      const color = status === 'elevated' ? '#f97316' : status === 'increasing' ? '#eab308' : '#22c55e';
+      return `<svg width="${w}" height="${h}" viewBox="0 0 ${w} ${h}" class="sparkline">
+        <path d="M${areaPoints.join(' L')}" fill="${color}" fill-opacity="0.15"/>
+        <polyline points="${points.join(' ')}" fill="none" stroke="${color}" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <circle cx="${(trend.length - 1) * step}" cy="${h - (trend[trend.length - 1] / max) * h}" r="3" fill="${color}"/>
+      </svg>`;
+    }
+
+    function renderCases() {
+      const search = document.getElementById('search-input').value.toLowerCase();
+      const filtered = cases.filter(c => {
+        const matchFilter = activeFilter === 'all' || c.status === activeFilter;
+        const searchTarget = c.name + (c.official_case_id || '');
+        const matchSearch = !search || searchTarget.toLowerCase().includes(search);
+        return matchFilter && matchSearch;
+      });
+
+      const container = document.getElementById('case-list');
+      const empty = document.getElementById('empty-state');
+      document.getElementById('case-count').textContent = `${filtered.length} case${filtered.length !== 1 ? 's' : ''}`;
+
+      if (filtered.length === 0) {
+        container.innerHTML = '';
+        empty.classList.remove('hidden');
+        return;
+      }
+      empty.classList.add('hidden');
+
+      container.innerHTML = filtered.map(c => `
+        <div class="case-row border-b border-outline-variant px-md py-sm" onclick="reviewCase('${c.id}')">
+          <div class="md:hidden flex items-center justify-between">
+            <div class="flex items-center gap-sm">
+              <div class="w-2 h-2 rounded-full status-dot-${c.status} flex-shrink-0"></div>
+              <div>
+                <p class="font-label text-label-lg text-on-surface">${c.name}</p>
+                <p class="font-label text-label-sm text-on-surface-variant font-mono">${c.official_case_id || c.id}</p>
+              </div>
+            </div>
+            <div class="flex items-center gap-sm">
+              <span class="font-label text-label-sm px-sm py-0.5 rounded-full badge-${c.status}">${SAHAY.t(c.status)}</span>
+              ${c.reviewNeeded ? '<span class="material-symbols-outlined icon-fill text-orange-500" style="font-size:18px;">flag</span>' : ''}
+              ${c.alertCount > 0 ? '<span class="material-symbols-outlined icon-fill text-error" style="font-size:18px;">warning</span>' : ''}
+            </div>
+          </div>
+          <div class="md:hidden flex items-center justify-between mt-xs">
+            <div class="flex items-center gap-sm">
+              <p class="font-label text-label-sm text-on-surface-variant">${c.lastCheckin}</p>
+              <p class="font-label text-label-sm text-on-surface-variant">Score: ${c.trend[c.trend.length - 1]}</p>
+            </div>
+            ${createSparkline(c.trend, c.status)}
+          </div>
+
+          <div class="hidden md:grid grid-cols-12 gap-sm items-center">
+            <div class="col-span-3 flex items-center gap-sm">
+              <div class="w-2 h-2 rounded-full status-dot-${c.status} flex-shrink-0"></div>
+              <div>
+                <p class="font-label text-label-lg text-on-surface">${c.name}</p>
+                <p class="font-label text-label-sm text-on-surface-variant font-mono">${c.official_case_id || c.id}</p>
+              </div>
+            </div>
+            <div class="col-span-2 flex items-center gap-xs">
+              <span class="font-label text-label-sm px-sm py-0.5 rounded-full badge-${c.status}">${SAHAY.t(c.status)}</span>
+              ${c.alertCount > 0 ? '<span class="material-symbols-outlined icon-fill text-error" style="font-size:16px;">warning</span>' : ''}
+            </div>
+            <div class="col-span-2">
+              <p class="font-label text-label-sm text-on-surface">${c.lastCheckin}</p>
+              <p class="font-label text-label-sm text-on-surface-variant">Score: ${c.trend[c.trend.length - 1]}</p>
+            </div>
+            <div class="col-span-3">${createSparkline(c.trend, c.status)}</div>
+            <div class="col-span-2 flex justify-end gap-xs">
+              ${c.reviewNeeded ? `<span class="font-label text-label-sm text-orange-600 bg-orange-50 px-sm py-0.5 rounded-full flex items-center gap-1"><span class="material-symbols-outlined icon-fill" style="font-size:14px;">flag</span>${SAHAY.t('action_review')}</span>` : `<span class="font-label text-label-sm text-green-600 bg-green-50 px-sm py-0.5 rounded-full">${SAHAY.t('action_reviewed')}</span>`}
+            </div>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function setFilter(btn) {
+      document.querySelectorAll('.filter-chip').forEach(c => {
+        c.classList.remove('active');
+        c.classList.add('text-on-surface-variant');
+      });
+      btn.classList.add('active');
+      btn.classList.remove('text-on-surface-variant');
+      activeFilter = btn.dataset.filter;
+      renderCases();
+    }
+
+    function filterCases() {
+      renderCases();
+    }
+
+    function reviewCase(caseId) {
+      currentCaseId = caseId;
+      const c = cases.find(x => x.id === caseId);
+      if (!c) return;
+
+      document.getElementById('case-modal-title').textContent = `${c.name} — ${c.official_case_id || c.id}`;
+      document.getElementById('case-modal-body').innerHTML = `
+        <div class="flex items-center gap-sm mb-sm">
+          <span class="font-label text-label-sm px-sm py-0.5 rounded-full badge-${c.status}">${SAHAY.t(c.status)}</span>
+          <span class="font-label text-label-sm text-on-surface-variant">${SAHAY.t('col_last_checkin')}: ${c.lastCheckin}</span>
+        </div>
+
+        <div class="bg-surface-container-low rounded-xl p-md">
+          <p class="font-label text-label-lg text-on-surface mb-sm">${SAHAY.t('signal_trend_title')}</p>
+          <div class="flex items-end gap-sm h-20">
+            ${c.trend.map((v, i) => `
+              <div class="flex-1 flex flex-col items-center gap-1">
+                <span class="font-label text-label-sm text-on-surface-variant">${v}</span>
+                <div class="w-full rounded-t" style="height:${v * 0.8}px; background:${v >= 60 ? '#f97316' : v >= 40 ? '#eab308' : '#22c55e'};"></div>
+                <span class="font-label" style="font-size:10px;">W${i + 1}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+
+        <div>
+          <p class="font-label text-label-lg text-on-surface mb-xs">${SAHAY.t('signals_detected_label')}</p>
+          <ul class="space-y-xs">
+            ${c.signals.map(s => `<li class="flex items-center gap-xs font-body text-body-md text-on-surface-variant"><span class="material-symbols-outlined text-primary" style="font-size:16px;">arrow_right</span>${s}</li>`).join('')}
+          </ul>
+        </div>
+
+        ${c.alertCount > 0 ? `
+        <div class="bg-error-container border border-error rounded-xl p-md flex items-start gap-sm">
+          <span class="material-symbols-outlined icon-fill text-error" style="font-size:20px;">warning</span>
+          <div>
+            <p class="font-label text-label-lg text-on-error-container">${SAHAY.t('signal_safety_title')}</p>
+            <p class="font-body text-body-md text-on-error-container opacity-80">${SAHAY.t('signal_safety_desc')}</p>
+          </div>
+        </div>` : ''}
+
+        <div class="bg-surface-container-low rounded-xl p-md">
+          <p class="font-label text-label-sm text-on-surface-variant">${SAHAY.t('assigned_support')}: Smt. Ananya Krishnan</p>
+          <p class="font-label text-label-sm text-on-surface-variant">${SAHAY.t('authorized_access_only')}</p>
+        </div>
+      `;
+      document.getElementById('case-modal').classList.remove('hidden');
+    }
+
+    function markReviewed() {
+      let cases = SAHAY.getDashboardCases();
+      const idx = cases.findIndex(x => x.id === currentCaseId);
+      if (idx !== -1) {
+        cases[idx].reviewNeeded = false;
+        cases[idx].alertCount = 0;
+        localStorage.setItem('sahay_dashboard_cases', JSON.stringify(cases));
+
+        document.getElementById('case-modal').classList.add('hidden');
+        showToast(`Case reviewed`);
+        loadCases();
+      }
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-msg').textContent = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 3000);
+    }
+
+    document.getElementById('case-modal').addEventListener('click', function (e) {
+      if (e.target === this) this.classList.add('hidden');
+    });
+
+    loadCases();
+    window.addEventListener('sahay-language-changed', renderCases);
+  </script>
+</body>
+
+</html>
