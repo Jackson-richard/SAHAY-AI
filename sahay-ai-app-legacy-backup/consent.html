@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SAHAY-AI – Consent to wellbeing monitoring. Your choice. Your control." />
+  <title>Consent – SAHAY-AI</title>
+  <script src="assets/tailwind.min.js"></script>
+  <link href="assets/google-fonts.css" rel="stylesheet" />
+  <link href="assets/material-symbols.css" rel="stylesheet" />
+  <script id="tw-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { "primary": "#006b5f", "on-primary": "#ffffff", "primary-container": "#14b8a6", "on-primary-container": "#00423b", "primary-fixed": "#71f8e4", "secondary": "#515f74", "on-secondary": "#ffffff", "error": "#ba1a1a", "on-error": "#ffffff", "background": "#f8f9fa", "on-background": "#191c1d", "surface": "#f8f9fa", "on-surface": "#191c1d", "surface-variant": "#e1e3e4", "on-surface-variant": "#3c4947", "surface-container-lowest": "#ffffff", "surface-container-low": "#f3f4f5", "surface-container": "#edeeef", "surface-container-high": "#e7e8e9", "outline": "#6c7a77", "outline-variant": "#bbcac6", "surface-tint": "#006b5f" },
+          borderRadius: { "DEFAULT": "0.5rem", "sm": "0.25rem", "md": "0.75rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+          spacing: { "base": "4px", "xs": "8px", "sm": "12px", "md": "16px", "lg": "24px", "xl": "32px", "touch-target": "48px", "container-margin": "16px" },
+          fontFamily: { "display": ["Public Sans", "sans-serif"], "headline": ["Public Sans", "sans-serif"], "body": ["Inter", "sans-serif"], "label": ["Inter", "sans-serif"] },
+          fontSize: { "display-lg": ["32px", { lineHeight: "40px", fontWeight: "700", letterSpacing: "-0.02em" }], "headline-lg": ["24px", { lineHeight: "32px", fontWeight: "600" }], "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }], "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }], "label-lg": ["14px", { lineHeight: "20px", fontWeight: "600", letterSpacing: "0.01em" }], "label-sm": ["12px", { lineHeight: "16px", fontWeight: "500" }] }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .icon-fill {
+      font-variation-settings: 'FILL' 1;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .btn-primary {
+      transition: opacity 0.15s, transform 0.1s;
+    }
+
+    .btn-primary:active:not(:disabled) {
+      transform: scale(0.97);
+    }
+
+    .info-card {
+      transition: background-color 0.15s;
+    }
+  </style>
+</head>
+
+<body class="bg-background text-on-background min-h-screen flex flex-col antialiased">
+  <header
+    class="fixed top-0 w-full bg-surface flex items-center justify-between px-md h-touch-target z-50 border-b border-outline-variant">
+    <div class="w-10"></div>
+    <span class="font-headline text-headline-lg font-bold text-primary tracking-tight"
+      data-i18n="brand_name">SAHAY-AI</span>
+    <div id="header-lang-container" class="flex items-center"></div>
+  </header>
+
+  <main class="flex-grow pt-[64px] pb-xl px-container-margin md:px-lg max-w-2xl mx-auto w-full flex flex-col">
+    <div class="mt-lg md:mt-xl flex flex-col gap-sm">
+      <h1 class="font-display text-display-lg text-on-surface whitespace-pre-line" data-i18n="consent_title">Your
+        choice.<br />Your control.</h1>
+      <p class="font-body text-body-lg text-on-surface-variant max-w-prose" data-i18n="consent_subtitle">
+        SAHAY-AI monitors your wellbeing throughout your case journey. Your information is protected and accessed only
+        by authorized personnel.
+        Wellbeing check-ins are voluntary, and AI does not provide medical or legal diagnosis.
+      </p>
+    </div>
+
+    <!-- Info Cards -->
+    <div class="mt-lg flex flex-col gap-sm">
+      <!-- Consent-based -->
+      <div
+        class="info-card bg-surface-container-lowest rounded-xl p-md shadow-sm border border-surface-container-low flex items-start gap-md">
+        <div class="bg-surface-container-low rounded-full p-xs flex-shrink-0 text-primary mt-0.5">
+          <span class="material-symbols-outlined">front_hand</span>
+        </div>
+        <div>
+          <h2 class="font-label text-label-lg text-on-surface" data-i18n="consent_card1_title">CONSENT-BASED</h2>
+          <p class="font-body text-body-md text-on-surface-variant mt-base" data-i18n="consent_card1_desc">You choose
+            whether to participate. You can withdraw at any time.</p>
+        </div>
+      </div>
+      <!-- Private -->
+      <div
+        class="info-card bg-surface-container-lowest rounded-xl p-md shadow-sm border border-surface-container-low flex items-start gap-md">
+        <div class="bg-surface-container-low rounded-full p-xs flex-shrink-0 text-primary mt-0.5">
+          <span class="material-symbols-outlined">lock</span>
+        </div>
+        <div>
+          <h2 class="font-label text-label-lg text-on-surface" data-i18n="consent_card2_title">PRIVATE</h2>
+          <p class="font-body text-body-md text-on-surface-variant mt-base" data-i18n="consent_card2_desc">Your
+            information is protected. We do not share without authorization.</p>
+        </div>
+      </div>
+      <!-- Human Support -->
+      <div
+        class="info-card bg-surface-container-lowest rounded-xl p-md shadow-sm border border-surface-container-low flex items-start gap-md">
+        <div class="bg-surface-container-low rounded-full p-xs flex-shrink-0 text-primary mt-0.5">
+          <span class="material-symbols-outlined">psychology</span>
+        </div>
+        <div>
+          <h2 class="font-label text-label-lg text-on-surface" data-i18n="consent_card3_title">AI ASSISTS, HUMANS DECIDE
+          </h2>
+          <p class="font-body text-body-md text-on-surface-variant mt-base" data-i18n="consent_card3_desc">AI signals
+            are reviewed by authorized human support personnel — humans make intervention decisions.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Specific Consents -->
+    <div class="mt-lg pt-sm flex flex-col gap-sm">
+      <h3 class="font-headline text-headline-md text-on-surface mb-xs" data-i18n="consent_options_title">Your
+        Preferences</h3>
+
+      <!-- General Consent (Required) -->
+      <label
+        class="flex items-start gap-sm cursor-pointer group p-sm bg-surface-container-lowest rounded-lg border border-outline-variant hover:bg-surface-container-low transition-colors"
+        for="consent-general">
+        <input
+          class="w-5 h-5 mt-0.5 rounded border-outline text-primary focus:ring-primary focus:ring-2 focus:ring-offset-2 bg-surface-container-lowest cursor-pointer flex-shrink-0"
+          id="consent-general" type="checkbox" />
+        <div class="flex-grow">
+          <span class="font-label text-label-lg text-on-surface select-none block">Required: Wellbeing Monitoring</span>
+          <span class="font-body text-body-sm text-on-surface-variant block mt-xs">I consent to periodic wellbeing
+            check-ins and analysis of my signals.</span>
+        </div>
+      </label>
+
+      <!-- Voice Consent (Optional) -->
+      <label
+        class="flex items-start gap-sm cursor-pointer group p-sm bg-surface-container-lowest rounded-lg border border-outline-variant hover:bg-surface-container-low transition-colors"
+        for="consent-voice">
+        <input
+          class="w-5 h-5 mt-0.5 rounded border-outline text-primary focus:ring-primary focus:ring-2 focus:ring-offset-2 bg-surface-container-lowest cursor-pointer flex-shrink-0"
+          id="consent-voice" type="checkbox" />
+        <div class="flex-grow">
+          <span class="font-label text-label-lg text-on-surface select-none block">Optional: Voice Check-ins</span>
+          <span class="font-body text-body-sm text-on-surface-variant block mt-xs">I consent to use my microphone for
+            voice check-ins and adaptive voice outreach.</span>
+        </div>
+      </label>
+
+      <!-- Trusted Contact (Optional) -->
+      <label
+        class="flex items-start gap-sm cursor-pointer group p-sm bg-surface-container-lowest rounded-lg border border-outline-variant hover:bg-surface-container-low transition-colors"
+        for="consent-trusted">
+        <input
+          class="w-5 h-5 mt-0.5 rounded border-outline text-primary focus:ring-primary focus:ring-2 focus:ring-offset-2 bg-surface-container-lowest cursor-pointer flex-shrink-0"
+          id="consent-trusted" type="checkbox" />
+        <div class="flex-grow">
+          <span class="font-label text-label-lg text-on-surface select-none block">Optional: Trusted Contact
+            Notifications</span>
+          <span class="font-body text-body-sm text-on-surface-variant block mt-xs">I consent to SAHAY sending generic
+            wellbeing support notifications to a trusted person if needed. Note: Disabled by default for
+            community-linked threats.</span>
+        </div>
+      </label>
+    </div>
+
+    <!-- Action Area -->
+    <div class="mt-auto pt-xl pb-md flex flex-col gap-lg">
+      <div class="flex flex-col gap-sm">
+        <button id="btn-consent"
+          class="btn-primary bg-primary text-on-primary font-label text-label-lg h-touch-target rounded-full w-full flex items-center justify-center shadow-sm opacity-40 cursor-not-allowed"
+          disabled aria-disabled="true" data-i18n="consent_btn_agree">
+          Give Consent &amp; Continue
+        </button>
+      </div>
+      <p class="text-center font-label text-label-sm text-on-surface-variant opacity-70" data-i18n="consent_footer">
+        You can change your consent preferences at any time in Profile &gt; Settings.
+      </p>
+    </div>
+  </main>
+
+  <script src="translations.js"></script>
+  <script src="env.js"></script>
+  <script src="shared.js"></script>
+  <script>
+    SAHAY.renderGlobalLanguageDropdown('header-lang-container');
+
+    // Redirect if registered but already consented
+    if (SAHAY.state.isRegistered && SAHAY.state.isConsented) {
+      window.location.href = 'home.html';
+    } else if (!SAHAY.state.isRegistered) {
+      window.location.href = 'language.html';
+    }
+
+    const checkGeneral = document.getElementById('consent-general');
+    const checkVoice = document.getElementById('consent-voice');
+    const checkTrusted = document.getElementById('consent-trusted');
+    const btnConsent = document.getElementById('btn-consent');
+
+    checkGeneral.addEventListener('change', () => {
+      if (checkGeneral.checked) {
+        btnConsent.disabled = false;
+        btnConsent.setAttribute('aria-disabled', 'false');
+        btnConsent.classList.remove('opacity-40', 'cursor-not-allowed');
+      } else {
+        btnConsent.disabled = true;
+        btnConsent.setAttribute('aria-disabled', 'true');
+        btnConsent.classList.add('opacity-40', 'cursor-not-allowed');
+      }
+    });
+
+    btnConsent.addEventListener('click', () => {
+      SAHAY.setConsent({
+        general_consent: checkGeneral.checked,
+        voice_consent: checkVoice.checked,
+        trusted_contact_consent: checkTrusted.checked
+      });
+      window.location.href = 'home.html';
+    });
+  </script>
+</body>
+
+</html>

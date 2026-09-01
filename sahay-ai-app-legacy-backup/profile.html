@@ -1,0 +1,500 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SAHAY-AI Profile – Manage your preferences, language, and privacy settings." />
+  <title>Profile – SAHAY-AI</title>
+  <script src="assets/tailwind.min.js"></script>
+
+
+  <link href="assets/google-fonts.css" rel="stylesheet" />
+  <link href="assets/material-symbols.css" rel="stylesheet" />
+  <script id="tw-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { "primary": "#006b5f", "on-primary": "#ffffff", "primary-container": "#14b8a6", "on-primary-container": "#00423b", "primary-fixed": "#71f8e4", "primary-fixed-dim": "#4fdbc8", "secondary": "#515f74", "on-secondary": "#ffffff", "secondary-container": "#d5e3fc", "on-secondary-container": "#57657a", "error": "#ba1a1a", "on-error": "#ffffff", "error-container": "#ffdad6", "on-error-container": "#93000a", "background": "#f8f9fa", "on-background": "#191c1d", "surface": "#f8f9fa", "on-surface": "#191c1d", "surface-variant": "#e1e3e4", "on-surface-variant": "#3c4947", "surface-container-lowest": "#ffffff", "surface-container-low": "#f3f4f5", "surface-container": "#edeeef", "surface-container-high": "#e7e8e9", "surface-container-highest": "#e1e3e4", "outline": "#6c7a77", "outline-variant": "#bbcac6", "surface-tint": "#006b5f", "inverse-surface": "#2e3132", "inverse-on-surface": "#f0f1f2" },
+          borderRadius: { "DEFAULT": "0.5rem", "sm": "0.25rem", "md": "0.75rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+          spacing: { "base": "4px", "xs": "8px", "sm": "12px", "md": "16px", "lg": "24px", "xl": "32px", "touch-target": "48px", "container-margin": "16px" },
+          fontFamily: { "display": ["Public Sans", "sans-serif"], "headline": ["Public Sans", "sans-serif"], "body": ["Inter", "sans-serif"], "label": ["Inter", "sans-serif"] },
+          fontSize: { "display-lg": ["32px", { lineHeight: "40px", fontWeight: "700", letterSpacing: "-0.02em" }], "headline-lg": ["24px", { lineHeight: "32px", fontWeight: "600" }], "headline-md": ["20px", { lineHeight: "28px", fontWeight: "600" }], "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }], "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }], "label-lg": ["14px", { lineHeight: "20px", fontWeight: "600", letterSpacing: "0.01em" }], "label-sm": ["12px", { lineHeight: "16px", fontWeight: "500" }] }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .icon-fill {
+      font-variation-settings: 'FILL' 1;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    .nav-item {
+      transition: background-color 0.15s, transform 0.1s;
+    }
+
+    .nav-item:active {
+      transform: scale(0.92);
+    }
+
+    .menu-row {
+      transition: background-color 0.15s;
+    }
+
+    .menu-row:hover {
+      background-color: #f3f4f5;
+    }
+
+    .menu-row:active {
+      background-color: #edeeef;
+    }
+
+    .toggle-track {
+      width: 48px;
+      height: 28px;
+      border-radius: 9999px;
+      transition: background 0.2s;
+      cursor: pointer;
+      position: relative;
+    }
+
+    .toggle-track.on {
+      background: #14b8a6;
+    }
+
+    .toggle-track.off {
+      background: #bbcac6;
+    }
+
+    .toggle-knob {
+      width: 22px;
+      height: 22px;
+      border-radius: 50%;
+      background: #ffffff;
+      position: absolute;
+      top: 3px;
+      transition: left 0.2s;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
+    }
+
+    .toggle-track.on .toggle-knob {
+      left: 23px;
+    }
+
+    .toggle-track.off .toggle-knob {
+      left: 3px;
+    }
+  </style>
+</head>
+
+<body class="bg-background text-on-background min-h-screen flex flex-col pb-[100px]">
+
+  <!-- Top App Bar with Language Selector -->
+  <header
+    class="fixed top-0 w-full bg-surface z-50 flex items-center justify-between px-md border-b border-outline-variant"
+    style="height:56px;">
+    <button
+      class="w-touch-target h-touch-target flex items-center justify-center text-primary hover:bg-surface-container-low rounded-full transition-colors"
+      onclick="window.location.href='home.html'" aria-label="Back">
+      <span class="material-symbols-outlined">arrow_back</span>
+    </button>
+    <span class="font-headline text-headline-lg font-bold text-primary" data-i18n="profile_title">Profile</span>
+    <div id="header-lang-container" class="flex items-center"></div>
+  </header>
+
+  <main class="flex-grow pt-[72px] px-container-margin md:max-w-2xl md:mx-auto w-full space-y-lg">
+
+    <!-- User Card -->
+    <section
+      class="bg-surface-container-lowest rounded-xl p-lg shadow-sm border border-outline-variant flex items-center gap-lg">
+      <div
+        class="w-16 h-16 rounded-full bg-primary-container text-on-primary-container flex items-center justify-center flex-shrink-0 shadow-md">
+        <span class="material-symbols-outlined icon-fill" style="font-size:32px;">person</span>
+      </div>
+      <div class="flex-grow" id="profile-user-card">
+        <!-- Dynamic user info rendered by js -->
+      </div>
+    </section>
+
+    <!-- Preferences -->
+    <section class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant overflow-hidden">
+      <div class="px-md py-sm border-b border-outline-variant">
+        <h2 class="font-headline text-headline-md text-on-surface" data-i18n="preferences_title">Preferences</h2>
+      </div>
+
+      <!-- Language Selector Row -->
+      <div class="menu-row w-full px-md py-sm flex items-center justify-between border-b border-outline-variant">
+        <div class="flex items-center gap-sm">
+          <span class="material-symbols-outlined text-primary" style="font-size:22px;">language</span>
+          <div class="text-left">
+            <p class="font-label text-label-lg text-on-surface" data-i18n="pref_language">Language</p>
+            <p id="lang-display" class="font-body text-body-md text-on-surface-variant current-lang-display">English</p>
+          </div>
+        </div>
+        <select id="profile-lang-dropdown"
+          class="global-lang-select bg-surface-container-low text-on-surface font-label text-label-sm rounded-full px-3 py-1.5 border border-outline-variant focus:outline-none focus:ring-1 focus:ring-primary cursor-pointer"
+          onchange="SAHAY.setLanguage(this.value)">
+          <option value="en">English</option>
+          <option value="ta">தமிழ் (Tamil)</option>
+          <option value="hi">हिन्दी (Hindi)</option>
+          <option value="te">తెలుగు (Telugu)</option>
+          <option value="kn">ಕನ್ನಡ (Kannada)</option>
+          <option value="ml">മലയാളം (Malayalam)</option>
+        </select>
+      </div>
+
+      <!-- Notifications -->
+      <div class="menu-row w-full px-md py-sm flex items-center justify-between border-b border-outline-variant">
+        <div class="flex items-center gap-sm">
+          <span class="material-symbols-outlined text-primary" style="font-size:22px;">notifications</span>
+          <div>
+            <p class="font-label text-label-lg text-on-surface" data-i18n="pref_reminders">Check-in Reminders</p>
+            <p class="font-body text-body-md text-on-surface-variant" data-i18n="pref_reminders_desc">Receive reminders
+              for check-ins</p>
+          </div>
+        </div>
+        <div id="toggle-notif" class="toggle-track on" onclick="toggleSwitch('toggle-notif')" role="switch"
+          aria-checked="true" aria-label="Toggle notifications" tabindex="0">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+
+      <!-- Voice Input -->
+      <div class="menu-row w-full px-md py-sm flex items-center justify-between">
+        <div class="flex items-center gap-sm">
+          <span class="material-symbols-outlined text-primary" style="font-size:22px;">mic</span>
+          <div>
+            <p class="font-label text-label-lg text-on-surface" data-i18n="pref_voice">Voice Input</p>
+            <p class="font-body text-body-md text-on-surface-variant" data-i18n="pref_voice_desc">Enable voice for
+              check-ins</p>
+          </div>
+        </div>
+        <div id="toggle-voice" class="toggle-track off" onclick="toggleSwitch('toggle-voice')" role="switch"
+          aria-checked="false" aria-label="Toggle voice input" tabindex="0">
+          <div class="toggle-knob"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Support Info -->
+    <section class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant overflow-hidden">
+      <div class="px-md py-sm border-b border-outline-variant">
+        <h2 class="font-headline text-headline-md text-on-surface" data-i18n="support_team_title">Your Support Team</h2>
+      </div>
+      <div class="px-md py-sm flex items-center gap-sm border-b border-outline-variant">
+        <div
+          class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center flex-shrink-0">
+          <span class="material-symbols-outlined" style="font-size:20px;">person</span>
+        </div>
+        <div>
+          <p class="font-label text-label-lg text-on-surface">Smt. Ananya Krishnan</p>
+          <p class="font-body text-body-md text-on-surface-variant" data-i18n="assigned_officer">Assigned Support
+            Officer</p>
+        </div>
+      </div>
+      <div class="px-md py-sm flex items-center gap-sm">
+        <div
+          class="w-10 h-10 rounded-full bg-secondary-container text-on-secondary-container flex items-center justify-center flex-shrink-0">
+          <span class="material-symbols-outlined" style="font-size:20px;">phone</span>
+        </div>
+        <div>
+          <p class="font-label text-label-lg text-on-surface">+91 98765 XXXXX</p>
+          <p class="font-body text-body-md text-on-surface-variant" data-i18n="registered_contact">Registered contact
+            number</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- About & Legal -->
+    <section class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant overflow-hidden">
+      <div class="px-md py-sm border-b border-outline-variant">
+        <h2 class="font-headline text-headline-md text-on-surface" data-i18n="about_section_title">About</h2>
+      </div>
+
+      <button
+        class="menu-row w-full px-md py-sm flex items-center justify-between border-b border-outline-variant text-left"
+        onclick="showAbout('privacy')">
+        <div class="flex items-center gap-sm">
+          <span class="material-symbols-outlined text-primary" style="font-size:22px;">shield</span>
+          <p class="font-label text-label-lg text-on-surface" data-i18n="privacy_policy">Privacy Policy</p>
+        </div>
+        <span class="material-symbols-outlined text-on-surface-variant" style="font-size:20px;">chevron_right</span>
+      </button>
+
+      <button
+        class="menu-row w-full px-md py-sm flex items-center justify-between border-b border-outline-variant text-left"
+        onclick="showAbout('consent')">
+        <div class="flex items-center gap-sm">
+          <span class="material-symbols-outlined text-primary" style="font-size:22px;">front_hand</span>
+          <p class="font-label text-label-lg text-on-surface" data-i18n="manage_consent">Manage Consent</p>
+        </div>
+        <span class="material-symbols-outlined text-on-surface-variant" style="font-size:20px;">chevron_right</span>
+      </button>
+
+      <button class="menu-row w-full px-md py-sm flex items-center justify-between text-left"
+        onclick="showAbout('about')">
+        <div class="flex items-center gap-sm">
+          <span class="material-symbols-outlined text-primary" style="font-size:22px;">info</span>
+          <p class="font-label text-label-lg text-on-surface" data-i18n="about_sahay">About SAHAY-AI</p>
+        </div>
+        <span class="material-symbols-outlined text-on-surface-variant" style="font-size:20px;">chevron_right</span>
+      </button>
+
+      <button id="btn-reset-demo"
+        class="menu-row w-full px-md py-sm flex items-center justify-between text-left text-orange-600 hidden"
+        onclick="confirmResetDemo()">
+        <div class="flex items-center gap-sm">
+          <span class="material-symbols-outlined" style="font-size:22px;">restart_alt</span>
+          <p class="font-label text-label-lg font-bold">Reset Demo Data</p>
+        </div>
+      </button>
+    </section>
+
+    <!-- Support Dashboard -->
+    <section class="bg-surface-container-lowest rounded-xl shadow-sm border border-outline-variant overflow-hidden">
+      <button class="menu-row w-full px-md py-sm flex items-center justify-between text-left"
+        onclick="window.location.href='dashboard.html'">
+        <div class="flex items-center gap-sm">
+          <span class="material-symbols-outlined text-primary" style="font-size:22px;">dashboard</span>
+          <div>
+            <p class="font-label text-label-lg text-on-surface" data-i18n="support_dashboard_menu">Support Team
+              Dashboard</p>
+            <p class="font-body text-body-md text-on-surface-variant" data-i18n="support_dashboard_sub">For authorized
+              support personnel</p>
+          </div>
+        </div>
+        <span class="material-symbols-outlined text-on-surface-variant" style="font-size:20px;">chevron_right</span>
+      </button>
+    </section>
+
+    <!-- Logout -->
+    <button
+      class="w-full bg-surface-container-lowest text-error border border-error rounded-xl py-sm font-label text-label-lg flex items-center justify-center gap-xs shadow-sm hover:bg-error-container transition-colors active:scale-97"
+      onclick="handleLogout()">
+      <span class="material-symbols-outlined" style="font-size:20px;">logout</span>
+      <span data-i18n="sign_out">Sign Out</span>
+    </button>
+
+    <p class="text-center font-label text-label-sm text-on-surface-variant opacity-50 py-md">SAHAY-AI v1.0 · Build
+      2024.08.30</p>
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav
+    class="fixed bottom-0 left-0 w-full bg-surface-container-lowest shadow-lg border-t border-outline-variant z-50 flex justify-around items-center px-container-margin py-xs"
+    style="height:72px;">
+    <button class="nav-item flex flex-col items-center justify-center rounded-xl px-3 py-1 text-on-surface-variant"
+      onclick="window.location.href='home.html'" aria-label="Home">
+      <span class="material-symbols-outlined" style="font-size:22px;">home</span>
+      <span class="font-label text-label-sm mt-0.5" data-i18n="nav_home">Home</span>
+    </button>
+    <button class="nav-item flex flex-col items-center justify-center rounded-xl px-3 py-1 text-on-surface-variant"
+      onclick="window.location.href='chat.html'" aria-label="Chat">
+      <span class="material-symbols-outlined" style="font-size:22px;">chat_bubble</span>
+      <span class="font-label text-label-sm mt-0.5" data-i18n="nav_chat">Chat</span>
+    </button>
+    <button class="nav-item flex flex-col items-center justify-center rounded-xl px-3 py-1 text-on-surface-variant"
+      onclick="window.location.href='journey.html'" aria-label="Journey">
+      <span class="material-symbols-outlined" style="font-size:22px;">auto_graph</span>
+      <span class="font-label text-label-sm mt-0.5" data-i18n="nav_journey">Journey</span>
+    </button>
+    <button class="nav-item flex flex-col items-center justify-center rounded-xl px-3 py-1 text-on-surface-variant"
+      onclick="window.location.href='support.html'" aria-label="Support">
+      <span class="material-symbols-outlined" style="font-size:22px;">contact_support</span>
+      <span class="font-label text-label-sm mt-0.5" data-i18n="nav_support">Support</span>
+    </button>
+    <button
+      class="nav-item flex flex-col items-center justify-center rounded-xl px-3 py-1 bg-primary-container text-on-primary-container"
+      aria-label="Profile" aria-current="page">
+      <span class="material-symbols-outlined icon-fill" style="font-size:22px;">person</span>
+      <span class="font-label text-label-sm mt-0.5" data-i18n="nav_profile">Profile</span>
+    </button>
+  </nav>
+
+  <!-- About Modal -->
+  <div id="about-modal" class="hidden fixed inset-0 bg-black/40 z-[100] flex items-end justify-center" role="dialog"
+    aria-modal="true">
+    <div class="bg-surface-container-lowest rounded-t-2xl w-full max-w-lg p-xl max-h-[70vh] overflow-y-auto">
+      <div class="flex justify-between items-center mb-md">
+        <h2 id="about-title" class="font-headline text-headline-md text-on-surface"></h2>
+        <button onclick="document.getElementById('about-modal').classList.add('hidden')"
+          class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-container" aria-label="Close">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div id="about-body" class="font-body text-body-md text-on-surface-variant space-y-md"></div>
+      <button
+        class="mt-lg w-full bg-surface-container-low text-on-surface font-label text-label-lg h-touch-target rounded-full"
+        onclick="document.getElementById('about-modal').classList.add('hidden')" data-i18n="close">Close</button>
+    </div>
+  </div>
+
+  <!-- Logout confirm -->
+  <div id="logout-dialog" class="hidden fixed inset-0 bg-black/40 z-[100] flex items-center justify-center p-md"
+    role="dialog" aria-modal="true">
+    <div class="bg-surface-container-lowest rounded-2xl p-xl w-full max-w-sm shadow-xl">
+      <h2 class="font-headline text-headline-md text-on-surface mb-sm" data-i18n="sign_out_confirm_title">Sign Out?</h2>
+      <p class="font-body text-body-md text-on-surface-variant mb-lg" data-i18n="sign_out_confirm_desc">You will need to
+        sign in again to access your check-in history and support features.</p>
+      <div class="flex flex-col gap-sm">
+        <button class="w-full bg-error text-on-error font-label text-label-lg h-touch-target rounded-full"
+          onclick="window.location.href='index.html'" data-i18n="sign_out">Sign Out</button>
+        <button
+          class="w-full bg-surface-container-low text-on-surface font-label text-label-lg h-touch-target rounded-full"
+          onclick="document.getElementById('logout-dialog').classList.add('hidden')" data-i18n="cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="translations.js"></script>
+  <script src="env.js"></script>
+  <script src="shared.js"></script>
+  <script>
+    SAHAY.renderGlobalLanguageDropdown('header-lang-container');
+
+    function syncProfileLang() {
+      const currentLang = SAHAY.state.language || 'en';
+      document.getElementById('profile-lang-dropdown').value = currentLang;
+      document.getElementById('lang-display').textContent = SAHAY.languageNames[currentLang] || 'English';
+    }
+
+    function loadProfile() {
+      const p = SAHAY.getProfile();
+      const c = SAHAY.getCase();
+      if (p && c) {
+        document.getElementById('profile-user-card').innerHTML = `
+          <h1 class="font-headline text-headline-md text-on-surface">${p.full_name}</h1>
+          <p class="font-body text-body-md text-on-surface-variant mt-base"><span data-i18n="case_id">Case ID</span>: <span class="font-mono">${c.official_case_id}</span></p>
+          <p class="font-label text-label-sm text-on-surface-variant mt-base text-primary">Registered: ${c.registration_date}</p>
+        `;
+        if (p.is_demo) {
+          document.getElementById('btn-reset-demo').classList.remove('hidden');
+        }
+      }
+
+      const consent = SAHAY.getConsent();
+      if (consent) {
+        setupToggle('toggle-voice', consent.voice_consent);
+        setupToggle('toggle-notif', consent.trusted_contact_consent);
+      }
+    }
+
+    function setupToggle(id, isOn) {
+      const el = document.getElementById(id);
+      if (isOn) {
+        el.classList.add('on');
+        el.classList.remove('off');
+        el.setAttribute('aria-checked', 'true');
+      } else {
+        el.classList.remove('on');
+        el.classList.add('off');
+        el.setAttribute('aria-checked', 'false');
+      }
+    }
+
+    syncProfileLang();
+    loadProfile();
+    window.addEventListener('sahay-language-changed', syncProfileLang);
+
+    function toggleSwitch(id) {
+      const el = document.getElementById(id);
+      if (el.classList.contains('on')) {
+        el.classList.remove('on');
+        el.classList.add('off');
+        el.setAttribute('aria-checked', 'false');
+      } else {
+        el.classList.remove('off');
+        el.classList.add('on');
+        el.setAttribute('aria-checked', 'true');
+      }
+    }
+
+    const aboutContent = {
+      privacy: {
+        title: 'Privacy Policy',
+        body: `
+          <p><strong>Data Protection Commitment</strong></p>
+          <p>SAHAY-AI is built on principles of data minimization, purpose limitation, and informed consent. Your data is:</p>
+          <ul class="list-disc pl-lg space-y-xs">
+            <li>Encrypted at rest and in transit</li>
+            <li>Accessible only to authorized support personnel assigned to your case</li>
+            <li>Never shared with third parties without explicit consent</li>
+            <li>Never used for commercial purposes</li>
+            <li>Stored in compliance with applicable data protection regulations</li>
+          </ul>
+          <p class="mt-md"><strong>Your Rights</strong></p>
+          <ul class="list-disc pl-lg space-y-xs">
+            <li>Right to access your data</li>
+            <li>Right to withdraw consent at any time</li>
+            <li>Right to request deletion of your data</li>
+            <li>Right to data portability</li>
+          </ul>
+        `
+      },
+      consent: {
+        title: 'Manage Consent',
+        body: `
+          <p>You gave consent to wellbeing monitoring. You can withdraw your consent at any time.</p>
+          <div class="mt-md p-md bg-surface-container-low rounded-xl border border-outline-variant">
+            <div class="flex items-center justify-between">
+              <p class="font-label text-label-lg text-on-surface">Wellbeing Monitoring</p>
+              <span class="font-label text-label-sm text-green-700 bg-green-100 px-sm py-0.5 rounded-full">Active</span>
+            </div>
+            <p class="font-body text-body-md text-on-surface-variant mt-xs">Consented on: Mar 15, 2024</p>
+          </div>
+          <p class="mt-md text-on-surface-variant">To withdraw consent, please contact your assigned support officer.</p>
+        `
+      },
+      about: {
+        title: 'About SAHAY-AI',
+        body: `
+          <p><strong>SAHAY-AI</strong> is a continuous wellbeing monitoring system designed to support victims throughout their case journey.</p>
+          <p class="mt-sm"><strong>From Reactive to Proactive:</strong> SAHAY-AI helps authorized human support teams identify increasing distress patterns earlier, enabling timely intervention.</p>
+          <p class="mt-sm"><strong>Key principles:</strong></p>
+          <ul class="list-disc pl-lg space-y-xs">
+            <li>AI notices. Humans support. You stay in control.</li>
+            <li>AI does not replace human support or make medical judgments</li>
+            <li>All AI signals require human review before action</li>
+            <li>Consent-based, privacy-first architecture</li>
+          </ul>
+          <p class="mt-md font-label text-label-sm text-on-surface-variant">Version 1.0 · Built with care for public infrastructure</p>
+        `
+      }
+    };
+
+    function showAbout(type) {
+      const c = aboutContent[type];
+      document.getElementById('about-title').textContent = SAHAY.t(type === 'privacy' ? 'privacy_policy' : (type === 'consent' ? 'manage_consent' : 'about_sahay'));
+      document.getElementById('about-body').innerHTML = c.body;
+      document.getElementById('about-modal').classList.remove('hidden');
+    }
+
+    function handleLogout() {
+      document.getElementById('logout-dialog').classList.remove('hidden');
+    }
+
+    function confirmResetDemo() {
+      if (confirm("This will erase all demo configurations and return to the registration screen. Continue?")) {
+        SAHAY.resetAll();
+        window.location.href = 'index.html';
+      }
+    }
+
+    ['about-modal', 'logout-dialog'].forEach(id => {
+      document.getElementById(id).addEventListener('click', function (e) {
+        if (e.target === this) this.classList.add('hidden');
+      });
+    });
+  </script>
+</body>
+
+</html>

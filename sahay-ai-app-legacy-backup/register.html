@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="SAHAY-AI – Connect your existing case for wellbeing monitoring." />
+    <title>Connect Your Case – SAHAY-AI</title>
+    <script src="assets/tailwind.min.js"></script>
+    <link href="assets/google-fonts.css" rel="stylesheet" />
+    <link href="assets/material-symbols.css" rel="stylesheet" />
+    <script id="tw-config">
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: { "primary": "#006b5f", "on-primary": "#ffffff", "primary-container": "#14b8a6", "on-primary-container": "#00423b", "primary-fixed": "#71f8e4", "secondary": "#515f74", "on-secondary": "#ffffff", "error": "#ba1a1a", "on-error": "#ffffff", "error-container": "#ffdad6", "background": "#f8f9fa", "on-background": "#191c1d", "surface": "#f8f9fa", "on-surface": "#191c1d", "surface-variant": "#e1e3e4", "on-surface-variant": "#3c4947", "surface-container-lowest": "#ffffff", "surface-container-low": "#f3f4f5", "surface-container": "#edeeef", "surface-container-high": "#e7e8e9", "outline": "#6c7a77", "outline-variant": "#bbcac6", "surface-tint": "#006b5f", "inverse-surface": "#2e3132", "inverse-on-surface": "#f0f1f2" },
+                    borderRadius: { "DEFAULT": "0.5rem", "sm": "0.25rem", "md": "0.75rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+                    spacing: { "base": "4px", "xs": "8px", "sm": "12px", "md": "16px", "lg": "24px", "xl": "32px", "touch-target": "48px", "container-margin": "16px" },
+                    fontFamily: { "display": ["Public Sans", "sans-serif"], "headline": ["Public Sans", "sans-serif"], "body": ["Inter", "sans-serif"], "label": ["Inter", "sans-serif"] },
+                    fontSize: { "display-lg": ["32px", { lineHeight: "40px", fontWeight: "700", letterSpacing: "-0.02em" }], "headline-lg": ["24px", { lineHeight: "32px", fontWeight: "600" }], "headline-md": ["20px", { lineHeight: "28px", fontWeight: "600" }], "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }], "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }], "label-lg": ["14px", { lineHeight: "20px", fontWeight: "600", letterSpacing: "0.01em" }], "label-sm": ["12px", { lineHeight: "16px", fontWeight: "500" }] }
+                }
+            }
+        }
+    </script>
+    <style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+
+        .icon-fill {
+            font-variation-settings: 'FILL' 1;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+        }
+
+        .field-input {
+            transition: border-color 0.15s;
+        }
+
+        .field-input:focus {
+            border-color: #006b5f;
+            box-shadow: 0 0 0 2px rgba(0, 107, 95, 0.15);
+        }
+
+        .btn-primary {
+            transition: opacity 0.15s, transform 0.1s;
+        }
+
+        .btn-primary:active:not(:disabled) {
+            transform: scale(0.97);
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(16px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .fade-up {
+            animation: fadeUp 0.5s ease forwards;
+        }
+
+        .fade-up-1 {
+            animation-delay: 0.1s;
+            opacity: 0;
+        }
+
+        .fade-up-2 {
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+
+        .fade-up-3 {
+            animation-delay: 0.3s;
+            opacity: 0;
+        }
+
+        .demo-badge {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 2px dashed #d97706;
+            color: #92400e;
+        }
+    </style>
+</head>
+
+<body class="bg-background text-on-background min-h-screen flex flex-col antialiased">
+
+    <!-- Top App Bar -->
+    <header
+        class="fixed top-0 w-full bg-surface flex items-center justify-between px-md h-touch-target z-50 border-b border-outline-variant">
+        <button
+            class="w-touch-target h-touch-target flex items-center justify-center text-primary hover:bg-surface-container-low rounded-full transition-colors"
+            onclick="window.location.href='language.html'" aria-label="Back">
+            <span class="material-symbols-outlined">arrow_back</span>
+        </button>
+        <span class="font-headline text-headline-lg font-bold text-primary tracking-tight"
+            data-i18n="brand_name">SAHAY-AI</span>
+        <div id="header-lang-container" class="flex items-center"></div>
+    </header>
+
+    <!-- Step 1: Registration Form -->
+    <main id="step-register"
+        class="flex-grow pt-[64px] pb-xl px-container-margin md:px-lg max-w-lg mx-auto w-full flex flex-col">
+        <div class="mt-lg flex flex-col gap-xs fade-up">
+            <div
+                class="inline-flex items-center justify-center w-14 h-14 rounded-full bg-primary-container text-on-primary-container mb-sm">
+                <span class="material-symbols-outlined icon-fill" style="font-size:28px;">link</span>
+            </div>
+            <h1 class="font-display text-display-lg text-on-surface" data-i18n="register_title">Connect Your Existing
+                Case</h1>
+            <p class="font-body text-body-lg text-on-surface-variant" data-i18n="register_subtitle">
+                Enter your official case details to begin wellbeing monitoring with SAHAY-AI.
+            </p>
+        </div>
+
+        <!-- Demo Data Notice -->
+        <div id="demo-notice" class="demo-badge rounded-xl p-md mt-lg flex items-start gap-sm fade-up fade-up-1">
+            <span class="material-symbols-outlined icon-fill" style="font-size:20px; color: #d97706;">science</span>
+            <div>
+                <p class="font-label text-label-lg font-bold">DEMO MODE AVAILABLE</p>
+                <p class="font-body text-body-md mt-base">For hackathon demonstration, use a demo case identifier like
+                    <strong>CNR/CASE-2026-0001</strong></p>
+            </div>
+        </div>
+
+        <!-- Form -->
+        <form id="register-form" class="mt-lg flex flex-col gap-md fade-up fade-up-2" onsubmit="return false;">
+
+            <!-- Official Case ID -->
+            <div>
+                <label class="font-label text-label-lg text-on-surface block mb-xs" for="case-id"
+                    data-i18n="field_case_id">Official Case ID / Case Number</label>
+                <input id="case-id" type="text"
+                    class="field-input w-full px-md py-sm border border-outline-variant rounded-xl font-body text-body-md text-on-surface bg-surface-container-lowest focus:outline-none"
+                    placeholder="e.g. CNR/CASE-2026-0001" data-i18n-placeholder="placeholder_case_id" required />
+                <p class="font-label text-label-sm text-on-surface-variant mt-base opacity-70"
+                    data-i18n="field_case_id_help">
+                    Enter the Case ID / Case Number assigned by the court or legal system.
+                </p>
+            </div>
+
+            <!-- Full Name -->
+            <div>
+                <label class="font-label text-label-lg text-on-surface block mb-xs" for="full-name"
+                    data-i18n="field_full_name">Full Name</label>
+                <input id="full-name" type="text"
+                    class="field-input w-full px-md py-sm border border-outline-variant rounded-xl font-body text-body-md text-on-surface bg-surface-container-lowest focus:outline-none"
+                    placeholder="Enter your full name" data-i18n-placeholder="placeholder_full_name" required />
+            </div>
+
+            <!-- Mobile Number -->
+            <div>
+                <label class="font-label text-label-lg text-on-surface block mb-xs" for="mobile"
+                    data-i18n="field_mobile">Mobile Number</label>
+                <input id="mobile" type="tel"
+                    class="field-input w-full px-md py-sm border border-outline-variant rounded-xl font-body text-body-md text-on-surface bg-surface-container-lowest focus:outline-none"
+                    placeholder="+91 XXXXX XXXXX" data-i18n-placeholder="placeholder_mobile" required />
+            </div>
+
+            <!-- Age -->
+            <div>
+                <label class="font-label text-label-lg text-on-surface block mb-xs" for="age"
+                    data-i18n="field_age">Age</label>
+                <input id="age" type="number" min="13" max="120"
+                    class="field-input w-full px-md py-sm border border-outline-variant rounded-xl font-body text-body-md text-on-surface bg-surface-container-lowest focus:outline-none"
+                    placeholder="Enter your age" data-i18n-placeholder="placeholder_age" required />
+            </div>
+
+            <!-- Preferred Language -->
+            <div>
+                <label class="font-label text-label-lg text-on-surface block mb-xs" for="pref-lang"
+                    data-i18n="field_language">Preferred Language</label>
+                <select id="pref-lang"
+                    class="field-input w-full px-md py-sm border border-outline-variant rounded-xl font-body text-body-md text-on-surface bg-surface-container-lowest focus:outline-none cursor-pointer">
+                    <option value="en">English</option>
+                    <option value="ta">Tamil</option>
+                    <option value="hi">Hindi</option>
+                    <option value="ml">Malayalam</option>
+                    <option value="te">Telugu</option>
+                </select>
+            </div>
+
+            <!-- Error message -->
+            <div id="form-error"
+                class="hidden bg-error-container text-on-error-container rounded-xl p-md flex items-center gap-sm">
+                <span class="material-symbols-outlined icon-fill text-error" style="font-size:18px;">error</span>
+                <span id="error-text" class="font-body text-body-md"></span>
+            </div>
+
+            <!-- Submit -->
+            <button id="btn-register" type="submit"
+                class="btn-primary bg-primary text-on-primary font-label text-label-lg h-touch-target rounded-full w-full flex items-center justify-center gap-xs shadow-sm mt-sm"
+                onclick="handleRegister()">
+                <span class="material-symbols-outlined" style="font-size:18px;">check_circle</span>
+                <span data-i18n="btn_connect_case">Connect Case</span>
+            </button>
+
+            <!-- Quick Demo Buttons -->
+            <div class="border-t border-outline-variant pt-md mt-sm">
+                <p class="font-label text-label-sm text-on-surface-variant text-center mb-sm">Quick Demo Setup</p>
+                <div class="grid grid-cols-1 gap-xs">
+                    <button type="button"
+                        class="bg-surface-container-low text-on-surface border border-outline-variant rounded-xl py-xs px-md font-label text-label-sm flex items-center gap-sm hover:bg-surface-container transition-colors"
+                        onclick="loadQuickDemo('stable')">
+                        <span class="w-2 h-2 rounded-full bg-green-500 flex-shrink-0"></span>
+                        Scenario 1: Stable
+                    </button>
+                    <button type="button"
+                        class="bg-surface-container-low text-on-surface border border-outline-variant rounded-xl py-xs px-md font-label text-label-sm flex items-center gap-sm hover:bg-surface-container transition-colors"
+                        onclick="loadQuickDemo('increasing')">
+                        <span class="w-2 h-2 rounded-full bg-yellow-500 flex-shrink-0"></span>
+                        Scenario 2: Increasing Concern
+                    </button>
+                    <button type="button"
+                        class="bg-surface-container-low text-on-surface border border-outline-variant rounded-xl py-xs px-md font-label text-label-sm flex items-center gap-sm hover:bg-surface-container transition-colors"
+                        onclick="loadQuickDemo('critical')">
+                        <span class="w-2 h-2 rounded-full bg-orange-500 flex-shrink-0"></span>
+                        Scenario 3: Concern Requiring Review
+                    </button>
+                </div>
+            </div>
+        </form>
+    </main>
+
+    <!-- Step 2: Case Connected Confirmation -->
+    <main id="step-connected"
+        class="hidden flex-grow pt-[64px] pb-xl px-container-margin md:px-lg max-w-lg mx-auto w-full flex flex-col items-center justify-center">
+        <div class="text-center">
+            <div
+                class="inline-flex items-center justify-center w-24 h-24 rounded-full bg-primary-container text-on-primary-container mb-lg shadow-lg fade-up">
+                <span class="material-symbols-outlined icon-fill"
+                    style="font-size:48px; color:#00423b;">check_circle</span>
+            </div>
+            <h1 class="font-display text-display-lg text-on-surface mb-sm fade-up fade-up-1"
+                data-i18n="case_connected_title">Case Connected</h1>
+
+            <!-- Demo badge (shown only for demo data) -->
+            <div id="connected-demo-badge"
+                class="hidden demo-badge rounded-full px-md py-xs font-label text-label-sm inline-flex items-center gap-xs mb-md fade-up fade-up-1">
+                <span class="material-symbols-outlined" style="font-size:14px;">science</span>
+                DEMO CASE
+            </div>
+
+            <div
+                class="bg-surface-container-lowest rounded-xl p-lg shadow-sm border border-outline-variant text-left mt-md fade-up fade-up-2">
+                <div class="flex items-center gap-sm mb-sm">
+                    <span class="material-symbols-outlined text-primary" style="font-size:20px;">gavel</span>
+                    <span class="font-label text-label-sm text-on-surface-variant"
+                        data-i18n="official_case_id_label">Official Case ID</span>
+                </div>
+                <p id="connected-case-id" class="font-headline text-headline-md text-on-surface font-mono"></p>
+            </div>
+
+            <p class="font-body text-body-lg text-on-surface-variant mt-lg max-w-sm mx-auto fade-up fade-up-3"
+                data-i18n="case_connected_desc">
+                SAHAY-AI will use this case connection to monitor wellbeing throughout your case journey.
+            </p>
+
+            <button
+                class="btn-primary bg-primary text-on-primary font-label text-label-lg h-touch-target rounded-full w-full max-w-sm flex items-center justify-center gap-xs shadow-sm mt-xl fade-up fade-up-3"
+                onclick="proceedToConsent()">
+                <span data-i18n="continue">Continue</span>
+                <span class="material-symbols-outlined" style="font-size:18px;">arrow_forward</span>
+            </button>
+        </div>
+    </main>
+
+    <script src="translations.js"></script>
+    <script src="env.js"></script>
+  <script src="shared.js"></script>
+    <script>
+        SAHAY.renderGlobalLanguageDropdown('header-lang-container');
+
+        // Pre-fill language from current selection
+        document.getElementById('pref-lang').value = SAHAY.state.language;
+
+        // If already registered, go to consent or home
+        if (SAHAY.state.isRegistered) {
+            if (SAHAY.state.isConsented) {
+                window.location.href = 'home.html';
+            } else {
+                window.location.href = 'consent.html';
+            }
+        }
+
+        function showError(msg) {
+            document.getElementById('form-error').classList.remove('hidden');
+            document.getElementById('error-text').textContent = msg;
+        }
+
+        function hideError() {
+            document.getElementById('form-error').classList.add('hidden');
+        }
+
+        function handleRegister() {
+            hideError();
+
+            const caseId = document.getElementById('case-id').value.trim();
+            const fullName = document.getElementById('full-name').value.trim();
+            const mobile = document.getElementById('mobile').value.trim();
+            const age = parseInt(document.getElementById('age').value);
+            const preferredLanguage = document.getElementById('pref-lang').value;
+
+            // Validation
+            if (!caseId) { showError('Please enter your Official Case ID.'); return; }
+            if (!fullName || fullName.length < 2) { showError('Please enter your full name.'); return; }
+            if (!mobile || mobile.length < 5) { showError('Please enter a valid mobile number.'); return; }
+            if (!age || age < 13 || age > 120) { showError('Please enter a valid age.'); return; }
+
+            // Determine if demo data
+            const isDemo = caseId.startsWith('CNR/CASE-') || caseId.includes('DEMO');
+
+            // Create profile
+            const profile = {
+                full_name: fullName,
+                mobile_number: mobile,
+                age: age,
+                preferred_language: preferredLanguage,
+                official_case_id: caseId,
+                is_demo: isDemo,
+            };
+
+            SAHAY.setProfile(profile);
+            SAHAY.initCase(caseId);
+            SAHAY.setLanguage(preferredLanguage);
+
+            if (isDemo) {
+                localStorage.setItem('sahay_demo_mode', 'true');
+                SAHAY.state.isDemoMode = true;
+            }
+
+            // Show connected confirmation
+            showConnectedStep(caseId, isDemo);
+        }
+
+        function showConnectedStep(caseId, isDemo) {
+            document.getElementById('step-register').classList.add('hidden');
+            document.getElementById('step-connected').classList.remove('hidden');
+            document.getElementById('connected-case-id').textContent = caseId;
+
+            if (isDemo) {
+                document.getElementById('connected-demo-badge').classList.remove('hidden');
+            }
+        }
+
+        function proceedToConsent() {
+            window.location.href = 'consent.html';
+        }
+
+        function loadQuickDemo(scenarioKey) {
+            if (SAHAY.loadDemoScenario(scenarioKey)) {
+                const scenario = SAHAY.DEMO_SCENARIOS[scenarioKey];
+                window.location.href = 'home.html';
+            }
+        }
+    </script>
+</body>
+
+</html>

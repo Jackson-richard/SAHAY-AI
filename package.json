@@ -4,6 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
@@ -16,9 +19,14 @@
     "@supabase/supabase-js": "^2.112.4",
     "body-parser": "^2.3.0",
     "cors": "^2.8.6",
-    "express": "^5.2.1"
+    "express": "^5.2.1",
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8",
+    "react-router-dom": "^7.18.3"
   },
   "devDependencies": {
-    "sharp": "^0.35.4"
+    "@vitejs/plugin-react": "^6.1.1",
+    "sharp": "^0.35.4",
+    "vite": "^8.2.2"
   }
 }

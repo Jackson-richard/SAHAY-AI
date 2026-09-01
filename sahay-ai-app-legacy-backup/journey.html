@@ -1,0 +1,522 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description" content="SAHAY-AI Journey – Track your wellbeing trend and case lifecycle progress." />
+  <title>My Journey – SAHAY-AI</title>
+  <script src="assets/tailwind.min.js"></script>
+
+
+  <link
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Public+Sans:wght@600;700&display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200"
+    rel="stylesheet" />
+  <script id="tw-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { "primary": "#006b5f", "on-primary": "#ffffff", "primary-container": "#14b8a6", "on-primary-container": "#00423b", "primary-fixed": "#71f8e4", "primary-fixed-dim": "#4fdbc8", "secondary": "#515f74", "on-secondary": "#ffffff", "secondary-container": "#d5e3fc", "on-secondary-container": "#57657a", "error": "#ba1a1a", "on-error": "#ffffff", "error-container": "#ffdad6", "on-error-container": "#93000a", "background": "#f8f9fa", "on-background": "#191c1d", "surface": "#f8f9fa", "on-surface": "#191c1d", "surface-variant": "#e1e3e4", "on-surface-variant": "#3c4947", "surface-container-lowest": "#ffffff", "surface-container-low": "#f3f4f5", "surface-container": "#edeeef", "surface-container-high": "#e7e8e9", "surface-container-highest": "#e1e3e4", "outline": "#6c7a77", "outline-variant": "#bbcac6", "surface-tint": "#006b5f", "inverse-surface": "#2e3132", "inverse-on-surface": "#f0f1f2" },
+          borderRadius: { "DEFAULT": "0.5rem", "sm": "0.25rem", "md": "0.75rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+          spacing: { "base": "4px", "xs": "8px", "sm": "12px", "md": "16px", "lg": "24px", "xl": "32px", "touch-target": "48px", "container-margin": "16px" },
+          fontFamily: { "display": ["Public Sans", "sans-serif"], "headline": ["Public Sans", "sans-serif"], "body": ["Inter", "sans-serif"], "label": ["Inter", "sans-serif"] },
+          fontSize: { "display-lg": ["32px", { lineHeight: "40px", fontWeight: "700", letterSpacing: "-0.02em" }], "headline-lg": ["24px", { lineHeight: "32px", fontWeight: "600" }], "headline-md": ["20px", { lineHeight: "28px", fontWeight: "600" }], "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }], "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }], "label-lg": ["14px", { lineHeight: "20px", fontWeight: "600", letterSpacing: "0.01em" }], "label-sm": ["12px", { lineHeight: "16px", fontWeight: "500" }] }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .icon-fill {
+      font-variation-settings: 'FILL' 1;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    @keyframes pulse-ring {
+      0% {
+        transform: scale(0.8);
+        opacity: 0.6;
+      }
+
+      100% {
+        transform: scale(2);
+        opacity: 0;
+      }
+    }
+
+    .timeline-active-dot::before {
+      content: '';
+      position: absolute;
+      inset: -4px;
+      border-radius: 50%;
+      background-color: #006b5f;
+      animation: pulse-ring 2s cubic-bezier(0.215, 0.61, 0.355, 1) infinite;
+      z-index: -1;
+    }
+
+    .period-tab {
+      transition: background 0.15s;
+      cursor: pointer;
+    }
+
+    .period-tab.active {
+      background: #ffffff;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12);
+      color: #191c1d;
+      font-weight: 600;
+    }
+
+    .nav-item {
+      transition: background-color 0.15s, transform 0.1s;
+    }
+
+    .nav-item:active {
+      transform: scale(0.92);
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .fade-s1 {
+      animation: fadeUp 0.4s 0.1s ease both;
+    }
+
+    .fade-s2 {
+      animation: fadeUp 0.4s 0.25s ease both;
+    }
+
+    .fade-s3 {
+      animation: fadeUp 0.4s 0.4s ease both;
+    }
+  </style>
+</head>
+
+<body class="bg-background text-on-background min-h-screen pb-[100px]">
+
+  <!-- Top App Bar with Language Selector -->
+  <header
+    class="fixed top-0 w-full bg-surface z-50 flex items-center justify-between px-md border-b border-outline-variant"
+    style="height:56px;">
+    <button
+      class="w-touch-target h-touch-target flex items-center justify-center text-primary hover:bg-surface-container-low rounded-full transition-colors"
+      onclick="window.location.href='home.html'" aria-label="Home">
+      <span class="material-symbols-outlined">arrow_back</span>
+    </button>
+    <span class="font-headline text-headline-lg font-bold text-primary" data-i18n="brand_name">SAHAY-AI</span>
+    <div class="flex items-center gap-xs">
+      <div id="header-lang-container"></div>
+      <button
+        class="w-touch-target h-touch-target flex items-center justify-center text-primary hover:bg-surface-container-low rounded-full transition-colors"
+        onclick="window.location.href='profile.html'" aria-label="Settings">
+        <span class="material-symbols-outlined">settings</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="pt-[72px] px-container-margin max-w-3xl mx-auto space-y-lg">
+
+    <!-- Header -->
+    <div class="mb-xl fade-s1 text-center md:text-left">
+      <h1 class="font-display text-display-lg text-on-surface" data-i18n="journey_title">My wellbeing journey</h1>
+      <p class="font-body text-body-md text-on-surface-variant mt-xs" data-i18n="journey_subtitle">Tracking your
+        progress and case status.</p>
+      <div id="journey-case-info"
+        class="inline-flex flex-col md:flex-row items-center gap-xs mt-sm font-label text-label-sm text-on-surface-variant bg-surface-container-low px-sm py-1 rounded-lg">
+        <!-- Rendered by JS -->
+      </div>
+    </div>
+
+    <!-- Wellbeing Concern Index Chart Card -->
+    <section class="fade-s1 bg-surface-container-lowest rounded-xl p-md shadow-sm border border-surface-variant">
+      <div class="flex justify-between items-center mb-md">
+        <div>
+          <h2 class="font-headline text-headline-md text-on-surface" data-i18n="chart_title">Wellbeing Concern Index
+          </h2>
+          <p class="font-label text-label-sm text-on-surface-variant mt-1" data-i18n="chart_subtitle">Higher =
+            increasing concern. Reviewed by support team.</p>
+        </div>
+        <span class="material-symbols-outlined text-on-surface-variant" style="font-size:22px;">monitoring</span>
+      </div>
+
+      <!-- Period Toggle -->
+      <div class="flex bg-surface-container-low rounded-full p-1 mb-lg w-fit gap-1">
+        <button class="period-tab active px-sm py-xs rounded-full font-label text-label-sm" data-i18n="tab_4w"
+          onclick="switchPeriod(this,'4w')">4 Weeks</button>
+        <button class="period-tab px-sm py-xs rounded-full font-label text-label-sm text-on-surface-variant"
+          data-i18n="tab_8w" onclick="switchPeriod(this,'8w')">8 Weeks</button>
+        <button class="period-tab px-sm py-xs rounded-full font-label text-label-sm text-on-surface-variant"
+          data-i18n="tab_3m" onclick="switchPeriod(this,'3m')">3 Months</button>
+      </div>
+
+      <!-- Chart -->
+      <div class="relative w-full mb-lg bg-surface-bright rounded-lg border border-surface-variant overflow-hidden"
+        style="height:220px;">
+        <!-- Y-axis labels -->
+        <div class="absolute top-0 left-0 h-full flex flex-col justify-between py-4 pr-2 pl-1 text-right">
+          <span class="font-label text-label-sm text-on-surface-variant" style="font-size:10px;">100</span>
+          <span class="font-label text-label-sm text-on-surface-variant" style="font-size:10px;">75</span>
+          <span class="font-label text-label-sm text-on-surface-variant" style="font-size:10px;">50</span>
+          <span class="font-label text-label-sm text-on-surface-variant" style="font-size:10px;">25</span>
+          <span class="font-label text-label-sm text-on-surface-variant" style="font-size:10px;">0</span>
+        </div>
+        <!-- Grid lines -->
+        <div class="absolute inset-0 flex flex-col justify-between py-4 pl-10 pr-4">
+          <div class="w-full border-t border-dashed border-surface-variant"></div>
+          <div class="w-full border-t border-dashed border-surface-variant"></div>
+          <div class="w-full border-t border-dashed border-surface-variant"></div>
+          <div class="w-full border-t border-dashed border-surface-variant"></div>
+          <div class="w-full border-t border-dashed border-surface-variant"></div>
+        </div>
+        <!-- SVG Chart -->
+        <!-- SVG Chart will be injected by JavaScript -->
+        <svg id="chart-svg" class="absolute inset-0 pl-10 pr-4" width="100%" height="100%" preserveAspectRatio="none"
+          viewBox="0 0 300 200">
+        </svg>
+
+        <!-- X-axis labels -->
+        <div id="chart-x-labels" class="absolute bottom-0 left-10 right-4 flex justify-between pb-2">
+        </div>
+        <!-- Threshold label -->
+        <div class="absolute right-4 font-label text-label-sm text-orange-500"
+          style="top:42%; font-size:9px; opacity:0.8;" data-i18n="concern_threshold">Concern threshold</div>
+      </div>
+
+      <!-- Legend -->
+      <div class="flex flex-wrap gap-xs justify-center">
+        <div class="flex items-center gap-base bg-surface-container py-1 px-3 rounded-full">
+          <div class="w-3 h-3 rounded-full bg-green-500"></div>
+          <span class="font-label text-label-sm text-on-surface" data-i18n="legend_stable">Stable (&lt;40)</span>
+        </div>
+        <div class="flex items-center gap-base bg-surface-container py-1 px-3 rounded-full">
+          <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
+          <span class="font-label text-label-sm text-on-surface" data-i18n="legend_increasing">Increasing (40–59)</span>
+        </div>
+        <div class="flex items-center gap-base bg-surface-container py-1 px-3 rounded-full">
+          <div class="w-3 h-3 rounded-full bg-orange-500"></div>
+          <span class="font-label text-label-sm text-on-surface" data-i18n="legend_elevated">Elevated (60+)</span>
+        </div>
+      </div>
+
+      <!-- Data summary -->
+      <div id="data-summary" class="grid grid-cols-3 gap-sm mt-lg border-t border-surface-variant pt-md">
+      </div>
+    </section>
+
+    <!-- Check-in History -->
+    <section class="fade-s2 bg-surface-container-lowest rounded-xl p-md shadow-sm border border-surface-variant">
+      <h2 class="font-headline text-headline-md text-on-surface mb-md" data-i18n="checkin_history_title">Check-in
+        History</h2>
+      <div id="history-list" class="space-y-sm">
+      </div>
+    </section>
+
+    <!-- Case Lifecycle Timeline Card -->
+    <section class="fade-s2 bg-surface-container-lowest rounded-xl p-md shadow-sm border border-surface-variant">
+      <div class="flex justify-between items-center mb-lg">
+        <h2 class="font-headline text-headline-md text-on-surface" data-i18n="case_lifecycle_title">Case Lifecycle</h2>
+        <span id="lifecycle-case-id"
+          class="font-label text-label-sm bg-surface-container-low text-on-surface-variant px-sm py-xs rounded-full"
+          data-i18n="case_id_label">Case Unknown</span>
+      </div>
+      <div class="relative pl-sm">
+        <div class="absolute top-4 bottom-4 bg-surface-variant" style="left:19px; width:2px;"></div>
+        <div class="space-y-lg relative z-10">
+
+          <!-- Registration -->
+          <div class="flex items-start gap-md">
+            <div
+              class="w-4 h-4 rounded-full bg-primary flex items-center justify-center shrink-0 mt-1 border-2 border-surface-container-lowest shadow-sm">
+              <span class="material-symbols-outlined text-on-primary"
+                style="font-size:10px; font-variation-settings:'FILL' 1,'wght' 700;">check</span>
+            </div>
+            <div>
+              <h3 class="font-label text-label-lg text-on-surface" data-i18n="stage_reg">Registration</h3>
+              <p class="font-body text-body-md text-on-surface-variant" data-i18n="stage_reg_sub">Completed · Mar 15,
+                2024</p>
+            </div>
+          </div>
+
+          <!-- Investigation -->
+          <div class="flex items-start gap-md">
+            <div
+              class="relative timeline-active-dot w-4 h-4 rounded-full bg-surface-container-lowest border-2 border-primary shrink-0 mt-1"
+              style="z-index:2;">
+              <div class="absolute inset-[2px] rounded-full bg-primary"></div>
+            </div>
+            <div>
+              <h3 class="font-label text-label-lg text-primary font-bold" data-i18n="stage_inv">Investigation</h3>
+              <p class="font-body text-body-md text-primary-fixed-dim" data-i18n="stage_inv_sub">Active · Since Mar 22,
+                2024</p>
+              <span
+                class="inline-block mt-xs font-label text-label-sm bg-primary-container text-on-primary-container px-sm py-0.5 rounded-full"
+                data-i18n="in_progress_badge">In progress</span>
+            </div>
+          </div>
+
+          <!-- Trial -->
+          <div class="flex items-start gap-md opacity-50">
+            <div class="w-4 h-4 rounded-full bg-surface-container-lowest border-2 border-outline-variant shrink-0 mt-1">
+            </div>
+            <div>
+              <h3 class="font-label text-label-lg text-on-surface" data-i18n="stage_trial">Trial</h3>
+              <p class="font-body text-body-md text-on-surface-variant" data-i18n="stage_trial_sub">Pending</p>
+            </div>
+          </div>
+
+          <!-- Compensation -->
+          <div class="flex items-start gap-md opacity-50">
+            <div class="w-4 h-4 rounded-full bg-surface-container-lowest border-2 border-outline-variant shrink-0 mt-1">
+            </div>
+            <div>
+              <h3 class="font-label text-label-lg text-on-surface" data-i18n="stage_comp">Compensation</h3>
+              <p class="font-body text-body-md text-on-surface-variant" data-i18n="stage_comp_sub">Pending</p>
+            </div>
+          </div>
+
+          <!-- Rehabilitation -->
+          <div class="flex items-start gap-md opacity-50">
+            <div class="w-4 h-4 rounded-full bg-surface-container-lowest border-2 border-outline-variant shrink-0 mt-1">
+            </div>
+            <div>
+              <h3 class="font-label text-label-lg text-on-surface" data-i18n="stage_rehab">Rehabilitation</h3>
+              <p class="font-body text-body-md text-on-surface-variant" data-i18n="stage_rehab_sub">Pending</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <div class="fade-s3 text-center py-xl border-t border-surface-variant opacity-60">
+      <p class="font-body text-body-md text-on-surface-variant flex items-center justify-center gap-xs">
+        <span class="material-symbols-outlined" style="font-size:18px;">psychology</span>
+        <span data-i18n="ai_notices_humans_support">AI notices patterns. Humans provide support.</span>
+      </p>
+    </div>
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav
+    class="fixed bottom-0 left-0 w-full bg-surface-container-lowest shadow-lg border-t border-outline-variant z-50 flex justify-around items-center px-container-margin py-xs"
+    style="height:72px;">
+    <button class="nav-item flex flex-col items-center justify-center rounded-xl px-3 py-1 text-on-surface-variant"
+      onclick="window.location.href='home.html'" aria-label="Home">
+      <span class="material-symbols-outlined" style="font-size:22px;">home</span>
+      <span class="font-label text-label-sm mt-0.5" data-i18n="nav_home">Home</span>
+    </button>
+    <button class="nav-item flex flex-col items-center justify-center rounded-xl px-3 py-1 text-on-surface-variant"
+      onclick="window.location.href='chat.html'" aria-label="Chat">
+      <span class="material-symbols-outlined" style="font-size:22px;">chat_bubble</span>
+      <span class="font-label text-label-sm mt-0.5" data-i18n="nav_chat">Chat</span>
+    </button>
+    <button
+      class="nav-item flex flex-col items-center justify-center rounded-xl px-3 py-1 bg-primary-container text-on-primary-container"
+      aria-label="Journey" aria-current="page">
+      <span class="material-symbols-outlined icon-fill" style="font-size:22px;">auto_graph</span>
+      <span class="font-label text-label-sm mt-0.5" data-i18n="nav_journey">Journey</span>
+    </button>
+    <button class="nav-item flex flex-col items-center justify-center rounded-xl px-3 py-1 text-on-surface-variant"
+      onclick="window.location.href='support.html'" aria-label="Support">
+      <span class="material-symbols-outlined" style="font-size:22px;">contact_support</span>
+      <span class="font-label text-label-sm mt-0.5" data-i18n="nav_support">Support</span>
+    </button>
+    <button class="nav-item flex flex-col items-center justify-center rounded-xl px-3 py-1 text-on-surface-variant"
+      onclick="window.location.href='profile.html'" aria-label="Profile">
+      <span class="material-symbols-outlined" style="font-size:22px;">person</span>
+      <span class="font-label text-label-sm mt-0.5" data-i18n="nav_profile">Profile</span>
+    </button>
+  </nav>
+
+  <!-- Check-in Detail Modal -->
+  <div id="detail-modal" class="hidden fixed inset-0 bg-black/40 z-[100] flex items-end justify-center" role="dialog"
+    aria-modal="true">
+    <div class="bg-surface-container-lowest rounded-t-2xl w-full max-w-lg p-xl">
+      <div class="flex justify-between items-center mb-md">
+        <h2 id="detail-title" class="font-headline text-headline-md text-on-surface" data-i18n="checkin_detail_title">
+          Check-in Details</h2>
+        <button onclick="document.getElementById('detail-modal').classList.add('hidden')"
+          class="w-8 h-8 flex items-center justify-center rounded-full hover:bg-surface-container" aria-label="Close">
+          <span class="material-symbols-outlined">close</span>
+        </button>
+      </div>
+      <div id="detail-body" class="font-body text-body-md text-on-surface-variant space-y-sm"></div>
+      <button
+        class="mt-lg w-full bg-surface-container-low text-on-surface font-label text-label-lg h-touch-target rounded-full"
+        onclick="document.getElementById('detail-modal').classList.add('hidden')" data-i18n="close">Close</button>
+    </div>
+  </div>
+
+  <script src="translations.js"></script>
+  <script src="env.js"></script>
+  <script src="shared.js"></script>
+  <script>
+    SAHAY.renderGlobalLanguageDropdown('header-lang-container');
+
+    let currentCheckins = [];
+
+    function renderDynamicJourney(checkins) {
+      currentCheckins = checkins;
+
+      // 1. Render Summary
+      const summary = document.getElementById('data-summary');
+      const latest = checkins[checkins.length - 1];
+      const oldest = checkins[Math.max(0, checkins.length - 4)];
+      const change = latest.score - oldest.score;
+      summary.innerHTML = `
+        <div class="text-center">
+          <p class="font-display text-headline-lg font-bold ${latest.status === 'elevated' ? 'text-orange-500' : latest.status === 'increasing' ? 'text-yellow-500' : 'text-green-500'}">${latest.score}</p>
+          <p class="font-label text-label-sm text-on-surface-variant" data-i18n="stat_current">Current</p>
+        </div>
+        <div class="text-center border-x border-surface-variant">
+          <p class="font-display text-headline-lg text-on-surface font-bold">${change > 0 ? '+' : ''}${change}</p>
+          <p class="font-label text-label-sm text-on-surface-variant" data-i18n="stat_change">Change</p>
+        </div>
+        <div class="text-center">
+          <p class="font-display text-headline-lg text-on-surface font-bold">${checkins.length}</p>
+          <p class="font-label text-label-sm text-on-surface-variant" data-i18n="stat_checkins">Check-ins</p>
+        </div>
+        `;
+
+      // 2. Render History
+      const hist = document.getElementById('history-list');
+      const reversed = [...checkins].reverse();
+      hist.innerHTML = reversed.map((c, i) => {
+        const index = checkins.length - i;
+        let bgColor = c.status === 'elevated' ? 'bg-orange-50 border-orange-200 text-orange-700' : c.status === 'increasing' ? 'bg-yellow-50 border-yellow-200 text-yellow-700' : 'bg-surface-container-lowest border-outline-variant text-green-700';
+        let circleColor = c.status === 'elevated' ? 'bg-orange-100' : c.status === 'increasing' ? 'bg-yellow-100' : 'bg-green-100';
+
+        return `
+            <div class="flex items-center justify-between p-md border rounded-xl ${bgColor}">
+              <div class="flex items-center gap-sm">
+                <div class="w-10 h-10 rounded-full flex items-center justify-center flex-shrink-0 ${circleColor}">
+                  <span class="font-label text-label-lg font-bold text-inherit">${c.score}</span>
+                </div>
+                <div>
+                  <p class="font-label text-label-lg text-on-surface">${c.week} – ${c.date}</p>
+                  <p class="font-body text-body-md text-inherit opacity-80">${c.status === 'elevated' ? 'Elevated concern' : c.status === 'increasing' ? 'Increasing' : 'Stable'} · ${c.signals.join(', ') || 'No concern'}</p>
+                </div>
+              </div>
+              <button class="font-label text-label-sm text-primary underline" onclick="showCheckinDetail(${index - 1})" data-i18n="details">Details</button>
+            </div>
+            `;
+      }).join('');
+
+      // 3. Render Chart
+      const w = 300;
+      const h = 200;
+      const pts = checkins.slice(-4); // last 4 max
+      const step = (w - 60) / Math.max(1, pts.length - 1);
+      const maxScore = 100;
+      const cy = s => h - (s / maxScore * h);
+
+      let pathLine = '';
+      let fillArea = '';
+      let circles = '';
+      let labels = '';
+
+      pts.forEach((pt, i) => {
+        const cx = 30 + i * step;
+        const y = cy(pt.score);
+        if (i === 0) {
+          pathLine += `M${cx},${y}`;
+          fillArea += `M${cx},${y}`;
+        } else {
+          pathLine += ` L${cx},${y}`;
+          fillArea += ` L${cx},${y}`;
+        }
+
+        let stroke = '#006b5f';
+        let fill = '#ffffff';
+        if (pt.status === 'elevated') {
+          stroke = '#f97316'; fill = '#f97316';
+        }
+        circles += `<circle cx="${cx}" cy="${y}" r="${i === pts.length - 1 ? 7 : 5}" fill="${i === pts.length - 1 ? stroke : fill}" stroke="${i === pts.length - 1 ? '#ffffff' : stroke}" stroke-width="${i === pts.length - 1 ? 2 : 2.5}"/>`;
+
+        let colorClass = i === pts.length - 1 ? 'text-orange-500 font-bold' : 'text-on-surface-variant';
+        labels += `<span class="font-label ${colorClass}" style="font-size:10px;">${pt.week} ${pt.date}</span>`;
+      });
+
+      if (pts.length > 0) {
+        fillArea += ` L${30 + (pts.length - 1) * step},${h} L30,${h} Z`;
+      }
+
+      const svgHTML = `
+          <path d="${fillArea}" fill="#14b8a6" fill-opacity="0.12"/>
+          <path d="${pathLine}" fill="none" stroke="#006b5f" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5"/>
+          ${circles}
+          <line x1="0" y1="80" x2="300" y2="80" stroke="#f97316" stroke-width="1" stroke-dasharray="4,4" opacity="0.5"/>
+        `;
+      document.getElementById('chart-svg').innerHTML = svgHTML;
+      document.getElementById('chart-x-labels').innerHTML = labels;
+
+      const caseData = SAHAY.getCase();
+      if (caseData) {
+        document.getElementById('journey-case-info').innerHTML = `
+            <span class="font-mono bg-surface-container px-1 py-0.5 rounded">${caseData.official_case_id}</span>
+            <span class="hidden md:inline">·</span>
+            <span>Registered: ${caseData.registration_date}</span>
+         `;
+        document.getElementById('lifecycle-case-id').textContent = caseData.official_case_id;
+      }
+    }
+
+    // Call using local state
+    const currentCheckinsList = SAHAY.getCheckins();
+    if (currentCheckinsList.length === 0) {
+      document.getElementById('data-summary').innerHTML = '<div class="col-span-3 text-center text-on-surface-variant">No check-ins recorded yet.</div>';
+    } else {
+      renderDynamicJourney(currentCheckinsList);
+    }
+
+    function showCheckinDetail(index) {
+      const d = currentCheckins[index];
+      if (!d) return;
+      const statusLabel = d.status;
+      document.getElementById('detail-title').textContent = d.week + ' · ' + d.date;
+      document.getElementById('detail-body').innerHTML = `
+        <div class="flex items-center gap-sm mb-sm">
+          <span class="font-headline text-headline-lg font-bold ${d.score >= 60 ? 'text-orange-500' : d.score >= 40 ? 'text-yellow-600' : 'text-green-600'}">${d.score}</span>
+          <span class="font-label text-label-lg ${d.score >= 60 ? 'text-orange-600' : d.score >= 40 ? 'text-yellow-700' : 'text-green-700'} capitalize">${statusLabel}</span>
+        </div>
+        <p class="font-label text-label-lg text-on-surface mb-sm">${SAHAY.t('signals_detected_label') || 'Signals detected'}</p>
+        <ul class="space-y-xs">
+          ${d.signals.length === 0 ? '<li>No specific concerns</li>' : d.signals.map(s => `<li class="flex items-center gap-xs"><span class="material-symbols-outlined text-primary" style="font-size:14px;">arrow_right</span>${s}</li>`).join('')}
+        </ul>
+        <p class="font-label text-label-sm text-on-surface-variant mt-md opacity-70">${SAHAY.t('not_medical_diagnosis')}</p>
+      `;
+      document.getElementById('detail-modal').classList.remove('hidden');
+    }
+
+    function switchPeriod(btn, period) {
+      document.querySelectorAll('.period-tab').forEach(t => {
+        t.classList.remove('active');
+        t.classList.add('text-on-surface-variant');
+        t.classList.remove('text-on-surface');
+      });
+      btn.classList.add('active', 'text-on-surface');
+      btn.classList.remove('text-on-surface-variant');
+    }
+  </script>
+</body>
+
+</html>

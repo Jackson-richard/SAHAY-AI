@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="SAHAY-AI – Continuous wellbeing monitoring for victims throughout their case journey. AI notices. Humans support." />
+  <title>SAHAY-AI – Wellbeing Monitoring</title>
+  <script src="assets/tailwind.min.js"></script>
+
+
+  <link href="assets/google-fonts.css" rel="stylesheet" />
+  <link href="assets/material-symbols.css" rel="stylesheet" />
+  <script id="tailwind-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            "primary": "#006b5f",
+            "on-primary": "#ffffff",
+            "primary-container": "#14b8a6",
+            "on-primary-container": "#00423b",
+            "primary-fixed": "#71f8e4",
+            "primary-fixed-dim": "#4fdbc8",
+            "secondary": "#515f74",
+            "on-secondary": "#ffffff",
+            "background": "#f8f9fa",
+            "on-background": "#191c1d",
+            "surface": "#f8f9fa",
+            "on-surface": "#191c1d",
+            "surface-variant": "#e1e3e4",
+            "on-surface-variant": "#3c4947",
+            "surface-container-lowest": "#ffffff",
+            "surface-container-low": "#f3f4f5",
+            "surface-container": "#edeeef",
+            "surface-container-high": "#e7e8e9",
+            "surface-container-highest": "#e1e3e4",
+            "outline": "#6c7a77",
+            "outline-variant": "#bbcac6",
+          },
+          borderRadius: {
+            "DEFAULT": "0.5rem",
+            "full": "9999px",
+          },
+          spacing: {
+            "base": "4px",
+            "xs": "8px",
+            "sm": "12px",
+            "md": "16px",
+            "lg": "24px",
+            "xl": "32px",
+            "touch-target": "48px",
+            "container-margin": "16px",
+          },
+          fontFamily: {
+            "display": ["Public Sans", "sans-serif"],
+            "headline": ["Public Sans", "sans-serif"],
+            "body": ["Inter", "sans-serif"],
+            "label": ["Inter", "sans-serif"],
+          },
+          fontSize: {
+            "display-lg": ["32px", { lineHeight: "40px", fontWeight: "700", letterSpacing: "-0.02em" }],
+            "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+            "label-sm": ["12px", { lineHeight: "16px", fontWeight: "500" }],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .icon-fill {
+      font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    @keyframes fadeInUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes progressBar {
+      0% {
+        width: 0%;
+        transform: translateX(-100%);
+      }
+
+      50% {
+        width: 100%;
+        transform: translateX(0);
+      }
+
+      100% {
+        width: 100%;
+        transform: translateX(100%);
+      }
+    }
+
+    @keyframes fadeOut {
+      from {
+        opacity: 1;
+      }
+
+      to {
+        opacity: 0;
+      }
+    }
+
+    .animate-fade-in-up {
+      animation: fadeInUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+    .animate-progress {
+      animation: progressBar 2s ease-in-out infinite;
+    }
+
+    .fade-out {
+      animation: fadeOut 0.5s ease forwards;
+    }
+  </style>
+</head>
+
+<body
+  class="bg-surface-container-lowest text-on-surface h-screen w-screen overflow-hidden flex flex-col justify-between items-center select-none">
+
+  <!-- Top spacer -->
+  <div class="h-xl w-full"></div>
+
+  <!-- Main content: Logo & Branding -->
+  <main class="flex flex-col items-center justify-center gap-lg px-container-margin w-full max-w-md animate-fade-in-up">
+    <!-- Logo circle -->
+    <div class="w-28 h-28 md:w-36 md:h-36 rounded-full bg-primary-container flex items-center justify-center shadow-lg">
+      <span class="material-symbols-outlined icon-fill text-on-primary-container"
+        style="font-size: 64px;">favorite</span>
+    </div>
+
+    <!-- Branding text -->
+    <div class="text-center space-y-xs">
+      <h1 class="font-display text-display-lg text-primary tracking-tight" data-i18n="brand_name">SAHAY-AI</h1>
+      <p class="font-body text-body-lg text-on-surface-variant" data-i18n="tagline">Your wellbeing matters.</p>
+    </div>
+
+    <!-- Progress bar -->
+    <div class="w-16 h-1 bg-surface-container-highest rounded-full overflow-hidden mt-xl">
+      <div class="h-full bg-primary rounded-full animate-progress"></div>
+    </div>
+  </main>
+
+  <!-- Footer tagline -->
+  <footer class="w-full pb-xl px-container-margin text-center">
+    <p class="font-label text-label-sm text-on-surface-variant max-w-sm mx-auto opacity-70" data-i18n="footer_tagline">
+      AI notices. Humans support. You stay in control.
+    </p>
+  </footer>
+
+  <script src="translations.js"></script>
+  <script src="env.js"></script>
+  <script src="shared.js"></script>
+  <script>
+    // After 2.5s, fade out and navigate to appropriate page
+    setTimeout(() => {
+      document.body.classList.add('fade-out');
+      setTimeout(() => {
+        if (SAHAY.state.isRegistered) {
+          if (SAHAY.state.isConsented) {
+            window.location.href = 'home.html';
+          } else {
+            window.location.href = 'consent.html';
+          }
+        } else {
+          window.location.href = 'language.html';
+        }
+      }, 500);
+    }, 2500);
+  </script>
+</body>
+
+</html>

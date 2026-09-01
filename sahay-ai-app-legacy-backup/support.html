@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="description"
+    content="SAHAY-AI Support – Counselling, safety, legal, welfare, rehabilitation, and trusted contact support." />
+  <title>Support – SAHAY-AI</title>
+  <script src="assets/tailwind.min.js"></script>
+
+
+  <link href="assets/google-fonts.css" rel="stylesheet" />
+  <link href="assets/material-symbols.css" rel="stylesheet" />
+  <script id="tw-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { "primary": "#006b5f", "on-primary": "#ffffff", "primary-container": "#14b8a6", "on-primary-container": "#00423b", "primary-fixed": "#71f8e4", "secondary": "#515f74", "on-secondary": "#ffffff", "secondary-container": "#d5e3fc", "on-secondary-container": "#57657a", "error": "#ba1a1a", "on-error": "#ffffff", "error-container": "#ffdad6", "on-error-container": "#93000a", "background": "#f8f9fa", "on-background": "#191c1d", "surface": "#f8f9fa", "on-surface": "#191c1d", "surface-variant": "#e1e3e4", "on-surface-variant": "#3c4947", "surface-container-lowest": "#ffffff", "surface-container-low": "#f3f4f5", "surface-container": "#edeeef", "surface-container-high": "#e7e8e9", "surface-container-highest": "#e1e3e4", "outline": "#6c7a77", "outline-variant": "#bbcac6", "surface-tint": "#006b5f", "inverse-surface": "#2e3132", "inverse-on-surface": "#f0f1f2" },
+          borderRadius: { "DEFAULT": "0.5rem", "sm": "0.25rem", "md": "0.75rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+          spacing: { "base": "4px", "xs": "8px", "sm": "12px", "md": "16px", "lg": "24px", "xl": "32px", "touch-target": "48px", "container-margin": "16px" },
+          fontFamily: { "display": ["Public Sans", "sans-serif"], "headline": ["Public Sans", "sans-serif"], "body": ["Inter", "sans-serif"], "label": ["Inter", "sans-serif"] },
+          fontSize: { "display-lg": ["32px", { lineHeight: "40px", fontWeight: "700", letterSpacing: "-0.02em" }], "headline-lg": ["24px", { lineHeight: "32px", fontWeight: "600" }], "headline-md": ["20px", { lineHeight: "28px", fontWeight: "600" }], "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }], "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }], "label-lg": ["14px", { lineHeight: "20px", fontWeight: "600", letterSpacing: "0.01em" }], "label-sm": ["12px", { lineHeight: "16px", fontWeight: "500" }] }
+        }
+      }
+    }
+  </script>
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .icon-fill {
+      font-variation-settings: 'FILL' 1;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: #f8f9fa;
+    }
+
+    .glass-card {
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(187, 202, 198, 0.5);
+      box-shadow: 0 4px 16px rgba(0, 0, 0, 0.04);
+      transition: transform 0.15s, box-shadow 0.15s;
+    }
+
+    .glass-card:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    }
+
+    .nav-item {
+      transition: background-color 0.15s, transform 0.1s;
+    }
+
+    .nav-item:active {
+      transform: scale(0.92);
+    }
+
+    .support-btn {
+      transition: background-color 0.15s, transform 0.1s;
+    }
+
+    .support-btn:active {
+      transform: scale(0.97);
+    }
+
+    @keyframes slideUp {
+      from {
+        opacity: 0;
+        transform: translateY(24px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0)
+      }
+    }
+
+    .slide-up {
+      animation: slideUp 0.35s ease both;
+    }
+
+    .slide-up-1 {
+      animation-delay: 0.05s;
+    }
+
+    .slide-up-2 {
+      animation-delay: 0.1s;
+    }
+
+    .slide-up-3 {
+      animation-delay: 0.15s;
+    }
+
+    .slide-up-4 {
+      animation-delay: 0.2s;
+    }
+
+    .slide-up-5 {
+      animation-delay: 0.25s;
+    }
+
+    .slide-up-6 {
+      animation-delay: 0.3s;
+    }
+
+    @keyframes modalSlide {
+      from {
+        transform: translateY(100%)
+      }
+
+      to {
+        transform: translateY(0)
+      }
+    }
+
+    .modal-panel {
+      animation: modalSlide 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    @keyframes toastIn {
+      from {
+        opacity: 0;
+        transform: translateX(-50%) translateY(12px)
+      }
+
+      to {
+        opacity: 1;
+        transform: translateX(-50%) translateY(0)
+      }
+    }
+
+    .toast {
+      animation: toastIn 0.3s ease;
+    }
+  </style>
+</head>
+
+<body class="bg-background text-on-background min-h-screen flex flex-col pb-[80px]">
+
+  <!-- Top App Bar with Language Selector -->
+  <header
+    class="fixed top-0 w-full bg-surface z-50 flex items-center justify-between px-md border-b border-outline-variant"
+    style="height:56px;">
+    <button
+      class="w-touch-target h-touch-target flex items-center justify-center text-primary hover:bg-surface-container-low rounded-full transition-colors"
+      onclick="window.location.href='home.html'" aria-label="Home">
+      <span class="material-symbols-outlined">arrow_back</span>
+    </button>
+    <span class="font-headline text-headline-lg font-bold text-primary" data-i18n="brand_name">SAHAY-AI</span>
+    <div class="flex items-center gap-xs">
+      <div id="header-lang-container"></div>
+      <button
+        class="w-touch-target h-touch-target flex items-center justify-center text-primary hover:bg-surface-container-low rounded-full transition-colors"
+        onclick="window.location.href='profile.html'" aria-label="Settings">
+        <span class="material-symbols-outlined">settings</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Content -->
+  <main class="flex-grow pt-[72px] px-container-margin md:max-w-4xl md:mx-auto w-full">
+
+    <!-- Header Section -->
+    <section class="mb-xl text-center mt-lg">
+      <div
+        class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary-container text-on-primary-container mb-lg shadow-md">
+        <span class="material-symbols-outlined icon-fill" style="font-size:32px;">contact_support</span>
+      </div>
+      <h1 class="font-display text-display-lg text-primary mb-xs" data-i18n="support_title">Support is available</h1>
+      <p class="font-body text-body-lg text-secondary" data-i18n="support_subtitle">You don't have to manage everything
+        alone.</p>
+    </section>
+
+    <!-- Emergency Banner -->
+    <div class="mb-lg bg-error-container border border-error rounded-xl p-md flex items-center justify-between gap-sm">
+      <div class="flex items-center gap-sm">
+        <span class="material-symbols-outlined icon-fill text-error flex-shrink-0">emergency</span>
+        <div>
+          <p class="font-label text-label-lg text-on-error-container" data-i18n="emergency_title">In immediate danger?
+          </p>
+          <p class="font-body text-body-md text-on-error-container opacity-80" data-i18n="emergency_desc">Call emergency
+            services right away.</p>
+        </div>
+      </div>
+      <a href="tel:112"
+        class="bg-error text-on-error font-label text-label-lg px-md py-xs rounded-full flex items-center gap-xs flex-shrink-0 hover:opacity-90 transition-opacity">
+        <span class="material-symbols-outlined icon-fill" style="font-size:16px;">call</span>
+        <span data-i18n="call_112">Call 112</span>
+      </a>
+    </div>
+
+    <!-- Bento Grid Cards -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-md mb-xl">
+
+      <!-- Counselling -->
+      <div
+        class="glass-card slide-up slide-up-1 rounded-xl p-container-margin flex flex-col justify-between min-h-[180px]">
+        <div class="flex items-start justify-between mb-sm">
+          <div class="bg-surface-container-high p-sm rounded-full flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined">psychology</span>
+          </div>
+          <span class="font-label text-label-sm text-secondary bg-surface-container-low px-2 py-1 rounded-full"
+            data-i18n="badge_confidential">Confidential</span>
+        </div>
+        <div class="flex-grow mb-sm">
+          <h2 class="font-headline text-headline-md text-on-surface mb-base" data-i18n="card_counselling_title">
+            COUNSELLING SUPPORT</h2>
+          <p class="font-body text-body-md text-secondary" data-i18n="card_counselling_desc">Connect with professional
+            therapists for emotional and mental wellbeing.</p>
+        </div>
+        <button
+          class="support-btn w-full bg-primary text-on-primary font-label text-label-lg h-touch-target rounded-lg flex items-center justify-center gap-xs"
+          onclick="requestSupport('card_counselling_title')">
+          <span class="material-symbols-outlined" style="font-size:16px;">add</span>
+          <span data-i18n="request_support_btn">Request Support</span>
+        </button>
+      </div>
+
+      <!-- Safety -->
+      <div
+        class="glass-card slide-up slide-up-2 rounded-xl p-container-margin flex flex-col justify-between min-h-[180px]">
+        <div class="flex items-start justify-between mb-sm">
+          <div class="bg-surface-container-high p-sm rounded-full flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined">security</span>
+          </div>
+          <span class="font-label text-label-sm text-error bg-error-container px-2 py-1 rounded-full"
+            data-i18n="badge_immediate">Immediate</span>
+        </div>
+        <div class="flex-grow mb-sm">
+          <h2 class="font-headline text-headline-md text-on-surface mb-base" data-i18n="card_safety_title">SAFETY
+            SUPPORT</h2>
+          <p class="font-body text-body-md text-secondary" data-i18n="card_safety_desc">Access immediate assistance for
+            physical safety and emergency situations.</p>
+        </div>
+        <button
+          class="support-btn w-full bg-primary text-on-primary font-label text-label-lg h-touch-target rounded-lg flex items-center justify-center gap-xs"
+          onclick="requestSupport('card_safety_title')">
+          <span class="material-symbols-outlined" style="font-size:16px;">add</span>
+          <span data-i18n="request_support_btn">Request Support</span>
+        </button>
+      </div>
+
+      <!-- Legal -->
+      <div
+        class="glass-card slide-up slide-up-3 rounded-xl p-container-margin flex flex-col justify-between min-h-[180px]">
+        <div class="flex items-start justify-between mb-sm">
+          <div class="bg-surface-container-high p-sm rounded-full flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined">gavel</span>
+          </div>
+        </div>
+        <div class="flex-grow mb-sm">
+          <h2 class="font-headline text-headline-md text-on-surface mb-base" data-i18n="card_legal_title">LEGAL SUPPORT
+          </h2>
+          <p class="font-body text-body-md text-secondary" data-i18n="card_legal_desc">Get guidance and representation
+            for legal matters and rights advocacy.</p>
+        </div>
+        <button
+          class="support-btn w-full bg-primary text-on-primary font-label text-label-lg h-touch-target rounded-lg flex items-center justify-center gap-xs"
+          onclick="requestSupport('card_legal_title')">
+          <span class="material-symbols-outlined" style="font-size:16px;">add</span>
+          <span data-i18n="request_support_btn">Request Support</span>
+        </button>
+      </div>
+
+      <!-- Welfare & Financial -->
+      <div
+        class="glass-card slide-up slide-up-4 rounded-xl p-container-margin flex flex-col justify-between min-h-[180px]">
+        <div class="flex items-start justify-between mb-sm">
+          <div class="bg-surface-container-high p-sm rounded-full flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined">account_balance_wallet</span>
+          </div>
+        </div>
+        <div class="flex-grow mb-sm">
+          <h2 class="font-headline text-headline-md text-on-surface mb-base" data-i18n="card_welfare_title">WELFARE
+            &amp; FINANCIAL</h2>
+          <p class="font-body text-body-md text-secondary" data-i18n="card_welfare_desc">Resources for financial aid,
+            housing, and basic needs assistance.</p>
+        </div>
+        <button
+          class="support-btn w-full bg-primary text-on-primary font-label text-label-lg h-touch-target rounded-lg flex items-center justify-center gap-xs"
+          onclick="requestSupport('card_welfare_title')">
+          <span class="material-symbols-outlined" style="font-size:16px;">add</span>
+          <span data-i18n="request_support_btn">Request Support</span>
+        </button>
+      </div>
+
+      <!-- Rehabilitation -->
+      <div
+        class="glass-card slide-up slide-up-5 rounded-xl p-container-margin flex flex-col justify-between min-h-[180px]">
+        <div class="flex items-start justify-between mb-sm">
+          <div class="bg-surface-container-high p-sm rounded-full flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined">healing</span>
+          </div>
+        </div>
+        <div class="flex-grow mb-sm">
+          <h2 class="font-headline text-headline-md text-on-surface mb-base" data-i18n="card_rehab_title">REHABILITATION
+          </h2>
+          <p class="font-body text-body-md text-secondary" data-i18n="card_rehab_desc">Programs for physical therapy,
+            recovery, and reintegration support.</p>
+        </div>
+        <button
+          class="support-btn w-full bg-primary text-on-primary font-label text-label-lg h-touch-target rounded-lg flex items-center justify-center gap-xs"
+          onclick="requestSupport('card_rehab_title')">
+          <span class="material-symbols-outlined" style="font-size:16px;">add</span>
+          <span data-i18n="request_support_btn">Request Support</span>
+        </button>
+      </div>
+
+      <!-- Trusted Contact -->
+      <div
+        class="glass-card slide-up slide-up-6 rounded-xl p-container-margin flex flex-col justify-between min-h-[180px]">
+        <div class="flex items-start justify-between mb-sm">
+          <div class="bg-surface-container-high p-sm rounded-full flex items-center justify-center text-primary">
+            <span class="material-symbols-outlined">group_add</span>
+          </div>
+          <span class="font-label text-label-sm text-secondary bg-surface-container-low px-2 py-1 rounded-full"
+            data-i18n="badge_network">Network</span>
+        </div>
+        <div class="flex-grow mb-sm">
+          <h2 class="font-headline text-headline-md text-on-surface mb-base" data-i18n="card_trusted_title">TRUSTED
+            CONTACT</h2>
+          <p class="font-body text-body-md text-secondary" data-i18n="card_trusted_desc">Reach out to your pre-defined
+            trusted network of friends or family.</p>
+        </div>
+        <button
+          class="support-btn w-full bg-primary text-on-primary font-label text-label-lg h-touch-target rounded-lg flex items-center justify-center gap-xs"
+          onclick="requestSupport('card_trusted_title')">
+          <span class="material-symbols-outlined" style="font-size:16px;">add</span>
+          <span data-i18n="request_support_btn">Request Support</span>
+        </button>
+      </div>
+    </section>
+
+    <!-- My Requests -->
+    <section class="bg-surface-container-lowest rounded-xl border border-outline-variant shadow-sm mb-xl">
+      <div class="flex items-center justify-between px-md py-sm border-b border-outline-variant">
+        <h2 class="font-headline text-headline-md text-on-surface" data-i18n="my_requests_title">My Requests</h2>
+        <span class="font-label text-label-sm bg-primary-container text-on-primary-container px-sm py-0.5 rounded-full"
+          data-i18n="active_badge">1 active</span>
+      </div>
+      <div id="requests-list">
+        <div class="px-md py-sm flex items-center justify-between">
+          <div class="flex items-center gap-sm">
+            <div class="w-2 h-2 rounded-full bg-yellow-400 flex-shrink-0"></div>
+            <div>
+              <p class="font-label text-label-lg text-on-surface" data-i18n="card_counselling_title">Counselling Support
+              </p>
+              <p class="font-body text-body-md text-on-surface-variant">Requested Aug 28 · <span
+                  data-i18n="in_review">In review</span></p>
+            </div>
+          </div>
+          <span class="font-label text-label-sm text-on-surface-variant bg-surface-container px-sm py-0.5 rounded-full"
+            data-i18n="pending">Pending</span>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- Bottom Navigation -->
+  <nav
+    class="fixed bottom-0 left-0 w-full bg-surface-container-lowest shadow-lg border-t border-outline-variant z-50 flex justify-around items-center px-container-margin py-xs"
+    style="height:72px;">
+    <button class="nav-item flex flex-col items-center justify-center rounded-xl px-3 py-1 text-on-surface-variant"
+      onclick="window.location.href='home.html'" aria-label="Home">
+      <span class="material-symbols-outlined" style="font-size:22px;">home</span>
+      <span class="font-label text-label-sm mt-0.5" data-i18n="nav_home">Home</span>
+    </button>
+    <button class="nav-item flex flex-col items-center justify-center rounded-xl px-3 py-1 text-on-surface-variant"
+      onclick="window.location.href='chat.html'" aria-label="Chat">
+      <span class="material-symbols-outlined" style="font-size:22px;">chat_bubble</span>
+      <span class="font-label text-label-sm mt-0.5" data-i18n="nav_chat">Chat</span>
+    </button>
+    <button class="nav-item flex flex-col items-center justify-center rounded-xl px-3 py-1 text-on-surface-variant"
+      onclick="window.location.href='journey.html'" aria-label="Journey">
+      <span class="material-symbols-outlined" style="font-size:22px;">auto_graph</span>
+      <span class="font-label text-label-sm mt-0.5" data-i18n="nav_journey">Journey</span>
+    </button>
+    <button
+      class="nav-item flex flex-col items-center justify-center rounded-xl px-3 py-1 bg-primary-container text-on-primary-container"
+      aria-label="Support" aria-current="page">
+      <span class="material-symbols-outlined icon-fill" style="font-size:22px;">contact_support</span>
+      <span class="font-label text-label-sm mt-0.5" data-i18n="nav_support">Support</span>
+    </button>
+    <button class="nav-item flex flex-col items-center justify-center rounded-xl px-3 py-1 text-on-surface-variant"
+      onclick="window.location.href='profile.html'" aria-label="Profile">
+      <span class="material-symbols-outlined" style="font-size:22px;">person</span>
+      <span class="font-label text-label-sm mt-0.5" data-i18n="nav_profile">Profile</span>
+    </button>
+  </nav>
+
+  <!-- Request Modal -->
+  <div id="request-modal" class="hidden fixed inset-0 bg-black/40 z-[100] flex items-end justify-center" role="dialog"
+    aria-modal="true" aria-labelledby="modal-title">
+    <div class="modal-panel bg-surface-container-lowest rounded-t-2xl w-full max-w-lg p-xl">
+      <div class="w-10 h-1 bg-surface-container-high rounded-full mx-auto mb-lg"></div>
+      <h2 id="modal-title" class="font-headline text-headline-md text-on-surface mb-xs" data-i18n="modal_request_title">
+        Request Support</h2>
+      <p id="modal-type" class="font-label text-label-lg text-primary mb-md"></p>
+      <p class="font-body text-body-md text-on-surface-variant mb-lg" id="modal-desc" data-i18n="modal_request_desc">
+      </p>
+
+      <label class="block mb-lg">
+        <span class="font-label text-label-lg text-on-surface block mb-xs" data-i18n="note_label">Add a note
+          (optional)</span>
+        <textarea id="support-note"
+          class="w-full border border-outline-variant rounded-xl p-md font-body text-body-md text-on-surface bg-surface-container-lowest resize-none focus:border-primary focus:ring-1 focus:ring-primary outline-none transition"
+          rows="3" placeholder="Briefly describe what you need…" data-i18n-placeholder="note_placeholder"></textarea>
+      </label>
+
+      <div class="mb-lg">
+        <p class="font-label text-label-lg text-on-surface mb-sm" data-i18n="urgency_question">How urgent is this?</p>
+        <div class="flex gap-sm">
+          <button
+            class="urgency-btn flex-1 border border-outline-variant rounded-xl py-sm font-label text-label-sm text-on-surface hover:bg-surface-container-low transition-colors"
+            data-urgency="routine" onclick="selectUrgency(this)" data-i18n="urgency_routine">Routine</button>
+          <button
+            class="urgency-btn flex-1 border border-outline-variant rounded-xl py-sm font-label text-label-sm text-on-surface hover:bg-surface-container-low transition-colors"
+            data-urgency="soon" onclick="selectUrgency(this)" data-i18n="urgency_soon">Soon</button>
+          <button
+            class="urgency-btn selected flex-1 border-2 border-primary bg-surface-container-low rounded-xl py-sm font-label text-label-sm text-primary"
+            data-urgency="urgent" onclick="selectUrgency(this)" data-i18n="urgency_urgent">Urgent</button>
+        </div>
+      </div>
+
+      <div class="flex flex-col gap-sm">
+        <button class="w-full bg-primary text-on-primary font-label text-label-lg h-touch-target rounded-full shadow-sm"
+          onclick="submitRequest()" data-i18n="send_request_btn">Send Request</button>
+        <button
+          class="w-full bg-surface-container-low text-on-surface font-label text-label-lg h-touch-target rounded-full"
+          onclick="closeModal()" data-i18n="cancel">Cancel</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast notification -->
+  <div id="toast"
+    class="hidden toast fixed bottom-[90px] left-1/2 -translate-x-1/2 bg-inverse-surface text-inverse-on-surface px-lg py-sm rounded-full font-label text-label-lg shadow-lg z-[200] flex items-center gap-xs whitespace-nowrap">
+    <span class="material-symbols-outlined icon-fill text-green-400" style="font-size:18px;">check_circle</span>
+    <span id="toast-msg" data-i18n="request_sent_toast">Request sent successfully</span>
+  </div>
+
+  <script src="translations.js"></script>
+  <script src="env.js"></script>
+  <script src="shared.js"></script>
+  <script>
+    SAHAY.renderGlobalLanguageDropdown('header-lang-container');
+
+    let currentSupportKey = 'card_counselling_title';
+    let selectedUrgency = 'urgent';
+
+    function requestSupport(keyOrTitle) {
+      currentSupportKey = keyOrTitle;
+      document.getElementById('modal-type').textContent = SAHAY.t(keyOrTitle);
+
+      let officerName = "your assigned support coordinator";
+      const caseData = SAHAY.getCase();
+      if (caseData && caseData.assigned_officer && caseData.assigned_officer.full_name) {
+        officerName = caseData.assigned_officer.full_name;
+      }
+      document.getElementById('modal-desc').textContent = SAHAY.t('modal_request_desc_dyn', { officer: officerName }) || `Your request will be sent to ${officerName}. They will reach out within 24 hours.`;
+
+      document.getElementById('support-note').value = '';
+      document.getElementById('request-modal').classList.remove('hidden');
+    }
+
+    function closeModal() {
+      document.getElementById('request-modal').classList.add('hidden');
+    }
+
+    function selectUrgency(btn) {
+      document.querySelectorAll('.urgency-btn').forEach(b => {
+        b.classList.remove('selected', 'border-2', 'border-primary', 'bg-surface-container-low', 'text-primary');
+        b.classList.add('border', 'border-outline-variant', 'text-on-surface');
+      });
+      btn.classList.add('selected', 'border-2', 'border-primary', 'bg-surface-container-low', 'text-primary');
+      btn.classList.remove('border', 'border-outline-variant', 'text-on-surface');
+      selectedUrgency = btn.dataset.urgency;
+    }
+
+    function submitRequest() {
+      closeModal();
+      const reqList = document.getElementById('requests-list');
+      const now = new Date();
+      const dateStr = now.toLocaleDateString('en-IN', { month: 'short', day: 'numeric' });
+      const urgencyLabel = SAHAY.t('urgency_' + selectedUrgency);
+      const newReq = document.createElement('div');
+      newReq.className = 'px-md py-sm flex items-center justify-between border-t border-outline-variant';
+      newReq.innerHTML = `
+        <div class="flex items-center gap-sm">
+          <div class="w-2 h-2 rounded-full bg-green-400 flex-shrink-0"></div>
+          <div>
+            <p class="font-label text-label-lg text-on-surface">${SAHAY.t(currentSupportKey)}</p>
+            <p class="font-body text-body-md text-on-surface-variant">Requested ${dateStr} · ${urgencyLabel}</p>
+          </div>
+        </div>
+        <span class="font-label text-label-sm text-on-surface-variant bg-surface-container px-sm py-0.5 rounded-full">${SAHAY.t('sent')}</span>`;
+      reqList.appendChild(newReq);
+      showToast(SAHAY.t('request_sent_toast'));
+    }
+
+    function showToast(msg) {
+      const toast = document.getElementById('toast');
+      document.getElementById('toast-msg').textContent = msg;
+      toast.classList.remove('hidden');
+      setTimeout(() => toast.classList.add('hidden'), 3000);
+    }
+
+    document.getElementById('request-modal').addEventListener('click', function (e) {
+      if (e.target === this) closeModal();
+    });
+  </script>
+</body>
+
+</html>

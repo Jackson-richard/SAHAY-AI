@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SAHAY-AI</title>
+  <!-- Use the existing CSS for mobile layout preservation -->
+  <script src="/assets/tailwind.min.js"></script>
+  <link href="/assets/google-fonts.css" rel="stylesheet" />
+  <link href="/assets/material-symbols.css" rel="stylesheet" />
+  <script id="tw-config">
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: { "primary": "#006b5f", "on-primary": "#ffffff", "primary-container": "#14b8a6", "on-primary-container": "#00423b", "primary-fixed": "#71f8e4", "secondary": "#515f74", "on-secondary": "#ffffff", "error": "#ba1a1a", "on-error": "#ffffff", "error-container": "#ffdad6", "background": "#f8f9fa", "on-background": "#191c1d", "surface": "#f8f9fa", "on-surface": "#191c1d", "surface-variant": "#e1e3e4", "on-surface-variant": "#3c4947", "surface-container-lowest": "#ffffff", "surface-container-low": "#f3f4f5", "surface-container": "#edeeef", "surface-container-high": "#e7e8e9", "outline": "#6c7a77", "outline-variant": "#bbcac6", "surface-tint": "#006b5f", "inverse-surface": "#2e3132", "inverse-on-surface": "#f0f1f2" },
+          borderRadius: { "DEFAULT": "0.5rem", "sm": "0.25rem", "md": "0.75rem", "lg": "1rem", "xl": "1.5rem", "full": "9999px" },
+          spacing: { "base": "4px", "xs": "8px", "sm": "12px", "md": "16px", "lg": "24px", "xl": "32px", "touch-target": "48px", "container-margin": "16px" },
+          fontFamily: { "display": ["Public Sans", "sans-serif"], "headline": ["Public Sans", "sans-serif"], "body": ["Inter", "sans-serif"], "label": ["Inter", "sans-serif"] },
+        }
+      }
+    }
+  </script>
+  <!-- We initialize the SAHAY namespace for the legacy translation file to stick to -->
+  <script>window.SAHAY = window.SAHAY || {};</script>
+  <script src="/translations.js"></script>
+
+  <style>
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+
+    .icon-fill {
+      font-variation-settings: 'FILL' 1;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+    }
+
+    .field-input {
+      transition: border-color 0.15s;
+    }
+
+    .field-input:focus {
+      border-color: #006b5f;
+      box-shadow: 0 0 0 2px rgba(0, 107, 95, 0.15);
+    }
+
+    .btn-primary {
+      transition: opacity 0.15s, transform 0.1s;
+    }
+
+    .btn-primary:active:not(:disabled) {
+      transform: scale(0.97);
+    }
+
+    .info-card {
+      transition: background-color 0.15s;
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(16px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .fade-up {
+      animation: fadeUp 0.5s ease forwards;
+    }
+
+    .fade-up-1 {
+      animation-delay: 0.1s;
+      opacity: 0;
+    }
+
+    .fade-up-2 {
+      animation-delay: 0.2s;
+      opacity: 0;
+    }
+
+    .fade-up-3 {
+      animation-delay: 0.3s;
+      opacity: 0;
+    }
+  </style>
+</head>
+
+<body class="bg-background text-on-background min-h-screen flex flex-col antialiased">
+  <div id="root" class="flex flex-col flex-grow"></div>
+  <script type="module" src="/src/main.jsx"></script>
+</body>
+
+</html>
