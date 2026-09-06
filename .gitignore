@@ -1,0 +1,28 @@
+# Dependency directories
+node_modules/
+
+# OS generated files
+.DS_Store
+Thumbs.db
+
+# Logs and debug traces generated locally
+*.log
+*.txt
+!CMakeLists.txt
+!README.txt
+!LICENSE.txt
+test_*.sql
+recovery_*.sql
+
+# Supabase
+supabase/.env
+supabase/.env.*
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+
+# Archives
+*.zip
+*.tar.gz

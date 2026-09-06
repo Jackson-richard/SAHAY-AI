@@ -1,0 +1,264 @@
+<!DOCTYPE html><html class="light" lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>SAHAY-AI - Journey</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    colors: {
+                        "inverse-primary": "#76d6d5",
+                        "inverse-on-surface": "#edf2f1",
+                        "on-surface": "#181c1c",
+                        "inverse-surface": "#2c3131",
+                        "surface-tint": "#006a6a",
+                        "secondary-container": "#9fc2fe",
+                        "primary": "#006565",
+                        "on-tertiary-container": "#f9fafb",
+                        "on-primary-fixed-variant": "#004f4f",
+                        "surface-dim": "#d7dbda",
+                        "on-secondary-fixed-variant": "#1f477b",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#f6faf9",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#3a5f94",
+                        "on-background": "#181c1c",
+                        "outline-variant": "#bdc9c8",
+                        "on-error-container": "#93000a",
+                        "on-surface-variant": "#3e4949",
+                        "on-secondary-fixed": "#001b3c",
+                        "tertiary-fixed": "#e1e3e4",
+                        "surface-container": "#ebefee",
+                        "on-secondary-container": "#294f83",
+                        "outline": "#6e7979",
+                        "surface-container-low": "#f0f4f3",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#76d6d5",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#dfe3e2",
+                        "primary-container": "#008080",
+                        "secondary-fixed-dim": "#a7c8ff",
+                        "surface": "#f6faf9",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#d5e3ff",
+                        "background": "#f6faf9",
+                        "on-primary-container": "#e3fffe",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#585b5c",
+                        "on-tertiary-fixed": "#191c1d",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-high": "#e5e9e8",
+                        "on-primary-fixed": "#002020",
+                        "tertiary-container": "#717374",
+                        "primary-fixed": "#93f2f2",
+                        "on-tertiary-fixed-variant": "#454748",
+                        "surface-container-highest": "#dfe3e2",
+                        "tertiary-fixed-dim": "#c5c7c8"
+                    },
+                    borderRadius: {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    spacing: {
+                        "stack-lg": "24px",
+                        "touch-target-min": "48px",
+                        "stack-sm": "8px",
+                        "gutter-mobile": "16px",
+                        "margin-mobile": "20px",
+                        "stack-md": "16px"
+                    },
+                    fontFamily: {
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    fontSize: {
+                        "headline-lg": ["32px", { lineHeight: "40px", letterSpacing: "-0.02em", fontWeight: "700" }],
+                        "body-md": ["16px", { lineHeight: "24px", fontWeight: "400" }],
+                        "headline-lg-mobile": ["28px", { lineHeight: "36px", fontWeight: "700" }],
+                        "body-lg": ["18px", { lineHeight: "28px", fontWeight: "400" }],
+                        "label-lg": ["14px", { lineHeight: "20px", letterSpacing: "0.01em", fontWeight: "600" }],
+                        "headline-md": ["24px", { lineHeight: "32px", letterSpacing: "-0.01em", fontWeight: "600" }],
+                        "label-md": ["12px", { lineHeight: "16px", fontWeight: "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; background-color: #f8f9fa; }
+        .chart-line { stroke: #008080; stroke-width: 3; fill: none; }
+        .chart-point { fill: #008080; }
+        .chart-point-elevated { fill: #ba1a1a; }
+        .chart-grid { stroke: #e0e0e0; stroke-width: 1; }
+        .timeline-line { position: absolute; left: 24px; top: 0; bottom: 0; width: 2px; background-color: #e0e0e0; z-index: 0; }
+        .timeline-line-active { position: absolute; left: 24px; top: 0; height: 50%; width: 2px; background-color: #008080; z-index: 1; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background min-h-screen pb-[100px] md:pb-0 pt-20 md:pt-24 flex flex-col items-center">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 bg-surface dark:bg-surface-dim shadow-sm h-[72px] md:h-[80px]">
+<div class="flex items-center px-margin-mobile h-full w-full justify-between max-w-7xl mx-auto">
+<div class="flex items-center gap-4">
+<img alt="SAHAY-AI Logo" class="h-10 w-10 object-contain mix-blend-multiply" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCnfFCc_72foiJi4HGGq93cNu3thPp_OOoiADnBRdLMcOhvR0dPbK_NnZihSQNKaKBrJiF9KNMsRfmNlG_GpJijJ1uZlLPaCqeeP_bxMLRExnVme0ez8n2421VZJp7KdYRqQ6aEOMV710IYrK0jakp-WcHR4LqbrmLnVReFdVz1_pWCci5mH1qRxCa--wId5RGUOHwlNzO6mQG2ofpxBvcNVVYotsSIzonI7igzZVgR5oZZOvLeOPds4_jVNTkeccJzDg">
+<h1 class="font-headline-md text-headline-md-mobile font-bold text-primary dark:text-inverse-primary tracking-tight">SAHAY-AI</h1>
+</div>
+<div class="hidden md:flex gap-8">
+<a class="font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-colors" href="#">Home</a>
+<a class="font-label-lg text-label-lg text-on-surface-variant hover:text-primary transition-colors" href="#">Support</a>
+</div>
+<div class="md:hidden">
+<span class="material-symbols-outlined text-on-surface">menu</span>
+</div>
+</div>
+</header>
+<main class="w-full max-w-3xl px-margin-mobile flex-1 flex flex-col gap-stack-lg mt-stack-md">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">My wellbeing journey</h2>
+<!-- Wellbeing Concern Index Card -->
+<section class="bg-surface-container-lowest rounded-[16px] shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] border border-surface-variant p-6 flex flex-col gap-4 relative overflow-hidden">
+<div class="flex justify-between items-start">
+<h3 class="font-headline-md text-headline-md-mobile text-on-surface">Wellbeing Concern Index</h3>
+<span class="material-symbols-outlined text-on-surface-variant">info</span>
+</div>
+<div class="w-full h-48 mt-4 relative">
+<!-- SVG Chart -->
+<svg height="100%" preserveAspectRatio="none" viewBox="0 0 400 200" width="100%">
+<!-- Grid Lines -->
+<line class="chart-grid" stroke-dasharray="4,4" x1="0" x2="400" y1="50" y2="50"></line>
+<line class="chart-grid" stroke-dasharray="4,4" x1="0" x2="400" y1="100" y2="100"></line>
+<line class="chart-grid" stroke-dasharray="4,4" x1="0" x2="400" y1="150" y2="150"></line>
+<!-- Line -->
+<path class="chart-line" d="M 50,150 L 150,140 L 250,90 L 350,30"></path>
+<!-- Points -->
+<circle class="chart-point" cx="50" cy="150" r="6"></circle>
+<circle class="chart-point" cx="150" cy="140" r="6"></circle>
+<circle class="chart-point" cx="250" cy="90" r="6"></circle>
+<circle class="chart-point-elevated" cx="350" cy="30" r="6"></circle>
+</svg>
+<!-- X-Axis Labels -->
+<div class="absolute bottom-[-24px] left-0 w-full flex justify-between px-8 text-on-surface-variant font-label-md text-label-md">
+<span>Week 1</span>
+<span>Week 2</span>
+<span>Week 3</span>
+<span>Week 4</span>
+</div>
+</div>
+<!-- Legend / Stats -->
+<div class="mt-8 grid grid-cols-2 gap-4 bg-surface-container-low p-4 rounded-lg">
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant">Current Status</span>
+<span class="font-body-lg text-body-lg text-error font-medium flex items-center gap-2">
+<span class="w-3 h-3 rounded-full bg-error inline-block"></span>
+                        Elevated (67)
+                    </span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-md text-label-md text-on-surface-variant">Trend</span>
+<span class="font-body-lg text-body-lg text-on-surface flex items-center gap-2">
+<span class="material-symbols-outlined text-error">trending_up</span>
+                        Increasing
+                    </span>
+</div>
+</div>
+</section>
+<!-- Case Lifecycle Section -->
+<section class="bg-surface-container-lowest rounded-[16px] shadow-[0_2px_8px_-2px_rgba(0,0,0,0.05)] border border-surface-variant p-6 flex flex-col gap-6">
+<h3 class="font-headline-md text-headline-md-mobile text-on-surface">Case Lifecycle</h3>
+<div class="relative pl-2">
+<div class="timeline-line"></div>
+<div class="timeline-line-active"></div>
+<!-- Registration -->
+<div class="flex items-start gap-6 mb-8 relative z-10">
+<div class="w-12 h-12 rounded-full bg-surface-variant border-2 border-surface-container-lowest flex items-center justify-center shrink-0 shadow-sm text-on-surface-variant">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+</div>
+<div class="flex flex-col pt-2">
+<span class="font-label-lg text-label-lg text-on-surface-variant">Completed</span>
+<span class="font-body-lg text-body-lg text-on-surface font-medium">Registration</span>
+</div>
+</div>
+<!-- Investigation (Active) -->
+<div class="flex items-start gap-6 mb-8 relative z-10">
+<div class="w-12 h-12 rounded-full bg-primary-container border-4 border-surface-container-lowest flex items-center justify-center shrink-0 shadow-md text-on-primary-container">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">search</span>
+</div>
+<div class="flex flex-col pt-1">
+<span class="font-label-lg text-label-lg text-primary font-bold">Active Stage</span>
+<span class="font-headline-md text-headline-md-mobile text-on-surface">Investigation</span>
+<p class="font-body-md text-body-md text-on-surface-variant mt-1">Information gathering and initial assessment.</p>
+</div>
+</div>
+<!-- Trial -->
+<div class="flex items-start gap-6 mb-8 relative z-10 opacity-50">
+<div class="w-12 h-12 rounded-full bg-surface-container border-2 border-surface-container-lowest flex items-center justify-center shrink-0 shadow-sm text-on-surface-variant">
+<span class="material-symbols-outlined">gavel</span>
+</div>
+<div class="flex flex-col pt-2">
+<span class="font-label-lg text-label-lg text-on-surface-variant">Upcoming</span>
+<span class="font-body-lg text-body-lg text-on-surface">Trial</span>
+</div>
+</div>
+<!-- Compensation -->
+<div class="flex items-start gap-6 mb-8 relative z-10 opacity-50">
+<div class="w-12 h-12 rounded-full bg-surface-container border-2 border-surface-container-lowest flex items-center justify-center shrink-0 shadow-sm text-on-surface-variant">
+<span class="material-symbols-outlined">payments</span>
+</div>
+<div class="flex flex-col pt-2">
+<span class="font-label-lg text-label-lg text-on-surface-variant">Upcoming</span>
+<span class="font-body-lg text-body-lg text-on-surface">Compensation</span>
+</div>
+</div>
+<!-- Rehabilitation -->
+<div class="flex items-start gap-6 relative z-10 opacity-50">
+<div class="w-12 h-12 rounded-full bg-surface-container border-2 border-surface-container-lowest flex items-center justify-center shrink-0 shadow-sm text-on-surface-variant">
+<span class="material-symbols-outlined">healing</span>
+</div>
+<div class="flex flex-col pt-2">
+<span class="font-label-lg text-label-lg text-on-surface-variant">Upcoming</span>
+<span class="font-body-lg text-body-lg text-on-surface">Rehabilitation</span>
+</div>
+</div>
+</div>
+</section>
+</main>
+<!-- BottomNavBar Mobile -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 bg-surface dark:bg-surface-container-lowest shadow-[0_-4px_8px_0_rgba(0,0,0,0.08)] flex justify-around items-center px-2 py-stack-sm h-20">
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-2 hover:bg-surface-container-high dark:hover:bg-surface-container transition-all active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined text-[24px]">home</span>
+<span class="font-label-md text-label-md mt-1">HOME</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-2 hover:bg-surface-container-high dark:hover:bg-surface-container transition-all active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined text-[24px]">chat_bubble</span>
+<span class="font-label-md text-label-md mt-1">CHAT</span>
+</a>
+<!-- Active Tab -->
+<a class="flex flex-col items-center justify-center bg-primary-container dark:bg-primary text-on-primary-container dark:text-on-primary rounded-xl px-4 py-1 hover:bg-surface-container-high dark:hover:bg-surface-container transition-all active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">auto_graph</span>
+<span class="font-label-md text-label-md mt-1">JOURNEY</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-2 hover:bg-surface-container-high dark:hover:bg-surface-container transition-all active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined text-[24px]">support_agent</span>
+<span class="font-label-md text-label-md mt-1">SUPPORT</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant dark:text-outline p-2 hover:bg-surface-container-high dark:hover:bg-surface-container transition-all active:scale-95 duration-200" href="#">
+<span class="material-symbols-outlined text-[24px]">person</span>
+<span class="font-label-md text-label-md mt-1">PROFILE</span>
+</a>
+</nav>
+</body></html>

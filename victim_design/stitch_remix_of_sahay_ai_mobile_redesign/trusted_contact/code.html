@@ -1,0 +1,213 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>Trusted Contact - SAHAY-AI</title>
+<!-- Tailwind CSS -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Config -->
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#76d6d5",
+                        "inverse-on-surface": "#edf2f1",
+                        "on-surface": "#181c1c",
+                        "inverse-surface": "#2c3131",
+                        "surface-tint": "#006a6a",
+                        "secondary-container": "#9fc2fe",
+                        "primary": "#006565",
+                        "on-tertiary-container": "#f9fafb",
+                        "on-primary-fixed-variant": "#004f4f",
+                        "surface-dim": "#d7dbda",
+                        "on-secondary-fixed-variant": "#1f477b",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#f6faf9",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#3a5f94",
+                        "on-background": "#181c1c",
+                        "outline-variant": "#bdc9c8",
+                        "on-error-container": "#93000a",
+                        "on-surface-variant": "#3e4949",
+                        "on-secondary-fixed": "#001b3c",
+                        "tertiary-fixed": "#e1e3e4",
+                        "surface-container": "#ebefee",
+                        "on-secondary-container": "#294f83",
+                        "outline": "#6e7979",
+                        "surface-container-low": "#f0f4f3",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#76d6d5",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#dfe3e2",
+                        "primary-container": "#008080",
+                        "secondary-fixed-dim": "#a7c8ff",
+                        "surface": "#f6faf9",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#d5e3ff",
+                        "background": "#f6faf9",
+                        "on-primary-container": "#e3fffe",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#585b5c",
+                        "on-tertiary-fixed": "#191c1d",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-high": "#e5e9e8",
+                        "on-primary-fixed": "#002020",
+                        "tertiary-container": "#717374",
+                        "primary-fixed": "#93f2f2",
+                        "on-tertiary-fixed-variant": "#454748",
+                        "surface-container-highest": "#dfe3e2",
+                        "tertiary-fixed-dim": "#c5c7c8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-lg": "24px",
+                        "touch-target-min": "48px",
+                        "stack-sm": "8px",
+                        "gutter-mobile": "16px",
+                        "margin-mobile": "20px",
+                        "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter", "sans-serif"],
+                        "body-md": ["Inter", "sans-serif"],
+                        "headline-lg-mobile": ["Inter", "sans-serif"],
+                        "body-lg": ["Inter", "sans-serif"],
+                        "label-lg": ["Inter", "sans-serif"],
+                        "headline-md": ["Inter", "sans-serif"],
+                        "label-md": ["Inter", "sans-serif"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<!-- Google Fonts & Material Symbols -->
+<link href="https://fonts.googleapis.com" rel="preconnect">
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            background-color: #f6faf9; /* background token */
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="text-on-background antialiased min-h-screen flex flex-col">
+<!-- TopAppBar Component -->
+<header class="bg-surface dark:bg-surface-dim text-primary dark:text-inverse-primary fixed top-0 w-full z-50 shadow-sm flex items-center px-margin-mobile h-touch-target-min w-full">
+<button aria-label="Go back" class="mr-4 text-on-surface-variant dark:text-on-surface-variant hover:bg-surface-container-low dark:hover:bg-surface-container-high transition-colors active:opacity-80 transition-opacity flex items-center justify-center w-10 h-10 rounded-full">
+<span class="material-symbols-outlined" data-icon="arrow_back">arrow_back</span>
+</button>
+<div class="flex items-center gap-2">
+<img alt="SAHAY-AI" class="h-10 w-auto object-contain mix-blend-multiply" src="https://lh3.googleusercontent.com/aida-public/AB6AXuD9nOFBaZY7wIb0FubeqJLUWlxRb9CjuqVOMKRSwbRq654pheVg42QxmbPTh8-OEUAjAwof_BagvX15sTpT_FpBf6l7q6a0iqP4t_yN9UwpbUTwSpEEY0fwfzlGRruM2QNXat05rDvuPO6uBIxN_Xl69Qx2Ft1StL0tNXIVqu6PI9Uu2Qt6O1Jxo8NCsjgk7Jfqds9t2NKpFheH4Mc4FM2n6LLIuT4MYGK0QqRFu5i0GmAPJEVT5rrc8Ogmf4_RrHIVdw">
+</div>
+</header>
+<!-- Main Content Canvas (Task-Focused: No Bottom Nav) -->
+<main class="flex-grow pt-24 pb-12 px-margin-mobile max-w-2xl mx-auto w-full">
+<!-- Header Section -->
+<div class="mb-stack-lg">
+<h1 class="font-headline-lg-mobile md:font-headline-lg text-on-surface mb-stack-sm">Someone you trust</h1>
+<p class="font-body-md text-on-surface-variant">You can choose a trusted person to involve in your support preferences.</p>
+</div>
+<!-- Form Card (Level 1 Elevation) -->
+<div class="bg-surface-container-lowest rounded-[16px] border border-[#E0E0E0] shadow-[0_2px_8px_rgba(0,0,0,0.05)] p-6 mb-stack-lg">
+<form action="#" class="space-y-stack-md" method="POST">
+<!-- Name Field -->
+<div>
+<label class="block font-label-md text-on-surface mb-2" for="contact-name">Name</label>
+<input class="w-full h-12 px-4 rounded-lg bg-surface border border-outline-variant text-on-surface font-body-md focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-colors" id="contact-name" name="contact-name" placeholder="Enter their full name" required="" type="text">
+</div>
+<!-- Phone Number Field -->
+<div>
+<label class="block font-label-md text-on-surface mb-2" for="contact-phone">Phone number</label>
+<input class="w-full h-12 px-4 rounded-lg bg-surface border border-outline-variant text-on-surface font-body-md focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-colors" id="contact-phone" name="contact-phone" placeholder="(555) 000-0000" required="" type="tel">
+</div>
+<!-- Relationship Dropdown -->
+<div>
+<label class="block font-label-md text-on-surface mb-2" for="contact-relation">Relationship</label>
+<div class="relative">
+<select class="w-full h-12 px-4 pr-10 rounded-lg bg-surface border border-outline-variant text-on-surface font-body-md appearance-none focus:border-primary focus:ring-1 focus:ring-primary focus:outline-none transition-colors" id="contact-relation" name="contact-relation" required="">
+<option disabled="" selected="" value="">Select relationship</option>
+<option value="mother">Mother</option>
+<option value="father">Father</option>
+<option value="sibling">Sibling</option>
+<option value="friend">Friend</option>
+<option value="other">Other</option>
+</select>
+<div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-4 text-on-surface-variant">
+<span class="material-symbols-outlined" data-icon="expand_more">expand_more</span>
+</div>
+</div>
+</div>
+<!-- Preferences Divider -->
+<div class="pt-stack-sm pb-2 border-t border-surface-variant mt-stack-lg">
+<h2 class="font-label-lg text-on-surface">Choose when they can be contacted.</h2>
+<p class="font-label-md text-on-surface-variant mt-1">Select all that apply.</p>
+</div>
+<!-- Preferences Checklist -->
+<div class="space-y-4">
+<label class="flex items-start gap-4 p-3 rounded-lg hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center h-6">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary bg-surface transition-all" type="checkbox">
+</div>
+<div class="flex-grow">
+<span class="font-body-md text-on-surface group-hover:text-primary transition-colors">Only when I request</span>
+</div>
+</label>
+<label class="flex items-start gap-4 p-3 rounded-lg hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center h-6">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary bg-surface transition-all" type="checkbox">
+</div>
+<div class="flex-grow">
+<span class="font-body-md text-on-surface group-hover:text-primary transition-colors">If I approve an alert</span>
+</div>
+</label>
+<label class="flex items-start gap-4 p-3 rounded-lg hover:bg-surface-container-low transition-colors cursor-pointer group">
+<div class="flex items-center h-6">
+<input class="w-5 h-5 rounded border-outline-variant text-primary focus:ring-primary bg-surface transition-all" type="checkbox">
+</div>
+<div class="flex-grow">
+<span class="font-body-md text-on-surface group-hover:text-primary transition-colors">For urgent safety concerns</span>
+</div>
+</label>
+</div>
+</form>
+</div>
+<!-- Action Area (Level 2 Active/Floating feel for main action) -->
+<div class="mt-stack-lg flex flex-col gap-4">
+<button class="w-full h-touch-target-min bg-primary-container text-on-primary font-label-lg rounded-full shadow-[0_4px_8px_rgba(0,0,0,0.08)] flex items-center justify-center gap-2 hover:bg-primary transition-colors active:scale-[0.98]" type="button">
+<span class="material-symbols-outlined" data-icon="save">save</span>
+                Save Contact
+            </button>
+<div class="text-center">
+<span class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-surface-container-high text-on-surface-variant font-label-md">
+<span class="material-symbols-outlined text-[16px]" data-icon="lock">lock</span>
+                    Your data is secure and private
+                </span>
+</div>
+</div>
+</main>
+</body></html>

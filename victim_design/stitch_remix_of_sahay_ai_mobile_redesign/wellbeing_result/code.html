@@ -1,0 +1,276 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>SAHAY-AI - Check-in Result</title>
+<!-- Material Symbols -->
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<!-- Tailwind CSS & Plugins -->
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<!-- Tailwind Configuration -->
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "inverse-primary": "#76d6d5",
+                    "inverse-on-surface": "#edf2f1",
+                    "on-surface": "#181c1c",
+                    "inverse-surface": "#2c3131",
+                    "surface-tint": "#006a6a",
+                    "secondary-container": "#9fc2fe",
+                    "primary": "#006565",
+                    "on-tertiary-container": "#f9fafb",
+                    "on-primary-fixed-variant": "#004f4f",
+                    "surface-dim": "#d7dbda",
+                    "on-secondary-fixed-variant": "#1f477b",
+                    "surface-container-lowest": "#ffffff",
+                    "surface-bright": "#f6faf9",
+                    "on-secondary": "#ffffff",
+                    "secondary": "#3a5f94",
+                    "on-background": "#181c1c",
+                    "outline-variant": "#bdc9c8",
+                    "on-error-container": "#93000a",
+                    "on-surface-variant": "#3e4949",
+                    "on-secondary-fixed": "#001b3c",
+                    "tertiary-fixed": "#e1e3e4",
+                    "surface-container": "#ebefee",
+                    "on-secondary-container": "#294f83",
+                    "outline": "#6e7979",
+                    "surface-container-low": "#f0f4f3",
+                    "error": "#ba1a1a",
+                    "primary-fixed-dim": "#76d6d5",
+                    "on-error": "#ffffff",
+                    "surface-variant": "#dfe3e2",
+                    "primary-container": "#008080",
+                    "secondary-fixed-dim": "#a7c8ff",
+                    "surface": "#f6faf9",
+                    "error-container": "#ffdad6",
+                    "secondary-fixed": "#d5e3ff",
+                    "background": "#f6faf9",
+                    "on-primary-container": "#e3fffe",
+                    "on-primary": "#ffffff",
+                    "tertiary": "#585b5c",
+                    "on-tertiary-fixed": "#191c1d",
+                    "on-tertiary": "#ffffff",
+                    "surface-container-high": "#e5e9e8",
+                    "on-primary-fixed": "#002020",
+                    "tertiary-container": "#717374",
+                    "primary-fixed": "#93f2f2",
+                    "on-tertiary-fixed-variant": "#454748",
+                    "surface-container-highest": "#dfe3e2",
+                    "tertiary-fixed-dim": "#c5c7c8"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.25rem",
+                    "lg": "0.5rem",
+                    "xl": "0.75rem",
+                    "full": "9999px"
+            },
+            "spacing": {
+                    "stack-lg": "24px",
+                    "touch-target-min": "48px",
+                    "stack-sm": "8px",
+                    "gutter-mobile": "16px",
+                    "margin-mobile": "20px",
+                    "stack-md": "16px"
+            },
+            "fontFamily": {
+                    "headline-lg": [
+                            "Inter"
+                    ],
+                    "body-md": [
+                            "Inter"
+                    ],
+                    "headline-lg-mobile": [
+                            "Inter"
+                    ],
+                    "body-lg": [
+                            "Inter"
+                    ],
+                    "label-lg": [
+                            "Inter"
+                    ],
+                    "headline-md": [
+                            "Inter"
+                    ],
+                    "label-md": [
+                            "Inter"
+                    ]
+            },
+            "fontSize": {
+                    "headline-lg": [
+                            "32px",
+                            {
+                                    "lineHeight": "40px",
+                                    "letterSpacing": "-0.02em",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-md": [
+                            "16px",
+                            {
+                                    "lineHeight": "24px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "headline-lg-mobile": [
+                            "28px",
+                            {
+                                    "lineHeight": "36px",
+                                    "fontWeight": "700"
+                            }
+                    ],
+                    "body-lg": [
+                            "18px",
+                            {
+                                    "lineHeight": "28px",
+                                    "fontWeight": "400"
+                            }
+                    ],
+                    "label-lg": [
+                            "14px",
+                            {
+                                    "lineHeight": "20px",
+                                    "letterSpacing": "0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "headline-md": [
+                            "24px",
+                            {
+                                    "lineHeight": "32px",
+                                    "letterSpacing": "-0.01em",
+                                    "fontWeight": "600"
+                            }
+                    ],
+                    "label-md": [
+                            "12px",
+                            {
+                                    "lineHeight": "16px",
+                                    "fontWeight": "500"
+                            }
+                    ]
+            }
+    },
+        },
+      }
+    </script>
+<style>
+        /* Base styles for material icons to ensure consistent rendering */
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        /* Hide scrollbar for a cleaner look while maintaining functionality */
+        ::-webkit-scrollbar {
+            width: 0px;
+            background: transparent;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background min-h-screen text-on-background font-sans antialiased pb-stack-lg">
+<!-- TopAppBar Shared Component -->
+<header class="bg-surface fixed top-0 w-full z-50 bg-surface shadow-sm flex items-center px-margin-mobile h-touch-target-min w-full">
+<div class="flex items-center gap-2 text-primary">
+<img alt="SAHAY-AI Logo" class="h-8 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA0vh2rdkYsl0pVYdWJqFEs-KOg3l0pfohFq7xCV_6jUqG9eYsq-pQeWuKiPFjMaMKbe1UEDqCUBLO4Hj2W16DerS2GudWLrYf86oAFjE8ENqYhzAXEAoAiWOPMzDZKgHAOdzxHabxynDyF37x72pAPAYdQv3wIExiqMRiOpdGVo1U0-HlmwlZfnrGgocQmau9YQtlM9LDiq5U5kWUkV6dIpgwvgcbK-QKi5yH4WSUBhLDLL8_WtnyHEuZ1FMtn6v3iSg">
+</div>
+</header>
+<!-- Main Content Canvas (Navigation Shell suppressed for transactional Result screen) -->
+<main class="pt-[80px] px-margin-mobile flex flex-col gap-stack-lg max-w-2xl mx-auto">
+<!-- Screen Title -->
+<div class="pt-stack-sm">
+<h2 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface">Check-in Result</h2>
+</div>
+<!-- Primary Result Card (Level 1 Elevation) -->
+<section class="bg-surface-container-lowest rounded-xl border border-outline-variant p-stack-lg shadow-sm flex flex-col gap-stack-md relative overflow-hidden">
+<!-- Subtle accent bar for visual hierarchy -->
+<div class="absolute top-0 left-0 w-full h-1 bg-[#ff9800] opacity-80"></div>
+<div class="flex items-center gap-2">
+<!-- Status Chip -->
+<div class="flex items-center gap-2 bg-[#fff3e0] text-[#e65100] px-3 py-1.5 rounded-full font-label-lg text-label-lg border border-[#ffe0b2]">
+<span class="material-symbols-outlined text-[18px]">warning</span>
+<span>WELLBEING CONCERN: ELEVATED</span>
+</div>
+</div>
+<p class="font-body-md text-body-md text-on-surface-variant leading-relaxed">
+                Some wellbeing-related signals have increased compared with your previous check-ins. Our system has noted these variations to help you stay aware of your current state.
+            </p>
+</section>
+<!-- Detailed Signals Grid -->
+<section class="flex flex-col gap-stack-sm">
+<h3 class="font-label-lg text-label-lg text-on-surface mb-2">Detected Signals</h3>
+<!-- Signal Item -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant p-stack-md flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">psychology</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface font-medium">Fear-related signal</span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">trending_up</span>
+<span class="font-label-md text-label-md">Increased</span>
+</div>
+</div>
+<!-- Signal Item -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant p-stack-md flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">bedtime</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface font-medium">Sleep difficulty</span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">trending_up</span>
+<span class="font-label-md text-label-md">Increased</span>
+</div>
+</div>
+<!-- Signal Item -->
+<div class="bg-surface-container-lowest rounded-lg border border-[#ffe0b2] bg-[#fff8f0] p-stack-md flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-[#ffe0b2] flex items-center justify-center text-[#e65100]">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">health_and_safety</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface font-medium">Safety concern</span>
+</div>
+<div class="flex items-center gap-1 text-[#e65100]">
+<span class="material-symbols-outlined text-[20px]">error</span>
+<span class="font-label-md text-label-md font-bold">Detected</span>
+</div>
+</div>
+<!-- Signal Item -->
+<div class="bg-surface-container-lowest rounded-lg border border-outline-variant p-stack-md flex items-center justify-between">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">monitoring</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface font-medium">Recent trend</span>
+</div>
+<div class="flex items-center gap-1 text-on-surface-variant">
+<span class="material-symbols-outlined text-[20px]">stacked_line_chart</span>
+<span class="font-label-md text-label-md">Increasing</span>
+</div>
+</div>
+</section>
+<!-- Actions Container -->
+<div class="flex flex-col gap-stack-md mt-4">
+<button class="w-full h-touch-target-min bg-primary-container text-on-primary rounded-full flex items-center justify-center gap-2 font-label-lg text-label-lg shadow-sm hover:opacity-90 active:scale-[0.98] transition-all">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">support_agent</span>
+                Get Support
+            </button>
+<button class="w-full h-touch-target-min bg-transparent border-2 border-secondary text-secondary rounded-full flex items-center justify-center gap-2 font-label-lg text-label-lg hover:bg-surface-container-low active:scale-[0.98] transition-all">
+                View My Journey
+            </button>
+</div>
+<!-- Disclaimer -->
+<p class="font-label-md text-label-md text-tertiary text-center mt-stack-sm px-4">
+            This is an automated signal review and is not a medical diagnosis. If you are in immediate danger, please contact emergency services.
+        </p>
+</main>
+</body></html>

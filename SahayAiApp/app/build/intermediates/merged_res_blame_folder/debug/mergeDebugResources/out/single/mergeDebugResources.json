@@ -1,0 +1,22 @@
+[
+    {
+        "merged": "com.sahay.ai.app-debug-47:/drawable-nodpi_ic_launcher_foreground.png.flat",
+        "source": "com.sahay.ai.app-main-49:/drawable-nodpi/ic_launcher_foreground.png"
+    },
+    {
+        "merged": "com.sahay.ai.app-debug-47:/drawable_ic_launcher_background.xml.flat",
+        "source": "com.sahay.ai.app-main-49:/drawable/ic_launcher_background.xml"
+    },
+    {
+        "merged": "com.sahay.ai.app-debug-47:/mipmap-anydpi-v26_ic_launcher.xml.flat",
+        "source": "com.sahay.ai.app-main-49:/mipmap-anydpi-v26/ic_launcher.xml"
+    },
+    {
+        "merged": "com.sahay.ai.app-debug-47:/mipmap-anydpi-v26_ic_launcher_round.xml.flat",
+        "source": "com.sahay.ai.app-main-49:/mipmap-anydpi-v26/ic_launcher_round.xml"
+    },
+    {
+        "merged": "com.sahay.ai.app-debug-47:/drawable_ic_launcher_bg.xml.flat",
+        "source": "com.sahay.ai.app-main-49:/drawable/ic_launcher_bg.xml"
+    }
+]

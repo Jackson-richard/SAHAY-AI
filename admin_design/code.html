@@ -1,0 +1,640 @@
+<!DOCTYPE html>
+
+<html lang="en"><head><meta charset="utf-8"/><meta content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" name="viewport"/><title>SAHAY-AI Officer Portal</title><link href="https://fonts.googleapis.com" rel="preconnect"/><link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/><link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/><link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/><script src="https://cdn.tailwindcss.com"></script><script id="tailwind-config">tailwind.config = { darkMode: "class", theme: { extend: { "colors": { "surface-container-low": "#f0f4f3", "on-primary-container": "#e3fffe", "primary-container": "#008080", "on-primary-fixed-variant": "#004f4f", "on-primary-fixed": "#002020", "surface-tint": "#006a6a", "secondary-fixed-dim": "#a7c8ff", "on-secondary-container": "#294f83", "outline-variant": "#bdc9c8", "on-surface-variant": "#3e4949", "secondary-container": "#9fc2fe", "surface-container-high": "#e5e9e8", "inverse-surface": "#2c3131", "primary-fixed": "#93f2f2", "on-tertiary-fixed": "#191c1d", "on-tertiary-container": "#f9fafb", "error-container": "#ffdad6", "surface": "#f6faf9", "primary-fixed-dim": "#76d6d5", "on-surface": "#181c1c", "tertiary-fixed-dim": "#c5c7c8", "on-secondary": "#ffffff", "inverse-on-surface": "#edf2f1", "on-error-container": "#93000a", "on-secondary-fixed-variant": "#1f477b", "surface-container-highest": "#dfe3e2", "on-background": "#181c1c", "primary": "#006565", "on-error": "#ffffff", "surface-container": "#ebefee", "surface-bright": "#f6faf9", "surface-variant": "#dfe3e2", "tertiary-fixed": "#e1e3e4", "surface-container-lowest": "#ffffff", "on-tertiary-fixed-variant": "#454748", "inverse-primary": "#76d6d5", "surface-dim": "#d7dbda", "tertiary": "#585b5c", "secondary": "#3a5f94", "on-tertiary": "#ffffff", "secondary-fixed": "#d5e3ff", "error": "#ba1a1a", "outline": "#6e7979", "tertiary-container": "#717374", "on-secondary-fixed": "#001b3c", "background": "#f6faf9", "on-primary": "#ffffff" }, "borderRadius": { "DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px" }, "spacing": { "gutter-mobile": "16px", "stack-lg": "24px", "touch-target-min": "48px", "stack-md": "16px", "margin-mobile": "20px", "stack-sm": "8px" }, "fontFamily": { "headline-md": ["Inter"], "label-md": ["Inter"], "body-lg": ["Inter"], "body-md": ["Inter"], "label-lg": ["Inter"], "headline-lg": ["Inter"], "headline-lg-mobile": ["Inter"] }, "fontSize": { "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }], "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "500" }], "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }], "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }], "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }], "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }], "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "700" }] } } } };</script><style>@layer base{html,body{width:100vw;margin:0;padding:0;background-color:#f6faf9;}body{overscroll-behavior:none;-webkit-tap-highlight-color:transparent;}.pb-safe{padding-bottom:env(safe-area-inset-bottom,0px);}.pt-safe{padding-top:env(safe-area-inset-top,0px);}main>:first-child{margin-top:0!important;}main>:last-child{margin-bottom:0!important;}}::-webkit-scrollbar{display:none;}</style><style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head><body class="bg-surface font-body-md text-on-surface min-h-screen flex flex-col antialiased selection:bg-secondary-fixed"><header class="fixed top-0 w-full z-50 pt-safe bg-surface/85 backdrop-blur-xl shadow-[0_1px_8px_rgba(0,0,0,0.04)]"><div class="h-16 px-margin-mobile flex items-center justify-between gap-2"><div class="flex items-center gap-2 min-w-0"><div class="w-9 h-9 rounded-lg bg-primary-container text-on-primary-container flex items-center justify-center flex-shrink-0"><span class="material-symbols-outlined text-[20px]">verified_user</span></div><div class="flex flex-col min-w-0"><div class="flex items-center gap-1"><span class="font-label-lg text-label-lg text-primary leading-tight tracking-tight truncate">SAHAY-AI</span><span class="font-label-md text-[10px] px-1.5 py-0.2 rounded bg-surface-container-high text-on-surface-variant uppercase font-semibold">GOVT</span></div><button class="flex items-center gap-1 text-left group"><span class="font-label-md text-label-md text-on-surface-variant truncate max-w-[130px]">Bengaluru Urban</span><span class="material-symbols-outlined text-[16px] text-on-surface-variant">arrow_drop_down</span></button></div></div><div class="flex items-center gap-2 flex-shrink-0"><button aria-label="Alerts and Escalations" class="relative w-touch-target-min h-touch-target-min flex items-center justify-center text-on-surface-variant hover:text-on-surface rounded-full transition-colors"><span class="material-symbols-outlined text-[24px]">notifications</span><span class="absolute top-2 right-2 flex items-center justify-center min-w-[18px] h-[18px] px-1 rounded-full bg-error text-on-error font-label-md text-[10px] font-bold leading-none ring-2 ring-surface">3</span></button><div class="flex items-center pl-1"><img alt="Profile" class="w-8 h-8 rounded-full object-cover ring-2 ring-primary/20" src="https://lh3.googleusercontent.com/aida/AEtjO1W2gRL2L4vLBwM4QLKwzAsGq_74I-6Jc-T6kzX5VOTsWH6WzCIicj-n_X0zlKvVOzuxPqmk2uwlw-8NxYIJPEoeyX519NEzt0ZyPXxcJxfzcZDpONBzoiSiPAAHFFHIndynQOyIC57bCm-iezqjnQuIH6xEuoo9_r3LGjcbA-gQFKjZvkDlOwwkvOnIU2ps-sajpudCyGPeXci_vMkohVvIENql7lg3EMBgCV0fbtRzILqS8wjt8nmaevf6edU252WTq6MNHELD"/></div></div></div></header><main class="flex-1 flex flex-col relative w-full pt-16 pb-24 bg-surface min-h-screen"><div class="flex flex-col w-full">
+<!-- Top Statutory Authority Badge & Sync Banner -->
+<section class="px-margin-mobile pt-3 pb-2">
+<div class="rounded-xl bg-surface-container-low p-3 shadow-sm flex items-center justify-between gap-2">
+<div class="flex items-center gap-2.5 min-w-0">
+<div class="w-8 h-8 rounded-lg bg-primary/10 text-primary flex items-center justify-center flex-shrink-0">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">sync</span>
+</div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-md text-label-md text-on-surface font-semibold truncate">CCTNS &amp; e-Courts Sync</span>
+<span class="w-1.5 h-1.5 rounded-full bg-primary animate-pulse"></span>
+</div>
+<p class="font-label-md text-[11px] text-on-surface-variant truncate">Live Gateway • Latency 280ms • Urban South</p>
+</div>
+</div>
+<span class="px-2 py-0.5 rounded-full bg-surface-container-highest text-on-surface-variant font-label-md text-[10px] tracking-wider uppercase font-bold flex-shrink-0">Sec. 357A</span>
+</div>
+</section>
+<!-- Screen Header & High-Level Action Row -->
+<header class="px-margin-mobile pt-2 pb-3 flex flex-col gap-2">
+<div>
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile text-on-surface leading-tight tracking-tight">Case Journey Lifecycle &amp; Distress Stratification</h1>
+<p class="font-body-md text-label-lg text-on-surface-variant mt-1 leading-snug">Track cohort distribution, average resolution velocity, and longitudinal mental wellbeing across statutory legal stages.</p>
+</div>
+<!-- Quick Action Chips & Controls -->
+<div class="flex items-center gap-2 pt-1 overflow-x-auto pb-1">
+<button class="h-10 px-3.5 rounded-xl bg-surface-container text-on-surface-variant hover:text-on-surface font-label-lg text-label-lg flex items-center gap-2 shadow-sm whitespace-nowrap transition-colors active:bg-surface-container-high" id="filterTriggerBtn">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">tune</span>
+<span>Cohort Filters</span>
+<span class="w-4 h-4 rounded-full bg-primary text-on-primary font-label-md text-[10px] flex items-center justify-center">3</span>
+</button>
+<button class="h-10 px-4 rounded-xl bg-primary text-on-primary font-label-lg text-label-lg flex items-center gap-2 shadow-sm whitespace-nowrap active:opacity-95 transition-opacity ml-auto" id="exportDossierBtn">
+<span class="material-symbols-outlined text-[18px]" style="font-variation-settings: 'FILL' 1;">download</span>
+<span>Export Audit Dossier</span>
+</button>
+</div>
+</header>
+<!-- Interactive Filter Modal / Sheet Drawer (Hidden by default, triggered via JS) -->
+<div class="hidden fixed inset-0 z-50 bg-inverse-surface/40 backdrop-blur-sm p-margin-mobile flex flex-col justify-end" id="filterDrawer">
+<div class="bg-surface-container-lowest rounded-2xl p-5 shadow-xl flex flex-col gap-4 max-h-[707px] overflow-y-auto">
+<div class="flex items-center justify-between pb-2">
+<div class="flex items-center gap-2">
+<span class="material-symbols-outlined text-primary text-[22px]">tune</span>
+<span class="font-headline-md text-headline-md text-on-surface">Filter Cohort</span>
+</div>
+<button class="w-8 h-8 rounded-full bg-surface-container flex items-center justify-center text-on-surface-variant" id="closeFilterBtn">
+<span class="material-symbols-outlined text-[18px]">close</span>
+</button>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-on-surface-variant">Police Station Jurisdiction</label>
+<div class="flex flex-wrap gap-1.5">
+<button class="px-3 py-1.5 rounded-lg bg-primary-container text-on-primary-container font-label-md text-label-md">All Stations</button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md">Indiranagar PS</button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md">Koramangala PS</button>
+<button class="px-3 py-1.5 rounded-lg bg-surface-container text-on-surface font-label-md text-label-md">Cubbon Park PS</button>
+</div>
+</div>
+<div class="flex flex-col gap-2">
+<label class="font-label-md text-label-md text-on-surface-variant">Distress Vulnerability Stratum</label>
+<div class="grid grid-cols-2 gap-2">
+<div class="p-2.5 rounded-xl bg-error-container text-on-error-container font-label-md text-label-md flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-error"></span> Critical (&gt;60)
+          </div>
+<div class="p-2.5 rounded-xl bg-surface-container text-on-surface font-label-md text-label-md flex items-center gap-2">
+<span class="w-2.5 h-2.5 rounded-full bg-secondary"></span> Moderate (40-60)
+          </div>
+</div>
+</div>
+<button class="w-full h-11 rounded-xl bg-primary text-on-primary font-label-lg text-label-lg font-semibold flex items-center justify-center mt-2 shadow-sm" id="applyFiltersBtn">
+        Apply 3 Filters (847 Cases)
+      </button>
+</div>
+</div>
+<!-- Statutory Stage Horizontal Scroll Cards -->
+<section class="mt-2 flex flex-col gap-2">
+<div class="px-margin-mobile flex items-center justify-between">
+<div class="flex items-center gap-1.5">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold tracking-tight">Legal Stages Pipeline</span>
+<span class="font-label-md text-[11px] text-on-surface-variant font-normal">5 Statutory Milestones</span>
+</div>
+<span class="font-label-md text-[11px] text-primary flex items-center gap-0.5">
+<span>Swipe stages</span>
+<span class="material-symbols-outlined text-[14px]">arrow_forward</span>
+</span>
+</div>
+<!-- Scroll Container -->
+<div class="flex gap-3 px-margin-mobile overflow-x-auto snap-x snap-mandatory py-1">
+<!-- Stage 1 -->
+<article class="snap-start shrink-0 w-[240px] rounded-2xl bg-surface-container-lowest p-4 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-md text-[11px] px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-semibold">STAGE 01</span>
+<span class="font-label-md text-[11px] text-primary font-semibold">Base Level</span>
+</div>
+<h2 class="font-label-lg text-label-lg text-on-surface font-semibold leading-tight">Registration Completed</h2>
+<p class="font-label-md text-[12px] text-on-surface-variant mt-0.5">FIR Formalized • Zero FIR</p>
+</div>
+<div class="mt-4 pt-3 bg-surface-container-low rounded-xl p-2.5 flex items-center justify-between">
+<div>
+<span class="font-label-md text-[10px] text-on-surface-variant uppercase tracking-wide block">Active Cohort</span>
+<span class="font-headline-md text-[18px] text-on-surface font-bold">182</span>
+</div>
+<div class="text-right">
+<span class="font-label-md text-[10px] text-on-surface-variant uppercase tracking-wide block">Distress / Vel.</span>
+<div class="flex items-center gap-1">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">34.2</span>
+<span class="text-on-surface-variant text-[11px]">• 4d</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Stage 2: High Friction Alert -->
+<article class="snap-start shrink-0 w-[255px] rounded-2xl bg-error-container/40 p-4 shadow-md flex flex-col justify-between relative overflow-hidden">
+<div class="absolute top-0 right-0 w-24 h-24 bg-error/10 rounded-full blur-xl pointer-events-none"></div>
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-md text-[11px] px-2 py-0.5 rounded-full bg-error text-on-error font-semibold flex items-center gap-1">
+<span class="material-symbols-outlined text-[13px]" style="font-variation-settings: 'FILL' 1;">warning</span>
+              STAGE 02
+            </span>
+<span class="font-label-md text-[11px] text-error font-bold flex items-center gap-0.5">
+<span class="material-symbols-outlined text-[13px]">arrow_upward</span>
+              Friction Peak
+            </span>
+</div>
+<h2 class="font-label-lg text-label-lg text-on-surface font-semibold leading-tight">Investigation Active</h2>
+<p class="font-label-md text-[12px] text-on-error-container mt-0.5">Charge-sheet drafting • Sec 164</p>
+</div>
+<div class="mt-4 pt-3 bg-surface-container-lowest rounded-xl p-2.5 flex items-center justify-between shadow-sm">
+<div>
+<span class="font-label-md text-[10px] text-error font-semibold uppercase tracking-wide block">Cohort Peak</span>
+<span class="font-headline-md text-[20px] text-error font-bold">314</span>
+</div>
+<div class="text-right">
+<span class="font-label-md text-[10px] text-on-surface-variant uppercase tracking-wide block">Distress / Avg</span>
+<div class="flex items-center gap-1">
+<span class="font-label-lg text-label-lg text-error font-bold">58.4</span>
+<span class="text-on-surface-variant text-[11px]">• 38d</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Stage 3 -->
+<article class="snap-start shrink-0 w-[240px] rounded-2xl bg-surface-container-lowest p-4 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-md text-[11px] px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-semibold">STAGE 03</span>
+<span class="font-label-md text-[11px] text-secondary font-semibold">Adjudication</span>
+</div>
+<h2 class="font-label-lg text-label-lg text-on-surface font-semibold leading-tight">Trial Pending / Active</h2>
+<p class="font-label-md text-[12px] text-on-surface-variant mt-0.5">Court Examination • Fast-track</p>
+</div>
+<div class="mt-4 pt-3 bg-surface-container-low rounded-xl p-2.5 flex items-center justify-between">
+<div>
+<span class="font-label-md text-[10px] text-on-surface-variant uppercase tracking-wide block">Active Cohort</span>
+<span class="font-headline-md text-[18px] text-on-surface font-bold">226</span>
+</div>
+<div class="text-right">
+<span class="font-label-md text-[10px] text-on-surface-variant uppercase tracking-wide block">Distress / Vel.</span>
+<div class="flex items-center gap-1">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">52.1</span>
+<span class="text-on-surface-variant text-[11px]">• 142d</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Stage 4 -->
+<article class="snap-start shrink-0 w-[240px] rounded-2xl bg-surface-container-lowest p-4 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-md text-[11px] px-2 py-0.5 rounded-full bg-surface-container text-on-surface-variant font-semibold">STAGE 04</span>
+<span class="font-label-md text-[11px] text-primary font-semibold">DLSA Escrow</span>
+</div>
+<h2 class="font-label-lg text-label-lg text-on-surface font-semibold leading-tight">Compensation Pending</h2>
+<p class="font-label-md text-[12px] text-on-surface-variant mt-0.5">Awaiting Treasury Payout</p>
+</div>
+<div class="mt-4 pt-3 bg-surface-container-low rounded-xl p-2.5 flex items-center justify-between">
+<div>
+<span class="font-label-md text-[10px] text-on-surface-variant uppercase tracking-wide block">Active Cohort</span>
+<span class="font-headline-md text-[18px] text-on-surface font-bold">89</span>
+</div>
+<div class="text-right">
+<span class="font-label-md text-[10px] text-on-surface-variant uppercase tracking-wide block">Distress / Vel.</span>
+<div class="flex items-center gap-1">
+<span class="font-label-lg text-label-lg text-on-surface font-semibold">41.6</span>
+<span class="text-on-surface-variant text-[11px]">• 45d</span>
+</div>
+</div>
+</div>
+</article>
+<!-- Stage 5 -->
+<article class="snap-start shrink-0 w-[240px] rounded-2xl bg-surface-container-lowest p-4 shadow-sm flex flex-col justify-between">
+<div>
+<div class="flex items-center justify-between mb-2">
+<span class="font-label-md text-[11px] px-2 py-0.5 rounded-full bg-secondary-fixed text-on-secondary-fixed font-semibold">STAGE 05</span>
+<span class="font-label-md text-[11px] text-primary font-semibold">Stabilized</span>
+</div>
+<h2 class="font-label-lg text-label-lg text-on-surface font-semibold leading-tight">Rehabilitation Active</h2>
+<p class="font-label-md text-[12px] text-on-surface-variant mt-0.5">Livelihood &amp; Clinical Followup</p>
+</div>
+<div class="mt-4 pt-3 bg-surface-container-low rounded-xl p-2.5 flex items-center justify-between">
+<div>
+<span class="font-label-md text-[10px] text-on-surface-variant uppercase tracking-wide block">Active Cohort</span>
+<span class="font-headline-md text-[18px] text-on-surface font-bold">36</span>
+</div>
+<div class="text-right">
+<span class="font-label-md text-[10px] text-on-surface-variant uppercase tracking-wide block">Distress / Vel.</span>
+<div class="flex items-center gap-1">
+<span class="font-label-lg text-label-lg text-primary font-bold">28.5</span>
+<span class="text-on-surface-variant text-[11px]">• 90d</span>
+</div>
+</div>
+</div>
+</article>
+</div>
+</section>
+<!-- Longitudinal Trajectory Chart Card -->
+<section class="px-margin-mobile mt-4">
+<div class="rounded-2xl bg-surface-container-lowest p-4 shadow-sm flex flex-col gap-3">
+<div class="flex items-start justify-between">
+<div>
+<h2 class="font-label-lg text-label-lg text-on-surface font-semibold">Stage Distress Velocity &amp; Early-Warning Correlation</h2>
+<p class="font-label-md text-[12px] text-on-surface-variant">Longitudinal curve showing high distress surge during testimony stages</p>
+</div>
+<span class="material-symbols-outlined text-primary text-[20px]">show_chart</span>
+</div>
+<!-- Chart Visual Area with Inline SVG Data Visualization -->
+<div class="w-full h-44 bg-surface-container-low rounded-xl p-2 relative flex flex-col justify-between overflow-hidden">
+<!-- Background Grid Ticks -->
+<div class="absolute inset-0 flex flex-col justify-between p-3 pointer-events-none opacity-25">
+<div class="w-full h-[1px] bg-outline-variant"></div>
+<div class="w-full h-[1px] bg-outline-variant"></div>
+<div class="w-full h-[1px] bg-outline-variant"></div>
+<div class="w-full h-[1px] bg-outline-variant"></div>
+</div>
+<!-- Metric Callouts over the chart -->
+<div class="relative z-10 flex items-center justify-between text-[11px] font-label-md text-on-surface-variant px-1 pt-1">
+<div class="flex items-center gap-2">
+<span class="flex items-center gap-1 text-error font-semibold">
+<span class="w-2 h-2 rounded-full bg-error"></span> Distress Index
+            </span>
+<span class="flex items-center gap-1 text-secondary font-semibold">
+<span class="w-2 h-2 rounded-full bg-secondary"></span> Resolution %
+            </span>
+</div>
+<span class="px-1.5 py-0.5 rounded bg-error-container text-error font-semibold text-[10px]">Peak 58.4 (Stg 2)</span>
+</div>
+<!-- SVG Line Chart (Distress vs Resolution Velocity) -->
+<div class="relative w-full h-28 my-auto">
+<svg class="w-full h-full overflow-visible" preserveaspectratio="none" viewbox="0 0 320 100">
+<defs>
+<lineargradient id="distressGradient" x1="0" x2="0" y1="0" y2="1">
+<stop offset="0%" stop-color="#ba1a1a" stop-opacity="0.32"></stop>
+<stop offset="100%" stop-color="#ba1a1a" stop-opacity="0.0"></stop>
+</lineargradient>
+</defs>
+<!-- Area under distress line -->
+<polygon fill="url(#distressGradient)" points="10,65 75,20 150,32 230,52 310,75 310,100 10,100"></polygon>
+<!-- Resolution velocity curve (Secondary line) -->
+<path d="M 10 90 Q 75 75, 150 55 T 310 18" fill="none" stroke="#3a5f94" stroke-dasharray="3 3" stroke-width="2.2"></path>
+<!-- Distress Velocity curve (Error / Primary alert line) -->
+<path d="M 10 65 L 75 20 L 150 32 L 230 52 L 310 75" fill="none" stroke="#ba1a1a" stroke-width="2.5"></path>
+<!-- Key Points & Markers -->
+<!-- Stg 1: 34.2 -->
+<circle cx="10" cy="65" fill="#ba1a1a" r="3.5"></circle>
+<!-- Stg 2 Peak: 58.4 -->
+<circle cx="75" cy="20" fill="#ba1a1a" r="5" stroke="#ffffff" stroke-width="2"></circle>
+<!-- Stg 3: 52.1 -->
+<circle cx="150" cy="32" fill="#ba1a1a" r="4" stroke="#ffffff" stroke-width="1.5"></circle>
+<!-- Stg 4: 41.6 -->
+<circle cx="230" cy="52" fill="#ba1a1a" r="3.5"></circle>
+<!-- Stg 5: 28.5 -->
+<circle cx="310" cy="75" fill="#006565" r="3.5"></circle>
+</svg>
+</div>
+<!-- Stage axis legend -->
+<div class="relative z-10 flex justify-between font-label-md text-[10px] text-on-surface-variant px-1 font-medium">
+<span>Stg 1</span>
+<span class="text-error font-bold">Stg 2 (Peak)</span>
+<span>Stg 3</span>
+<span>Stg 4</span>
+<span>Stg 5</span>
+</div>
+</div>
+</div>
+</section>
+<!-- Clinical Friction & Safeguard Callout Banner -->
+<section class="px-margin-mobile mt-3">
+<div class="rounded-2xl bg-error-container p-4 shadow-sm flex flex-col gap-3">
+<div class="flex items-start gap-3">
+<div class="w-10 h-10 rounded-xl bg-error text-on-error flex items-center justify-center flex-shrink-0 shadow-sm">
+<span class="material-symbols-outlined text-[22px]" style="font-variation-settings: 'FILL' 1;">crisis_alert</span>
+</div>
+<div class="flex flex-col">
+<span class="font-label-lg text-label-lg text-on-error-container font-bold">Investigation &amp; Bail Hearing Window Alert</span>
+<p class="font-body-md text-label-md text-on-error-container mt-0.5 leading-relaxed">
+            Investigation &amp; Bail Hearing windows demonstrate an <span class="font-bold underline">84% spike in elevated distress alerts</span> due to coercion threats and repetitive testimony.
+          </p>
+</div>
+</div>
+<div class="bg-surface-container-lowest rounded-xl p-3 flex items-center justify-between gap-2 shadow-sm">
+<div class="flex items-center gap-2 min-w-0">
+<span class="material-symbols-outlined text-primary text-[20px]" style="font-variation-settings: 'FILL' 1;">shield</span>
+<div class="min-w-0">
+<span class="font-label-md text-label-md text-on-surface font-bold block truncate">Pre-Bail Protective Protocol</span>
+<span class="font-label-md text-[11px] text-on-surface-variant truncate block">Automated witness security &amp; clinical counselor link</span>
+</div>
+</div>
+<button class="px-3 py-1.5 rounded-lg bg-primary text-on-primary font-label-md text-[12px] font-semibold flex-shrink-0 active:bg-primary/90">
+          Deploy
+        </button>
+</div>
+</div>
+</section>
+<!-- Active Cohort Roster Section -->
+<section class="px-margin-mobile mt-5 flex flex-col gap-3">
+<div class="flex items-center justify-between">
+<div>
+<h2 class="font-headline-md text-headline-md text-on-surface">Active Cohort Roster</h2>
+<p class="font-label-md text-label-md text-on-surface-variant">Live surveillance of active beneficiaries</p>
+</div>
+<span class="font-label-md text-[11px] px-2 py-1 rounded-md bg-surface-container text-on-surface-variant font-semibold">847 Monitored</span>
+</div>
+<!-- Scrollable Tab Filter Bar -->
+<div class="flex gap-2 overflow-x-auto pb-1" id="cohortTabs">
+<button class="cohort-tab-btn active px-3.5 py-1.5 rounded-xl bg-primary text-on-primary font-label-md text-label-md font-semibold whitespace-nowrap shadow-sm" data-filter="all">
+        All Stages (847)
+      </button>
+<button class="cohort-tab-btn px-3.5 py-1.5 rounded-xl bg-surface-container text-on-surface font-label-md text-label-md whitespace-nowrap" data-filter="investigation">
+        Stage 2: Investigation (314)
+      </button>
+<button class="cohort-tab-btn px-3.5 py-1.5 rounded-xl bg-surface-container text-on-surface font-label-md text-label-md whitespace-nowrap" data-filter="trial">
+        Stage 3: Trial (226)
+      </button>
+<button class="cohort-tab-btn px-3.5 py-1.5 rounded-xl bg-surface-container text-on-surface font-label-md text-label-md whitespace-nowrap" data-filter="compensation">
+        Compensation (89)
+      </button>
+</div>
+<!-- Beneficiary Ledger Cards -->
+<div class="flex flex-col gap-3" id="rosterList">
+<!-- Card 1: Priya Sharma (Investigation Critical) -->
+<article class="cohort-card investigation rounded-2xl bg-surface-container-lowest p-4 shadow-sm flex flex-col gap-3 transition-transform active:scale-[0.99]">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-11 h-11 rounded-full bg-error-container text-on-error-container font-headline-md text-[16px] font-bold flex items-center justify-center flex-shrink-0">
+              PS
+            </div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-lg text-label-lg text-on-surface font-bold truncate">Priya Sharma</span>
+<span class="px-1.5 py-0.2 rounded bg-error text-on-error font-label-md text-[10px] uppercase font-bold">Critical</span>
+</div>
+<span class="font-label-md text-[12px] text-on-surface-variant font-mono">VCT-2024-00847</span>
+</div>
+</div>
+<div class="text-right flex-shrink-0">
+<span class="font-label-md text-[10px] uppercase text-error font-bold block">Distress 67</span>
+<span class="font-label-md text-[11px] text-on-surface-variant">Panic Index</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 pt-1 font-label-md text-[12px]">
+<div class="bg-surface-container-low rounded-xl p-2.5">
+<span class="text-on-surface-variant text-[11px] block">Stage • Velocity</span>
+<span class="text-on-surface font-semibold block truncate">Investigation (Day 16)</span>
+</div>
+<div class="bg-surface-container-low rounded-xl p-2.5">
+<span class="text-on-surface-variant text-[11px] block">Station • Officer</span>
+<span class="text-on-surface font-semibold block truncate">Indiranagar PS (SI M. Gowda)</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1 border-t border-surface-container-high/40 text-on-surface-variant font-label-md text-[12px]">
+<div class="flex items-center gap-1.5 min-w-0">
+<span class="material-symbols-outlined text-[16px] text-primary">person</span>
+<span class="truncate">Counselor: Smt. Deepa Nair</span>
+</div>
+<div class="flex items-center gap-1 text-error font-semibold flex-shrink-0">
+<span class="material-symbols-outlined text-[15px]">event</span>
+<span>Sec. 164 Statement</span>
+</div>
+</div>
+<div class="flex items-center gap-2 pt-1">
+<button class="flex-1 h-9 rounded-xl bg-error-container text-on-error-container font-label-md text-[12px] font-bold flex items-center justify-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]" style="font-variation-settings: 'FILL' 1;">sos</span>
+<span>Emergency Intervention</span>
+</button>
+<button class="w-9 h-9 rounded-xl bg-surface-container text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</article>
+<!-- Card 2: Ananya K. (Trial Moderate) -->
+<article class="cohort-card trial rounded-2xl bg-surface-container-lowest p-4 shadow-sm flex flex-col gap-3 transition-transform active:scale-[0.99]">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-11 h-11 rounded-full bg-secondary-fixed text-on-secondary-fixed font-headline-md text-[16px] font-bold flex items-center justify-center flex-shrink-0">
+              AK
+            </div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-lg text-label-lg text-on-surface font-bold truncate">Ananya K.</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-high text-on-surface-variant font-label-md text-[10px] uppercase font-medium">Protected</span>
+</div>
+<span class="font-label-md text-[12px] text-on-surface-variant font-mono">VCT-2023-01129</span>
+</div>
+</div>
+<div class="text-right flex-shrink-0">
+<span class="font-label-md text-[10px] uppercase text-secondary font-bold block">Distress 48</span>
+<span class="font-label-md text-[11px] text-on-surface-variant">Moderate</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 pt-1 font-label-md text-[12px]">
+<div class="bg-surface-container-low rounded-xl p-2.5">
+<span class="text-on-surface-variant text-[11px] block">Stage • Velocity</span>
+<span class="text-on-surface font-semibold block truncate">Trial Pending (Day 84)</span>
+</div>
+<div class="bg-surface-container-low rounded-xl p-2.5">
+<span class="text-on-surface-variant text-[11px] block">Jurisdiction • Advocate</span>
+<span class="text-on-surface font-semibold block truncate">Koramangala (K. Ramesh Babu)</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1 border-t border-surface-container-high/40 text-on-surface-variant font-label-md text-[12px]">
+<div class="flex items-center gap-1.5 min-w-0">
+<span class="material-symbols-outlined text-[16px] text-secondary">gavel</span>
+<span class="truncate">Fast-track Special Court</span>
+</div>
+<div class="flex items-center gap-1 text-on-surface font-medium flex-shrink-0">
+<span class="material-symbols-outlined text-[15px] text-primary">calendar_today</span>
+<span>Cross Exam 04 Nov</span>
+</div>
+</div>
+<div class="flex items-center gap-2 pt-1">
+<button class="flex-1 h-9 rounded-xl bg-surface-container text-on-surface font-label-lg text-[12px] font-semibold flex items-center justify-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">support_agent</span>
+<span>Escort Briefing</span>
+</button>
+<button class="w-9 h-9 rounded-xl bg-surface-container text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</article>
+<!-- Card 3: Meera L. (Compensation) -->
+<article class="cohort-card compensation rounded-2xl bg-surface-container-lowest p-4 shadow-sm flex flex-col gap-3 transition-transform active:scale-[0.99]">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-11 h-11 rounded-full bg-primary-container/20 text-primary font-headline-md text-[16px] font-bold flex items-center justify-center flex-shrink-0">
+              ML
+            </div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-lg text-label-lg text-on-surface font-bold truncate">Meera L.</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-high text-on-surface-variant font-label-md text-[10px] uppercase font-medium">Protected</span>
+</div>
+<span class="font-label-md text-[12px] text-on-surface-variant font-mono">VCT-2024-00412</span>
+</div>
+</div>
+<div class="text-right flex-shrink-0">
+<span class="font-label-md text-[10px] uppercase text-primary font-bold block">Distress 38</span>
+<span class="font-label-md text-[11px] text-on-surface-variant">Normalising</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 pt-1 font-label-md text-[12px]">
+<div class="bg-surface-container-low rounded-xl p-2.5">
+<span class="text-on-surface-variant text-[11px] block">Stage • Velocity</span>
+<span class="text-on-surface font-semibold block truncate">Compensation (Day 31)</span>
+</div>
+<div class="bg-surface-container-low rounded-xl p-2.5">
+<span class="text-on-surface-variant text-[11px] block">Originating Station</span>
+<span class="text-on-surface font-semibold block truncate">Cubbon Park PS</span>
+</div>
+</div>
+<div class="bg-surface-container rounded-xl p-2.5 flex items-center justify-between text-on-surface font-label-md text-[12px]">
+<div class="flex items-center gap-1.5">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">payments</span>
+<span class="font-semibold">₹3,50,000 ECS Release Pending</span>
+</div>
+<span class="text-[11px] text-primary font-semibold">Treasury Step 3/4</span>
+</div>
+<div class="flex items-center gap-2 pt-1">
+<button class="flex-1 h-9 rounded-xl bg-surface-container text-on-surface font-label-lg text-[12px] font-semibold flex items-center justify-center gap-1.5">
+<span class="material-symbols-outlined text-[16px]">send_time_extension</span>
+<span>Speed Escrow Authorization</span>
+</button>
+<button class="w-9 h-9 rounded-xl bg-surface-container text-on-surface-variant flex items-center justify-center">
+<span class="material-symbols-outlined text-[18px]">chevron_right</span>
+</button>
+</div>
+</article>
+<!-- Card 4: Rekha T. (Rehabilitation) -->
+<article class="cohort-card rehabilitation rounded-2xl bg-surface-container-lowest p-4 shadow-sm flex flex-col gap-3 transition-transform active:scale-[0.99]">
+<div class="flex items-start justify-between gap-2">
+<div class="flex items-center gap-3 min-w-0">
+<div class="w-11 h-11 rounded-full bg-surface-container-high text-on-surface font-headline-md text-[16px] font-bold flex items-center justify-center flex-shrink-0">
+              RT
+            </div>
+<div class="min-w-0">
+<div class="flex items-center gap-1.5">
+<span class="font-label-lg text-label-lg text-on-surface font-bold truncate">Rekha T.</span>
+<span class="px-1.5 py-0.2 rounded bg-surface-container-high text-on-surface-variant font-label-md text-[10px] uppercase font-medium">Protected</span>
+</div>
+<span class="font-label-md text-[12px] text-on-surface-variant font-mono">VCT-2023-00918</span>
+</div>
+</div>
+<div class="text-right flex-shrink-0">
+<span class="font-label-md text-[10px] uppercase text-primary font-bold block">Distress 22</span>
+<span class="font-label-md text-[11px] text-primary font-semibold">Resilient</span>
+</div>
+</div>
+<div class="grid grid-cols-2 gap-2 pt-1 font-label-md text-[12px]">
+<div class="bg-surface-container-low rounded-xl p-2.5">
+<span class="text-on-surface-variant text-[11px] block">Stage • Velocity</span>
+<span class="text-on-surface font-semibold block truncate">Rehabilitation (Day 74)</span>
+</div>
+<div class="bg-surface-container-low rounded-xl p-2.5">
+<span class="text-on-surface-variant text-[11px] block">Intervention Program</span>
+<span class="text-on-surface font-semibold block truncate">Vocational Upskill &amp; Livelihood</span>
+</div>
+</div>
+<div class="flex items-center justify-between pt-1 border-t border-surface-container-high/40 text-on-surface-variant font-label-md text-[12px]">
+<div class="flex items-center gap-1.5 min-w-0">
+<span class="material-symbols-outlined text-[16px] text-primary" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+<span class="truncate">Monthly Check-in Cleared</span>
+</div>
+<span class="text-primary font-semibold">Self-sustaining</span>
+</div>
+</article>
+</div>
+</section>
+<!-- Bottom Pagination & Regulatory Disclaimer -->
+<footer class="px-margin-mobile pt-4 pb-6 flex flex-col gap-3">
+<!-- Pagination Control -->
+<div class="rounded-xl bg-surface-container-lowest p-2 shadow-sm flex items-center justify-between">
+<button class="h-9 px-3 rounded-lg bg-surface-container text-on-surface-variant font-label-md text-label-md flex items-center gap-1 disabled:opacity-50">
+<span class="material-symbols-outlined text-[16px]">arrow_back</span>
+<span>Prev</span>
+</button>
+<span class="font-label-md text-label-md text-on-surface-variant">Page 1 of 85 • 847 Cases</span>
+<button class="h-9 px-3 rounded-lg bg-surface-container-high text-on-surface font-label-md text-label-md flex items-center gap-1">
+<span>Next</span>
+<span class="material-symbols-outlined text-[16px]">arrow_forward</span>
+</button>
+</div>
+<!-- Statutory Notice Stamp -->
+<div class="p-3 rounded-xl bg-surface-container-low flex flex-col gap-1">
+<div class="flex items-center gap-1.5 text-on-surface-variant">
+<span class="material-symbols-outlined text-[16px] text-primary">policy</span>
+<span class="font-label-md text-[11px] font-semibold uppercase">Statutory Governance Audit</span>
+</div>
+<p class="font-label-md text-[10px] text-on-surface-variant leading-normal">
+        Filtered to Bengaluru Urban South Administrative Division. Data cryptographically synchronized under Karnataka Victim Compensation Scheme guidelines and Bharatiya Nagarik Suraksha Sanhita (BNSS) legal mandates.
+      </p>
+</div>
+</footer>
+</div>
+<!-- Inline Javascript for Interactive Tabs and Filter Drawer micro-delights -->
+<script>
+  (function() {
+    // 1. Highlight Active Bottom Navigation Link
+    const navLinks = document.querySelectorAll('nav a');
+    navLinks.forEach(link => {
+      if (link.getAttribute('data-path') === 'victim-journey') {
+        link.classList.add('text-primary', 'font-semibold');
+        link.classList.remove('text-on-surface-variant');
+        const icon = link.querySelector('.material-symbols-outlined');
+        if (icon) {
+          icon.style.fontVariationSettings = "'FILL' 1";
+        }
+      } else {
+        link.classList.remove('text-primary', 'font-semibold');
+        link.classList.add('text-on-surface-variant');
+      }
+    });
+
+    // 2. Interactive Cohort Tab Filtering
+    const tabs = document.querySelectorAll('.cohort-tab-btn');
+    const cards = document.querySelectorAll('.cohort-card');
+
+    tabs.forEach(tab => {
+      tab.addEventListener('click', () => {
+        tabs.forEach(t => {
+          t.classList.remove('bg-primary', 'text-on-primary', 'shadow-sm', 'font-semibold');
+          t.classList.add('bg-surface-container', 'text-on-surface');
+        });
+        tab.classList.add('bg-primary', 'text-on-primary', 'shadow-sm', 'font-semibold');
+        tab.classList.remove('bg-surface-container', 'text-on-surface');
+
+        const filter = tab.getAttribute('data-filter');
+        cards.forEach(card => {
+          if (filter === 'all' || card.classList.contains(filter)) {
+            card.style.display = 'flex';
+          } else {
+            card.style.display = 'none';
+          }
+        });
+      });
+    });
+
+    // 3. Filter Drawer Toggle
+    const filterBtn = document.getElementById('filterTriggerBtn');
+    const filterDrawer = document.getElementById('filterDrawer');
+    const closeFilterBtn = document.getElementById('closeFilterBtn');
+    const applyFiltersBtn = document.getElementById('applyFiltersBtn');
+
+    if (filterBtn && filterDrawer) {
+      filterBtn.addEventListener('click', () => filterDrawer.classList.remove('hidden'));
+    }
+    if (closeFilterBtn && filterDrawer) {
+      closeFilterBtn.addEventListener('click', () => filterDrawer.classList.add('hidden'));
+    }
+    if (applyFiltersBtn && filterDrawer) {
+      applyFiltersBtn.addEventListener('click', () => filterDrawer.classList.add('hidden'));
+    }
+
+    // 4. Export Audit Dossier toast micro-interaction
+    const exportBtn = document.getElementById('exportDossierBtn');
+    if (exportBtn) {
+      exportBtn.addEventListener('click', () => {
+        const originalText = exportBtn.innerHTML;
+        exportBtn.innerHTML = `<span class="material-symbols-outlined text-[18px] animate-spin">progress_activity</span><span>Preparing...</span>`;
+        exportBtn.disabled = true;
+        setTimeout(() => {
+          exportBtn.innerHTML = `<span class="material-symbols-outlined text-[18px]">check_circle</span><span>Dossier Ready</span>`;
+          setTimeout(() => {
+            exportBtn.innerHTML = originalText;
+            exportBtn.disabled = false;
+          }, 1800);
+        }, 1200);
+      });
+    }
+  })();
+</script></main><nav class="fixed bottom-0 w-full z-50 pb-safe bg-surface/90 backdrop-blur-xl shadow-[0_-2px_12px_rgba(0,0,0,0.05)]" data-active-classes="text-primary font-semibold"><div class="flex items-center justify-around h-16 px-2"><a class="flex flex-col items-center justify-center w-touch-target-min h-touch-target-min gap-1 text-on-surface-variant hover:text-on-surface transition-colors" data-path="overview" href="#"><span class="material-symbols-outlined text-[22px]">space_dashboard</span><span class="font-label-md text-[11px] leading-tight">Overview</span></a><a class="relative flex flex-col items-center justify-center w-touch-target-min h-touch-target-min gap-1 text-on-surface-variant hover:text-on-surface transition-colors" data-path="flagged-alerts" href="#"><span class="material-symbols-outlined text-[22px]">emergency_home</span><span class="font-label-md text-[11px] leading-tight">Flagged</span><span class="absolute top-1.5 right-2.5 w-2 h-2 rounded-full bg-error ring-1 ring-surface"></span></a><a aria-current="page" class="flex flex-col items-center justify-center w-touch-target-min h-touch-target-min gap-1 transition-colors text-primary font-semibold" data-path="triage-routing" href="#"><span class="material-symbols-outlined text-[22px]">alt_route</span><span class="font-label-md text-[11px] leading-tight">Triage</span></a><a class="flex flex-col items-center justify-center w-touch-target-min h-touch-target-min gap-1 text-on-surface-variant hover:text-on-surface transition-colors" data-path="victim-journey" href="#"><span class="material-symbols-outlined text-[22px]">timeline</span><span class="font-label-md text-[11px] leading-tight">Journey</span></a><a class="flex flex-col items-center justify-center w-touch-target-min h-touch-target-min gap-1 text-on-surface-variant hover:text-on-surface transition-colors" data-path="officer-profile" href="#"><span class="material-symbols-outlined text-[22px]">manage_accounts</span><span class="font-label-md text-[11px] leading-tight">More</span></a></div></nav></body></html>
