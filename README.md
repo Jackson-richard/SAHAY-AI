@@ -473,6 +473,6 @@ SAHAY-AI
 AI-Powered Dynamic Mental Health Monitoring & Distress Prediction System
 
 From Reactive Support to Proactive Wellbeing Monitoring.
-
-
+```text
 One thing I'd strongly recommend: **don't put “mental health prediction” everywhere in the README as if the AI diagnoses people.** Your strongest and safest technical positioning is **“AI-assisted wellbeing monitoring and distress early warning.”** That also makes your architecture much easier to defend when judges start asking difficult questions.
+```
