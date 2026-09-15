@@ -51,6 +51,7 @@ Human Review Alert
 Appropriate Support
 
 The system is designed to assist human decision-making rather than replace it.
+```
 
 🧠 How the AI Works
 
@@ -119,7 +120,7 @@ Strong safety-related indicators
 Significant deterioration across check-ins
 
 The system does not automatically diagnose the victim or make legal decisions.
-
+```text
 Instead:
 
 AI Detection
@@ -129,12 +130,14 @@ Early Warning
 Human Review
      ↓
 Appropriate Support
+```
+
 📞 Automated Follow-up
 
 To reduce dependence on users continuously opening the application, SAHAY-AI can support an automated voice check-in workflow.
 
 If a victim does not complete a check-in for a defined period, such as two days:
-
+```text
 No Check-in
      ↓
 Backend Inactivity Detection
@@ -150,6 +153,7 @@ Existing AI Analysis Pipeline
 Distress Assessment
      ↓
 Human Review if Required
+```
 
 This voice-intervention module can be integrated using telephony platforms such as Exotel or Twilio.
 
@@ -181,7 +185,7 @@ MODERATE
 Case E     43 →
 
 This allows authorized personnel to focus attention where it is most needed.
-
+```text
 🏗️ System Architecture
 ┌──────────────────────────┐
 │      Android App         │
@@ -228,6 +232,7 @@ This allows authorized personnel to focus attention where it is most needed.
 │   Distress Score +       │
 │   Trend + Alerts         │
 └──────────────────────────┘
+```
 🛠️ Technology Stack
 Mobile Application
 Kotlin
@@ -255,6 +260,7 @@ Planned Voice Module
 Exotel / Twilio
 Speech-to-Text
 AI Voice Agent
+
 🔐 Security & Privacy
 
 SAHAY-AI handles highly sensitive victim information, so security is a core architectural requirement.
@@ -304,7 +310,9 @@ Early-warning alerts
 Reason for alert
 Follow-up status
 Role-based access
+
 🔄 Example User Journey
+```text
 Victim is onboarded
         ↓
 Completes wellbeing check-in
@@ -322,16 +330,7 @@ Trend updated
 System checks escalation conditions
         ↓
 No concern → Continue monitoring
-
-OR
-
-Concern detected
-        ↓
-Alert generated
-        ↓
-Authorized human review
-        ↓
-Appropriate support
+```
 ⚖️ Human-in-the-Loop Design
 
 SAHAY-AI follows a human-in-the-loop architecture.
@@ -361,6 +360,7 @@ Traditional systems often provide support when a problem has already become visi
 SAHAY-AI adds a continuous early-warning layer.
 
 Traditional Approach
+```text
 Problem occurs
       ↓
 Victim reports
@@ -376,6 +376,7 @@ Distress Trend
 Early Warning
       ↓
 Human Support
+```
 
 This shifts the approach from:
 
@@ -406,6 +407,7 @@ Provide explainable indicators.
 Keep humans involved in intervention decisions.
 Protect sensitive victim information.
 Avoid unnecessary data collection.
+```text
 📂 Project Structure
 SAHAY-AI/
 │
@@ -426,6 +428,7 @@ SAHAY-AI/
 │   └── screenshots/
 │
 └── README.md
+```
 🧪 Project Status
 Current Prototype
  Android application
@@ -446,6 +449,7 @@ Planned
  Advanced prediction models
  Production deployment
  Integration with authorized government workflows
+ 
 🏆 Core Innovation
 
 SAHAY-AI combines:
@@ -471,4 +475,4 @@ AI-Powered Dynamic Mental Health Monitoring & Distress Prediction System
 From Reactive Support to Proactive Wellbeing Monitoring.
 
 
-One thing I'd strongly recommend: **don't put “mental health prediction” everywhere in the README as if t
+One thing I'd strongly recommend: **don't put “mental health prediction” everywhere in the README as if the AI diagnoses people.** Your strongest and safest technical positioning is **“AI-assisted wellbeing monitoring and distress early warning.”** That also makes your architecture much easier to defend when judges start asking difficult questions.
