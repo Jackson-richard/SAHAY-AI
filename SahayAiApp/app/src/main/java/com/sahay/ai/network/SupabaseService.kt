@@ -21,7 +21,8 @@ data class ChatAnalysisRequest(
     val context: String,
     val message: String,
     val case_id: String,
-    val assessment_period_id: String = "DEFAULT"
+    val assessment_period_id: String = "DEFAULT",
+    val input_type: String = "CHAT"
 )
 
 data class ChatAnalysisResponse(
@@ -83,6 +84,13 @@ interface SupabaseService {
         @Header("Content-Type") contentType: String = "application/json"
     ): Response<Unit>
 
+    @GET("rest/v1/check_ins?order=created_at.asc")
+    suspend fun getCheckIns(
+        @retrofit2.http.Query("case_id") caseIdFilter: String,
+        @Header("apikey") apikey: String = SupabaseConfig.ANON_KEY,
+        @Header("Authorization") auth: String = "Bearer ${SessionManager.accessToken ?: SupabaseConfig.ANON_KEY}"
+    ): Response<List<SupabaseCheckIn>>
+
     @POST("rest/v1/rpc/validate_case_existence")
     suspend fun validateCaseExistence(
         @Body request: ValidateCaseRequest,
@@ -90,6 +98,13 @@ interface SupabaseService {
         @Header("Authorization") auth: String = "Bearer ${SessionManager.accessToken ?: SupabaseConfig.ANON_KEY}",
         @Header("Content-Type") contentType: String = "application/json"
     ): Response<Boolean>
+
+    @GET("rest/v1/chat_messages?select=*&order=created_at.asc")
+    suspend fun getChatMessages(
+        @retrofit2.http.Query("case_id") caseIdFilter: String,
+        @Header("apikey") apikey: String = SupabaseConfig.ANON_KEY,
+        @Header("Authorization") auth: String = "Bearer ${SessionManager.accessToken ?: SupabaseConfig.ANON_KEY}"
+    ): Response<List<SupabaseChatMessage>>
 
     @POST("rest/v1/rpc/register_victim")
     suspend fun registerVictimRpc(

@@ -15,8 +15,8 @@ enum class DistressLevel { LOW, MODERATE, HIGH, CRITICAL }
 
 fun getDistressLevel(score: Int): DistressLevel = when {
     score >= 75 -> DistressLevel.CRITICAL
-    score >= 60 -> DistressLevel.HIGH
-    score >= 40 -> DistressLevel.MODERATE
+    score >= 50 -> DistressLevel.HIGH
+    score >= 25 -> DistressLevel.MODERATE
     else -> DistressLevel.LOW
 }
 
@@ -40,7 +40,11 @@ data class AIAnalysis(
     val summary: String,
     val recommendedSupportCategory: String,
     val escalationReason: String?,
-    val isHumanReviewRecommended: Boolean
+    val isHumanReviewRecommended: Boolean,
+    val emotionalDistressLevel: Double = 0.0,
+    val fearLevel: Double = 0.0,
+    val feelingUnsafe: Boolean = false,
+    val urgency: String = "low"
 )
 
 data class CaseRecord(
@@ -73,4 +77,15 @@ data class TrustedContact(
     val name: String,
     val phone: String,
     val useForSupport: Boolean
+)
+
+enum class InputMode {
+    CHAT,
+    VOICE
+}
+
+data class ChatMessage(
+    val sender: String,
+    val message: String,
+    val inputMode: InputMode = InputMode.CHAT
 )

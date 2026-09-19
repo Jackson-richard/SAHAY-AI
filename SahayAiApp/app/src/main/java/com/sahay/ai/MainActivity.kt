@@ -12,6 +12,7 @@ import com.sahay.ai.ui.theme.SahayTheme
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        com.sahay.ai.network.SessionManager.init(applicationContext)
         setContent {
             SahayTheme {
                 Surface(modifier = Modifier.fillMaxSize()) {

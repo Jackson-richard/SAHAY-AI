@@ -20,10 +20,22 @@ import com.sahay.ai.ui.screens.OfficialCaseDetailScreen
 fun SahayApp(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     val viewModel: MainViewModel = viewModel()
+    
+    val isRestored = viewModel.isSessionRestored.collectAsState().value
 
-    NavHost(navController = navController, startDestination = "role_selection", modifier = modifier) {
+    if (isRestored == null) {
+        // Splash screen while checking session
+        Box(modifier = Modifier.fillMaxSize(), contentAlignment = androidx.compose.ui.Alignment.Center) {
+            CircularProgressIndicator()
+        }
+        return
+    }
+    
+    val startDest = if (isRestored) "victim_dashboard" else "role_selection"
+
+    NavHost(navController = navController, startDestination = startDest, modifier = modifier) {
         composable("role_selection") {
-            RoleSelectionScreen(navController)
+            RoleSelectionScreen(navController, viewModel)
         }
         composable("victim_language") {
             VictimLanguageScreen(navController, viewModel)

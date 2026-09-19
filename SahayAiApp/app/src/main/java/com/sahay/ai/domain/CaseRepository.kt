@@ -5,6 +5,8 @@ import com.sahay.ai.data.CaseStatus
 import com.sahay.ai.data.CheckIn
 import com.sahay.ai.data.UserProfile
 import com.sahay.ai.data.AIAnalysis
+import com.sahay.ai.data.ChatMessage
+import com.sahay.ai.data.InputMode
 import com.sahay.ai.network.AuthRequest
 import com.sahay.ai.network.RetrofitClient
 import com.sahay.ai.network.SessionManager
@@ -134,6 +136,43 @@ class CaseRepository {
         }
     }
     
+    suspend fun restoreSession(): Boolean {
+        val token = SessionManager.victimSessionToken
+        if (token != null) {
+            android.util.Log.d("AuthDebug", "SESSION_FOUND - Victim session token found")
+            val req = DashboardRequest(token)
+            val res = try {
+                RetrofitClient.supabaseService.getVictimDashboard(req)
+            } catch (e: Exception) {
+                null
+            }
+            if (res != null && res.isSuccessful && res.body() != null && res.body()!!.profile != null) {
+                 val caseId = res.body()!!.profile!!.caseId
+                 android.util.Log.d("AuthDebug", "SESSION_RESTORED - Restored case: $caseId")
+                 return fetchVictimDashboard(caseId) 
+            } else {
+                 android.util.Log.d("AuthDebug", "SESSION_EXPIRED - Victim token invalid")
+                 SessionManager.victimSessionToken = null
+                 return false
+            }
+        }
+        
+        // Also check if admin token exists for official restore
+        val adminToken = SessionManager.accessToken
+        if (adminToken != null) {
+            val success = fetchDataFromSupabase(null)
+            if (success) {
+                android.util.Log.d("AuthDebug", "SESSION_RESTORED - Restored Official session")
+                return true
+            } else {
+                SessionManager.accessToken = null
+            }
+        }
+        
+        android.util.Log.d("AuthDebug", "LOGIN_REQUIRED - No active session found")
+        return false
+    }
+
     private suspend fun fetchVictimDashboard(caseId: String): Boolean {
         try {
             if (SessionManager.victimSessionToken == null) return false
@@ -158,12 +197,30 @@ class CaseRepository {
                         trustedPersonMobile = dbP.trustedPersonMobile
                     )
                     
+                    var existingCheckIns = mutableListOf<CheckIn>()
+                    try {
+                        val checkInRes = RetrofitClient.supabaseService.getCheckIns("eq.${dbC.caseId}")
+                        if (checkInRes.isSuccessful) {
+                            val dbCheckIns = checkInRes.body() ?: emptyList()
+                            existingCheckIns = dbCheckIns.map { c ->
+                                CheckIn(
+                                    caseId = c.caseId,
+                                    answers = c.answers,
+                                    timestamp = 0L, // Backend doesn't return timestamp, or use created_at if added.
+                                    score = c.score
+                                )
+                            }.toMutableList()
+                        }
+                    } catch(e: Exception) {
+                        existingCheckIns = _cases.value[dbC.caseId]?.checkIns ?: mutableListOf()
+                    }
+
                     val caseRec = CaseRecord(
                         caseId = dbC.caseId,
                         profile = userProf,
                         distressScore = dbC.currentDistressScore,
                         status = mappedStatus,
-                        checkIns = mutableListOf(),
+                        checkIns = existingCheckIns,
                         priority = dbC.priority,
                         department = dbC.department,
                         supportCategory = dbC.supportCategory,
@@ -249,9 +306,24 @@ class CaseRepository {
 
     fun logout() {
         _currentProfile.value = null
-        SessionManager.accessToken = null
-        SessionManager.victimSessionToken = null
+        SessionManager.clear()
         _cases.value = emptyMap()
+    }
+
+    suspend fun loadChatHistory(caseId: String): List<ChatMessage>? {
+        return try {
+            val res = RetrofitClient.supabaseService.getChatMessages("eq.$caseId")
+            if (res.isSuccessful) {
+                res.body()?.map { msg ->
+                    val senderMap = if (msg.sender == "AI") "AI Support" else "You"
+                    val inputModeStr = msg.aiAnalysisSummary?.get("input_type") as? String
+                    val mode = if (inputModeStr == "VOICE") InputMode.VOICE else InputMode.CHAT
+                    ChatMessage(senderMap, msg.message, mode)
+                }
+            } else null
+        } catch (e: Exception) {
+            null
+        }
     }
 
     suspend fun submitCheckIn(caseId: String, checkIn: CheckIn, analysis: AIAnalysis?) {
@@ -265,6 +337,17 @@ class CaseRepository {
             )
             val res = RetrofitClient.supabaseService.submitVictimCheckInRpc(sc)
             if (res.isSuccessful && res.body()?.success == true) {
+                // Append locally BEFORE re-fetching so it persists in the next step
+                val map = _cases.value.toMutableMap()
+                val case = map[caseId]
+                if (case != null) {
+                    case.checkIns.add(checkIn)
+                    case.distressScore = checkIn.score
+                    map[caseId] = case
+                    _cases.value = map
+                    _currentProfile.value = _currentProfile.value?.copy(distressScore = checkIn.score)
+                }
+
                 // Instantly re-fetch dashboard safely via token to view generated triggers organically
                 fetchVictimDashboard(caseId) 
             }

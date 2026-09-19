@@ -1,5 +1,7 @@
 package com.sahay.ai.ui.screens
 
+import com.sahay.ai.ui.Localization
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -21,7 +23,7 @@ import com.sahay.ai.ui.MainViewModel
 import java.util.Locale
 
 @Composable
-fun RoleSelectionScreen(navController: NavController) {
+fun RoleSelectionScreen(navController: NavController, viewModel: MainViewModel) {
     Column(
         modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
@@ -31,11 +33,11 @@ fun RoleSelectionScreen(navController: NavController) {
             Icon(Icons.Filled.VerifiedUser, contentDescription = null, tint = MaterialTheme.colorScheme.onPrimaryContainer, modifier = Modifier.size(40.dp))
         }
         Spacer(Modifier.height(24.dp))
-        Text("SAHAY-AI", style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.primary)
-        Text("Public Trust Infrastructure", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(Localization.getString("SAHAY-AI", viewModel.selectedLanguage), style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.primary)
+        Text(Localization.getString("Public Trust Infrastructure", viewModel.selectedLanguage), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         
         Spacer(Modifier.height(48.dp))
-        Text("Select Portal Access", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(Localization.getString("Select Portal Access", viewModel.selectedLanguage), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
         Spacer(Modifier.height(16.dp))
         
         Card(
@@ -50,8 +52,8 @@ fun RoleSelectionScreen(navController: NavController) {
                 }
                 Spacer(Modifier.width(16.dp))
                 Column {
-                    Text("Victim/Citizen", style = MaterialTheme.typography.headlineMedium.copy(fontSize = 20.sp), color = MaterialTheme.colorScheme.onSurface)
-                    Text("Access your journey & support", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(Localization.getString("Victim/Citizen", viewModel.selectedLanguage), style = MaterialTheme.typography.headlineMedium.copy(fontSize = 20.sp), color = MaterialTheme.colorScheme.onSurface)
+                    Text(Localization.getString("Access your journey & support", viewModel.selectedLanguage), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
         }
@@ -70,8 +72,8 @@ fun RoleSelectionScreen(navController: NavController) {
                 }
                 Spacer(Modifier.width(16.dp))
                 Column {
-                    Text("Official Portal", style = MaterialTheme.typography.headlineMedium.copy(fontSize = 20.sp), color = MaterialTheme.colorScheme.onSurface)
-                    Text("Manage active case queues", style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                    Text(Localization.getString("Official Portal", viewModel.selectedLanguage), style = MaterialTheme.typography.headlineMedium.copy(fontSize = 20.sp), color = MaterialTheme.colorScheme.onSurface)
+                    Text(Localization.getString("Manage active case queues", viewModel.selectedLanguage), style = MaterialTheme.typography.labelMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 }
             }
         }
@@ -90,8 +92,8 @@ fun VictimLanguageScreen(navController: NavController, viewModel: MainViewModel)
     ) {
         Icon(Icons.Filled.Language, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(48.dp))
         Spacer(Modifier.height(16.dp))
-        Text("Preferred Language", style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.onSurface)
-        Text("Select your communication language", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(Localization.getString("Preferred Language", viewModel.selectedLanguage), style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.onSurface)
+        Text(Localization.getString("Select your communication language", viewModel.selectedLanguage), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         
         Spacer(Modifier.height(32.dp))
         
@@ -126,7 +128,7 @@ fun VictimLanguageScreen(navController: NavController, viewModel: MainViewModel)
             },
             modifier = Modifier.fillMaxWidth().height(48.dp)
         ) {
-            Text("Continue")
+            Text(Localization.getString("Continue", viewModel.selectedLanguage))
         }
     }
 }
@@ -143,8 +145,8 @@ fun VictimConsentScreen(navController: NavController, viewModel: MainViewModel) 
     ) {
         Icon(Icons.Filled.HealthAndSafety, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(48.dp))
         Spacer(Modifier.height(16.dp))
-        Text("Your choice. Your control.", style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.onSurface)
-        Text("SAHAY-AI uses your check-ins to understand changes in your wellbeing. Your information is protected and accessed only by authorized personnel.",
+        Text(Localization.getString("Your choice. Your control.", viewModel.selectedLanguage), style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.onSurface)
+        Text(Localization.getString("SAHAY-AI uses your check-ins to understand changes in your wellbeing. Your information is protected and accessed only by authorized personnel.", viewModel.selectedLanguage),
             style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
         
         Spacer(Modifier.height(24.dp))
@@ -154,19 +156,19 @@ fun VictimConsentScreen(navController: NavController, viewModel: MainViewModel) 
                 Row {
                     Icon(Icons.Filled.Verified, contentDescription=null, tint=MaterialTheme.colorScheme.primary, modifier=Modifier.size(20.dp))
                     Spacer(Modifier.width(8.dp))
-                    Text("CONSENT-BASED — You choose whether to participate.", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+                    Text(Localization.getString("CONSENT-BASED — You choose whether to participate.", viewModel.selectedLanguage), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
                 }
                 Spacer(Modifier.height(12.dp))
                 Row {
                     Icon(Icons.Filled.Lock, contentDescription=null, tint=MaterialTheme.colorScheme.primary, modifier=Modifier.size(20.dp))
                     Spacer(Modifier.width(8.dp))
-                    Text("PRIVATE — Your information is protected.", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+                    Text(Localization.getString("PRIVATE — Your information is protected.", viewModel.selectedLanguage), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
                 }
                 Spacer(Modifier.height(12.dp))
                 Row {
                     Icon(Icons.Filled.PeopleAlt, contentDescription=null, tint=MaterialTheme.colorScheme.primary, modifier=Modifier.size(20.dp))
                     Spacer(Modifier.width(8.dp))
-                    Text("HUMAN SUPPORT — AI signals are reviewed by authorized people.", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+                    Text(Localization.getString("HUMAN SUPPORT — AI signals are reviewed by authorized people.", viewModel.selectedLanguage), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
                 }
             }
         }
@@ -174,12 +176,12 @@ fun VictimConsentScreen(navController: NavController, viewModel: MainViewModel) 
         Spacer(Modifier.height(24.dp))
         Row(verticalAlignment = Alignment.CenterVertically, modifier = Modifier.fillMaxWidth().clickable { checked = !checked }) {
             Checkbox(checked = checked, onCheckedChange = { checked = it })
-            Text("I understand and consent to wellbeing monitoring.", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+            Text(Localization.getString("I understand and consent to wellbeing monitoring.", viewModel.selectedLanguage), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
         }
         
         if(showRejectMessage) {
             Spacer(Modifier.height(16.dp))
-            Text("Wellbeing monitoring requires your consent to continue.", color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
+            Text(Localization.getString("Wellbeing monitoring requires your consent to continue.", viewModel.selectedLanguage), color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall)
         }
         
         Spacer(Modifier.height(32.dp))
@@ -191,14 +193,14 @@ fun VictimConsentScreen(navController: NavController, viewModel: MainViewModel) 
             enabled = checked,
             modifier = Modifier.fillMaxWidth().height(48.dp)
         ) {
-            Text("Give Consent")
+            Text(Localization.getString("Give Consent", viewModel.selectedLanguage))
         }
         Spacer(Modifier.height(12.dp))
         OutlinedButton(
             onClick = { showRejectMessage = true },
             modifier = Modifier.fillMaxWidth().height(48.dp)
         ) {
-            Text("Not Now")
+            Text(Localization.getString("Not Now", viewModel.selectedLanguage))
         }
     }
 }
@@ -220,16 +222,16 @@ fun VictimRegistrationScreen(navController: NavController, viewModel: MainViewMo
     ) {
         Icon(Icons.Filled.Badge, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(48.dp))
         Spacer(Modifier.height(16.dp))
-        Text("Registration & Linkage", style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.onSurface)
-        Text("Link your secure case record", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(Localization.getString("Registration & Linkage", viewModel.selectedLanguage), style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.onSurface)
+        Text(Localization.getString("Link your secure case record", viewModel.selectedLanguage), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         
         Spacer(Modifier.height(24.dp))
         
         OutlinedTextField(
             value = fullName,
             onValueChange = { fullName = it },
-            label = { Text("Full Name") },
-            placeholder = { Text("Enter your full name") },
+            label = { Text(Localization.getString("Full Name", viewModel.selectedLanguage)) },
+            placeholder = { Text(Localization.getString("Enter your full name", viewModel.selectedLanguage)) },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
         )
@@ -237,8 +239,8 @@ fun VictimRegistrationScreen(navController: NavController, viewModel: MainViewMo
         OutlinedTextField(
             value = mobileNumber,
             onValueChange = { mobileNumber = it },
-            label = { Text("Mobile Number") },
-            placeholder = { Text("Enter your mobile number") },
+            label = { Text(Localization.getString("Mobile Number", viewModel.selectedLanguage)) },
+            placeholder = { Text(Localization.getString("Enter your mobile number", viewModel.selectedLanguage)) },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
         )
@@ -246,8 +248,8 @@ fun VictimRegistrationScreen(navController: NavController, viewModel: MainViewMo
         OutlinedTextField(
             value = caseId,
             onValueChange = { caseId = it },
-            label = { Text("Case ID") },
-            placeholder = { Text("Enter your case ID") },
+            label = { Text(Localization.getString("Case ID", viewModel.selectedLanguage)) },
+            placeholder = { Text(Localization.getString("Enter your case ID", viewModel.selectedLanguage)) },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
         )
@@ -255,12 +257,12 @@ fun VictimRegistrationScreen(navController: NavController, viewModel: MainViewMo
         OutlinedTextField(
             value = trustedPhone,
             onValueChange = { trustedPhone = it },
-            label = { Text("Trusted Person’s Mobile Number") },
-            placeholder = { Text("Enter trusted person’s number") },
+            label = { Text(Localization.getString("Trusted Person’s Mobile Number", viewModel.selectedLanguage)) },
+            placeholder = { Text(Localization.getString("Enter trusted person’s number", viewModel.selectedLanguage)) },
             modifier = Modifier.fillMaxWidth(),
             singleLine = true
         )
-        Text("You may provide a trusted person’s number for urgent support. This is optional.", style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 4.dp).fillMaxWidth())
+        Text(Localization.getString("You may provide a trusted person’s number for urgent support. This is optional.", viewModel.selectedLanguage), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(top = 4.dp).fillMaxWidth())
         
         if (errorMsg.isNotEmpty()) {
             Spacer(Modifier.height(16.dp))
@@ -288,7 +290,7 @@ fun VictimRegistrationScreen(navController: NavController, viewModel: MainViewMo
                 },
                 modifier = Modifier.padding(top = 4.dp)
             ) {
-                Text("Is this you? Log in securely", color = MaterialTheme.colorScheme.primary)
+                Text(Localization.getString("Is this you? Log in securely", viewModel.selectedLanguage), color = MaterialTheme.colorScheme.primary)
             }
         }
         
@@ -335,7 +337,7 @@ fun VictimRegistrationScreen(navController: NavController, viewModel: MainViewMo
             modifier = Modifier.fillMaxWidth().height(48.dp)
         ) {
             if (isLoading) CircularProgressIndicator(color = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(24.dp))
-            else Text("Link Profile")
+            else Text(Localization.getString("Link Profile", viewModel.selectedLanguage))
         }
     }
 }
@@ -352,8 +354,8 @@ fun VictimConfirmationScreen(navController: NavController, viewModel: MainViewMo
             Icon(Icons.Filled.CheckCircle, contentDescription = null, tint = MaterialTheme.colorScheme.onPrimaryContainer, modifier = Modifier.size(40.dp))
         }
         Spacer(Modifier.height(24.dp))
-        Text("You’re all set", style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.onSurface)
-        Text("Your details have been securely saved. You can now begin your wellbeing check-ins and access support.", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
+        Text(Localization.getString("You’re all set", viewModel.selectedLanguage), style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.onSurface)
+        Text(Localization.getString("Your details have been securely saved. You can now begin your wellbeing check-ins and access support.", viewModel.selectedLanguage), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = TextAlign.Center)
         
         Spacer(Modifier.height(32.dp))
         Card(modifier = Modifier.fillMaxWidth(), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
@@ -371,7 +373,7 @@ fun VictimConfirmationScreen(navController: NavController, viewModel: MainViewMo
             onClick = { navController.navigate("victim_dashboard") { popUpTo("role_selection") } },
             modifier = Modifier.fillMaxWidth().height(48.dp)
         ) {
-            Text("Go to My Dashboard")
+            Text(Localization.getString("Go to My Dashboard", viewModel.selectedLanguage))
         }
     }
 }

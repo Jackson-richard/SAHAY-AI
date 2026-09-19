@@ -46,6 +46,15 @@ data class SupabaseDistressAlert(
     @SerializedName("status") val status: String
 )
 
+data class SupabaseChatMessage(
+    @SerializedName("id") val id: String? = null,
+    @SerializedName("case_id") val caseId: String,
+    @SerializedName("sender") val sender: String,
+    @SerializedName("message") val message: String,
+    @SerializedName("ai_analysis_summary") val aiAnalysisSummary: Map<String, Any>? = null,
+    @SerializedName("created_at") val createdAt: String? = null
+)
+
 // RPC Requests
 data class ValidateCaseRequest(@SerializedName("p_case_id") val caseId: String)
 

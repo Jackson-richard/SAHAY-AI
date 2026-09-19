@@ -1,5 +1,7 @@
 package com.sahay.ai.ui.screens
 
+import com.sahay.ai.ui.Localization
+
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -31,12 +33,12 @@ import java.util.*
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun VictimDashboardScreen(navController: NavController, viewModel: MainViewModel) {
-    var selectedTab by remember { mutableStateOf("HOME") }
+    var selectedTab by remember { mutableStateOf(Localization.getString("HOME", viewModel.selectedLanguage)) }
     
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("SAHAY-AI", color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold) },
+                title = { Text(Localization.getString("SAHAY-AI", viewModel.selectedLanguage), color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold) },
                 navigationIcon = {
                     Box(modifier = Modifier.padding(start=16.dp, end=8.dp).size(32.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primaryContainer), contentAlignment = Alignment.Center) {
                         Icon(Icons.Filled.Person, tint = MaterialTheme.colorScheme.onPrimaryContainer, contentDescription = null)
@@ -52,45 +54,45 @@ fun VictimDashboardScreen(navController: NavController, viewModel: MainViewModel
             ) {
                 NavigationBarItem(
                     icon = { Icon(Icons.Filled.Home, contentDescription = null) },
-                    label = { Text("HOME", style = MaterialTheme.typography.labelMedium) },
-                    selected = selectedTab == "HOME",
-                    onClick = { selectedTab = "HOME" },
+                    label = { Text(Localization.getString("HOME", viewModel.selectedLanguage), style = MaterialTheme.typography.labelMedium) },
+                    selected = selectedTab == Localization.getString("HOME", viewModel.selectedLanguage),
+                    onClick = { selectedTab = Localization.getString("HOME", viewModel.selectedLanguage) },
                     colors = NavigationBarItemDefaults.colors(indicatorColor = MaterialTheme.colorScheme.primaryContainer)
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Filled.ChatBubble, contentDescription = null) },
-                    label = { Text("CHAT", style = MaterialTheme.typography.labelMedium) },
-                    selected = selectedTab == "CHAT",
-                    onClick = { selectedTab = "CHAT" }
+                    label = { Text(Localization.getString("CHAT", viewModel.selectedLanguage), style = MaterialTheme.typography.labelMedium) },
+                    selected = selectedTab == Localization.getString("CHAT", viewModel.selectedLanguage),
+                    onClick = { selectedTab = Localization.getString("CHAT", viewModel.selectedLanguage) }
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Filled.AutoGraph, contentDescription = null) },
-                    label = { Text("JOURNEY", style = MaterialTheme.typography.labelMedium) },
-                    selected = selectedTab == "JOURNEY",
-                    onClick = { selectedTab = "JOURNEY" }
+                    label = { Text(Localization.getString("JOURNEY", viewModel.selectedLanguage), style = MaterialTheme.typography.labelMedium) },
+                    selected = selectedTab == Localization.getString("JOURNEY", viewModel.selectedLanguage),
+                    onClick = { selectedTab = Localization.getString("JOURNEY", viewModel.selectedLanguage) }
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Filled.SupportAgent, contentDescription = null) },
-                    label = { Text("SUPPORT", style = MaterialTheme.typography.labelMedium) },
-                    selected = selectedTab == "SUPPORT",
-                    onClick = { selectedTab = "SUPPORT" }
+                    label = { Text(Localization.getString("SUPPORT", viewModel.selectedLanguage), style = MaterialTheme.typography.labelMedium) },
+                    selected = selectedTab == Localization.getString("SUPPORT", viewModel.selectedLanguage),
+                    onClick = { selectedTab = Localization.getString("SUPPORT", viewModel.selectedLanguage) }
                 )
                 NavigationBarItem(
                     icon = { Icon(Icons.Filled.Person, contentDescription = null) },
-                    label = { Text("PROFILE", style = MaterialTheme.typography.labelMedium) },
-                    selected = selectedTab == "PROFILE",
-                    onClick = { selectedTab = "PROFILE" }
+                    label = { Text(Localization.getString("PROFILE", viewModel.selectedLanguage), style = MaterialTheme.typography.labelMedium) },
+                    selected = selectedTab == Localization.getString("PROFILE", viewModel.selectedLanguage),
+                    onClick = { selectedTab = Localization.getString("PROFILE", viewModel.selectedLanguage) }
                 )
             }
         }
     ) { padding ->
         Box(modifier = Modifier.padding(padding).fillMaxSize().background(MaterialTheme.colorScheme.background)) {
             when (selectedTab) {
-                "HOME" -> VictimHomeTab(viewModel, onNavigateToChat = { selectedTab = "CHAT" })
-                "CHAT" -> VictimChatTab(viewModel)
-                "JOURNEY" -> VictimJourneyTab(viewModel)
-                "SUPPORT" -> VictimSupportTab(viewModel)
-                "PROFILE" -> VictimProfileTab(viewModel, navController)
+                Localization.getString("HOME", viewModel.selectedLanguage) -> VictimHomeTab(viewModel, onNavigateToChat = { selectedTab = Localization.getString("CHAT", viewModel.selectedLanguage) })
+                Localization.getString("CHAT", viewModel.selectedLanguage) -> VictimChatTab(viewModel)
+                Localization.getString("JOURNEY", viewModel.selectedLanguage) -> VictimJourneyTab(viewModel)
+                Localization.getString("SUPPORT", viewModel.selectedLanguage) -> VictimSupportTab(viewModel)
+                Localization.getString("PROFILE", viewModel.selectedLanguage) -> VictimProfileTab(viewModel, navController)
             }
         }
     }
@@ -100,10 +102,13 @@ fun VictimDashboardScreen(navController: NavController, viewModel: MainViewModel
 fun VictimHomeTab(viewModel: MainViewModel, onNavigateToChat: () -> Unit) {
     val profile by viewModel.currentProfile.collectAsState()
     var showCheckInDialog by remember { mutableStateOf(false) }
+    var showScoreDetailsDialog by remember { mutableStateOf(false) }
+    val cases by viewModel.cases.collectAsState()
+    val checkIns = profile?.caseId?.let { cases[it]?.checkIns } ?: emptyList()
 
     Column(modifier = Modifier.fillMaxSize().padding(horizontal = 20.dp, vertical = 24.dp).verticalScroll(rememberScrollState())) {
-        Text("Good evening.", style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.onSurface)
-        Text("How are you doing today?", style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+        Text(Localization.getString("Good evening.", viewModel.selectedLanguage), style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.onSurface)
+        Text(Localization.getString("How are you doing today?", viewModel.selectedLanguage), style = MaterialTheme.typography.bodyLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
         
         Spacer(Modifier.height(24.dp))
         
@@ -117,9 +122,9 @@ fun VictimHomeTab(viewModel: MainViewModel, onNavigateToChat: () -> Unit) {
             Column(modifier = Modifier.padding(24.dp)) {
                 Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween, verticalAlignment = Alignment.Top) {
                     Column {
-                        Text("TODAY'S CHECK-IN", style = MaterialTheme.typography.headlineMedium.copy(fontSize=20.sp), color = MaterialTheme.colorScheme.onSurface)
+                        Text(Localization.getString("TODAY'S CHECK-IN", viewModel.selectedLanguage), style = MaterialTheme.typography.headlineMedium.copy(fontSize=20.sp), color = MaterialTheme.colorScheme.onSurface)
                         Spacer(Modifier.height(8.dp))
-                        Text("Take a moment to tell us how you are feeling.", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(Localization.getString("Take a moment to tell us how you are feeling.", viewModel.selectedLanguage), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
                     }
                     Box(modifier = Modifier.size(48.dp).clip(CircleShape).background(MaterialTheme.colorScheme.secondaryContainer), contentAlignment = Alignment.Center) {
                         Icon(Icons.Filled.Favorite, contentDescription = null, tint = MaterialTheme.colorScheme.onSecondaryContainer)
@@ -134,13 +139,13 @@ fun VictimHomeTab(viewModel: MainViewModel, onNavigateToChat: () -> Unit) {
                 ) {
                     Icon(Icons.Filled.EditNote, contentDescription = null, tint = MaterialTheme.colorScheme.onPrimaryContainer)
                     Spacer(Modifier.width(8.dp))
-                    Text("Start Check-in", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onPrimaryContainer)
+                    Text(Localization.getString("Start Check-in", viewModel.selectedLanguage), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onPrimaryContainer)
                 }
             }
         }
         
         Spacer(Modifier.height(24.dp))
-        Text("OTHER WAYS TO CONNECT", style = MaterialTheme.typography.labelLarge.copy(fontSize=12.sp), color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(start=4.dp))
+        Text(Localization.getString("OTHER WAYS TO CONNECT", viewModel.selectedLanguage), style = MaterialTheme.typography.labelLarge.copy(fontSize=12.sp), color = MaterialTheme.colorScheme.onSurfaceVariant, modifier = Modifier.padding(start=4.dp))
         Spacer(Modifier.height(16.dp))
         
         Row(horizontalArrangement = Arrangement.spacedBy(12.dp)) {
@@ -154,16 +159,16 @@ fun VictimHomeTab(viewModel: MainViewModel, onNavigateToChat: () -> Unit) {
                     val data = result.data
                     val spokenText = data?.getStringArrayListExtra(android.speech.RecognizerIntent.EXTRA_RESULTS)?.get(0)
                     if (!spokenText.isNullOrEmpty()) {
-                        viewModel.updateChatInput(spokenText)
                         onNavigateToChat()
+                        viewModel.sendChatMessage(spokenText, com.sahay.ai.data.InputMode.VOICE)
                     }
                 }
             }
             
-            ConnectionMethodCard("CHAT", "Talk to SAHAY", Icons.Filled.Chat, Modifier.weight(1f)) {
+            ConnectionMethodCard(Localization.getString("CHAT", viewModel.selectedLanguage), Localization.getString("Talk to SAHAY", viewModel.selectedLanguage), Icons.Filled.Chat, Modifier.weight(1f)) {
                 onNavigateToChat()
             }
-            ConnectionMethodCard("VOICE", "Speak instead", Icons.Filled.Mic, Modifier.weight(1f)) {
+            ConnectionMethodCard(Localization.getString("VOICE", viewModel.selectedLanguage), Localization.getString("Speak instead", viewModel.selectedLanguage), Icons.Filled.Mic, Modifier.weight(1f)) {
                 try {
                     val intent = android.content.Intent(android.speech.RecognizerIntent.ACTION_RECOGNIZE_SPEECH).apply {
                         putExtra(android.speech.RecognizerIntent.EXTRA_LANGUAGE_MODEL, android.speech.RecognizerIntent.LANGUAGE_MODEL_FREE_FORM)
@@ -182,7 +187,7 @@ fun VictimHomeTab(viewModel: MainViewModel, onNavigateToChat: () -> Unit) {
                     android.widget.Toast.makeText(context, "Voice recognition not supported on this device.", android.widget.Toast.LENGTH_SHORT).show()
                 }
             }
-            ConnectionMethodCard("CALL", "Scheduled Call", Icons.Filled.Call, Modifier.weight(1f)) {
+            ConnectionMethodCard(Localization.getString("CALL", viewModel.selectedLanguage), Localization.getString("Scheduled Call", viewModel.selectedLanguage), Icons.Filled.Call, Modifier.weight(1f)) {
                 val trustedNumber = profile?.trustedPersonMobile
                 if (!trustedNumber.isNullOrEmpty()) {
                     val intent = android.content.Intent(android.content.Intent.ACTION_DIAL).apply {
@@ -198,13 +203,29 @@ fun VictimHomeTab(viewModel: MainViewModel, onNavigateToChat: () -> Unit) {
         Spacer(Modifier.height(24.dp))
         
         Row(horizontalArrangement = Arrangement.spacedBy(16.dp)) {
-            BentoCard("Last Check-in", "history", "3 days ago", Modifier.weight(1f))
-            BentoCard("Current Wellbeing", "circle", if((profile?.distressScore ?: 0) < 50) "Stable" else "Supported", Modifier.weight(1f), iconColor = if((profile?.distressScore ?: 0) < 50) Color(0xFF4CAF50) else MaterialTheme.colorScheme.error)
+            BentoCard(Localization.getString("Last Check-in", viewModel.selectedLanguage), "history", if (checkIns.isNotEmpty()) Localization.getString("Today", viewModel.selectedLanguage) else Localization.getString("No Data", viewModel.selectedLanguage), Modifier.weight(1f))
+            
+            val scoreText = if (checkIns.isEmpty()) Localization.getString("Insufficient data", viewModel.selectedLanguage) else "${profile?.distressScore ?: 0}/100"
+            BentoCard(Localization.getString("Distress Score", viewModel.selectedLanguage), "circle", scoreText, Modifier.weight(1f).clickable { if (checkIns.isNotEmpty()) showScoreDetailsDialog = true }, iconColor = if(checkIns.isEmpty() || (profile?.distressScore ?: 0) < 50) Color(0xFF4CAF50) else MaterialTheme.colorScheme.error)
         }
+        
+        Spacer(Modifier.height(24.dp))
+        
+        DistressTrendChart(
+            checkIns = checkIns, 
+            viewModel = viewModel, 
+            onClick = { showScoreDetailsDialog = true }
+        )
+        
+        Spacer(Modifier.height(24.dp))
     }
 
     if (showCheckInDialog) {
         CheckInDialog(viewModel = viewModel, onDismiss = { showCheckInDialog = false })
+    }
+    
+    if (showScoreDetailsDialog) {
+        ScoreDetailsDialog(checkIn = checkIns.lastOrNull(), viewModel = viewModel, onDismiss = { showScoreDetailsDialog = false })
     }
 }
 
@@ -276,8 +297,8 @@ fun VictimChatTab(viewModel: MainViewModel) {
     
     LaunchedEffect(messages) {
         val lastMsg = messages.lastOrNull()
-        if (lastMsg != null && lastMsg.first == "AI Support") {
-            val text = lastMsg.second
+        if (lastMsg != null && lastMsg.sender == "AI Support" && lastMsg.inputMode == com.sahay.ai.data.InputMode.VOICE) {
+            val text = lastMsg.message
             if (!text.startsWith("System Error:") && !text.startsWith("App Runtime Error:") && text != "Your session has expired. Please log in again.") {
                 tts?.let { 
                     val loc = when (viewModel.selectedLanguage) {
@@ -302,10 +323,10 @@ fun VictimChatTab(viewModel: MainViewModel) {
     Column(modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background)) {
         LazyColumn(modifier = Modifier.weight(1f).padding(horizontal = 16.dp), reverseLayout = true) {
             items(messages.reversed()) { msg ->
-                val isUser = msg.first == "You"
+                val isUser = msg.sender == "You"
                 Box(modifier = Modifier.fillMaxWidth().padding(vertical = 8.dp), contentAlignment = if (isUser) Alignment.CenterEnd else Alignment.CenterStart) {
                     Box(modifier = Modifier.background(if (isUser) MaterialTheme.colorScheme.primaryContainer else MaterialTheme.colorScheme.surface, RoundedCornerShape(12.dp)).padding(16.dp)) {
-                        Text(msg.second, color = if (isUser) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurface)
+                        Text(msg.message, color = if (isUser) MaterialTheme.colorScheme.onPrimaryContainer else MaterialTheme.colorScheme.onSurface)
                     }
                 }
             }
@@ -320,7 +341,7 @@ fun VictimChatTab(viewModel: MainViewModel) {
                 value = input,
                 onValueChange = { viewModel.updateChatInput(it) },
                 modifier = Modifier.weight(1f),
-                placeholder = { Text("Message SAHAY-AI...") },
+                placeholder = { Text(Localization.getString("Message SAHAY-AI...", viewModel.selectedLanguage)) },
                 colors = OutlinedTextFieldDefaults.colors(unfocusedContainerColor = MaterialTheme.colorScheme.surface, focusedContainerColor = MaterialTheme.colorScheme.surface),
                 shape = RoundedCornerShape(24.dp),
                 enabled = !isSending
@@ -348,22 +369,22 @@ fun VictimJourneyTab(viewModel: MainViewModel) {
     val caseData = profile?.caseId?.let { viewModel.cases.value[it] }
     
     Column(modifier = Modifier.fillMaxSize().padding(16.dp).verticalScroll(rememberScrollState())) {
-        Text("Your Legal Journey", style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.onSurface)
+        Text(Localization.getString("Your Legal Journey", viewModel.selectedLanguage), style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.onSurface)
         Spacer(Modifier.height(24.dp))
         
         Card(modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Text("Case Status", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
-                Text(caseData?.status?.display ?: "Unknown", style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.primary)
+                Text(Localization.getString("Case Status", viewModel.selectedLanguage), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(Localization.getString(caseData?.status?.display ?: "Unknown", viewModel.selectedLanguage), style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.primary)
                 Spacer(Modifier.height(16.dp))
                 
-                Text("Timeline", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(Localization.getString("Timeline", viewModel.selectedLanguage), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(Modifier.height(8.dp))
                 caseData?.history?.forEach { action ->
                     Row(modifier = Modifier.padding(vertical = 8.dp), verticalAlignment = Alignment.Top) {
                         Box(modifier = Modifier.padding(top=4.dp).size(8.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primary))
                         Spacer(Modifier.width(16.dp))
-                        Text(action, style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+                        Text(Localization.getString(action, viewModel.selectedLanguage), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
                     }
                 }
             }
@@ -374,7 +395,7 @@ fun VictimJourneyTab(viewModel: MainViewModel) {
 @Composable
 fun VictimSupportTab(viewModel: MainViewModel) {
     Column(modifier = Modifier.fillMaxSize().padding(16.dp).verticalScroll(rememberScrollState())) {
-        Text("Support Services", style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.onSurface)
+        Text(Localization.getString("Support Services", viewModel.selectedLanguage), style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.onSurface)
         Spacer(Modifier.height(24.dp))
         
         Card(modifier = Modifier.fillMaxWidth().clickable { }, shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.errorContainer)) {
@@ -382,8 +403,8 @@ fun VictimSupportTab(viewModel: MainViewModel) {
                 Icon(Icons.Filled.Call, contentDescription = null, tint = MaterialTheme.colorScheme.onErrorContainer, modifier = Modifier.size(32.dp))
                 Spacer(Modifier.width(16.dp))
                 Column {
-                    Text("Emergency SOS", style = MaterialTheme.typography.headlineMedium.copy(fontSize=18.sp), color = MaterialTheme.colorScheme.onErrorContainer)
-                    Text("Trigger immediate official response", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onErrorContainer)
+                    Text(Localization.getString("Emergency SOS", viewModel.selectedLanguage), style = MaterialTheme.typography.headlineMedium.copy(fontSize=18.sp), color = MaterialTheme.colorScheme.onErrorContainer)
+                    Text(Localization.getString("Trigger immediate official response", viewModel.selectedLanguage), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onErrorContainer)
                 }
             }
         }
@@ -392,7 +413,7 @@ fun VictimSupportTab(viewModel: MainViewModel) {
         
         Card(modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface), elevation = CardDefaults.cardElevation(2.dp)) {
             Column(modifier = Modifier.padding(16.dp)) {
-                Text("Trusted Contacts", style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                Text(Localization.getString("Trusted Contacts", viewModel.selectedLanguage), style = MaterialTheme.typography.labelLarge, color = MaterialTheme.colorScheme.onSurfaceVariant)
                 Spacer(Modifier.height(16.dp))
                 Row(verticalAlignment = Alignment.CenterVertically) {
                     Box(modifier = Modifier.size(40.dp).clip(CircleShape).background(MaterialTheme.colorScheme.secondaryContainer), contentAlignment = Alignment.Center) {
@@ -413,7 +434,7 @@ fun VictimSupportTab(viewModel: MainViewModel) {
 fun VictimProfileTab(viewModel: MainViewModel, navController: NavController) {
     val profile = viewModel.currentProfile.collectAsState().value
     Column(modifier = Modifier.fillMaxSize().padding(16.dp)) {
-        Text("Profile & Settings", style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.onSurface)
+        Text(Localization.getString("Profile & Settings", viewModel.selectedLanguage), style = MaterialTheme.typography.headlineLarge, color = MaterialTheme.colorScheme.onSurface)
         Spacer(Modifier.height(24.dp))
         
         Card(modifier = Modifier.fillMaxWidth(), shape = RoundedCornerShape(16.dp), colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface)) {
@@ -430,7 +451,7 @@ fun VictimProfileTab(viewModel: MainViewModel, navController: NavController) {
             modifier = Modifier.fillMaxWidth().height(48.dp),
             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
         ) {
-            Text("Secure Sign Out")
+            Text(Localization.getString("Secure Sign Out", viewModel.selectedLanguage))
         }
     }
 }
@@ -438,36 +459,167 @@ fun VictimProfileTab(viewModel: MainViewModel, navController: NavController) {
 @Composable
 fun CheckInDialog(viewModel: MainViewModel, onDismiss: () -> Unit) {
     val profile = viewModel.currentProfile.collectAsState().value
-    var scoreStr by remember { mutableStateOf("") }
+    var checkInText by remember { mutableStateOf("") }
+    var isSubmitting by remember { mutableStateOf(false) }
     
     AlertDialog(
-        onDismissRequest = onDismiss,
-        title = { Text("Wellbeing Check-in") },
+        onDismissRequest = { if (!isSubmitting) onDismiss() },
+        title = { Text(Localization.getString("Wellbeing Check-in", viewModel.selectedLanguage)) },
         text = { 
-            Column {
-                Text("On a scale from 0 to 100, where 100 corresponds to extreme distress, how do you feel today?")
-                Spacer(Modifier.height(8.dp))
+            Column(modifier = Modifier.fillMaxWidth()) {
+                Text(Localization.getString("Take a moment to tell us how you are feeling.", viewModel.selectedLanguage))
+                Spacer(Modifier.height(16.dp))
                 OutlinedTextField(
-                    value = scoreStr,
-                    onValueChange = { if (it.all { char -> char.isDigit() }) scoreStr = it },
-                    singleLine = true,
-                    label = { Text("Score (0-100)") }
+                    value = checkInText,
+                    onValueChange = { checkInText = it },
+                    minLines = 3,
+                    maxLines = 5,
+                    modifier = Modifier.fillMaxWidth(),
+                    label = { Text(Localization.getString("Message SAHAY-AI...", viewModel.selectedLanguage)) }
                 )
+                if (isSubmitting) {
+                    Spacer(Modifier.height(16.dp))
+                    LinearProgressIndicator(modifier = Modifier.fillMaxWidth())
+                }
             } 
         },
         confirmButton = {
-            Button(onClick = {
-                val score = scoreStr.toIntOrNull() ?: return@Button
-                if(score in 0..100) {
-                    profile?.caseId?.let { id ->
-                        viewModel.submitCheckIn(id, mapOf("distress" to scoreStr), score)
+            Button(
+                onClick = {
+                    if (checkInText.isNotBlank()) {
+                        isSubmitting = true
+                        viewModel.processCheckInAnalysis(checkInText) {
+                            isSubmitting = false
+                            onDismiss()
+                        }
                     }
-                    onDismiss()
-                }
-            }) { Text("Submit Securely") }
+                },
+                enabled = !isSubmitting && checkInText.isNotBlank()
+            ) { Text(Localization.getString("Submit Securely", viewModel.selectedLanguage)) }
         },
         dismissButton = {
-            TextButton(onClick = onDismiss) { Text("Cancel") }
+            TextButton(
+                onClick = onDismiss,
+                enabled = !isSubmitting
+            ) { Text(Localization.getString("Cancel", viewModel.selectedLanguage)) }
+        }
+    )
+}
+
+@Composable
+fun DistressTrendChart(checkIns: List<CheckIn>, viewModel: MainViewModel, modifier: Modifier = Modifier, onClick: () -> Unit) {
+    Card(
+        modifier = modifier.fillMaxWidth().clickable(onClick = onClick),
+        shape = RoundedCornerShape(16.dp),
+        colors = CardDefaults.cardColors(containerColor = MaterialTheme.colorScheme.surface),
+        elevation = CardDefaults.cardElevation(defaultElevation = 2.dp)
+    ) {
+        Column(modifier = Modifier.padding(16.dp)) {
+            Text(Localization.getString("Distress Trend", viewModel.selectedLanguage), style = MaterialTheme.typography.headlineMedium.copy(fontSize=18.sp), color = MaterialTheme.colorScheme.onSurface)
+            Spacer(Modifier.height(4.dp))
+            Text(Localization.getString("Your distress level across recent check-ins", viewModel.selectedLanguage), style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            Spacer(Modifier.height(16.dp))
+            
+            if (checkIns.isEmpty()) {
+                Box(modifier = Modifier.fillMaxWidth().height(100.dp), contentAlignment = Alignment.Center) {
+                    Text(Localization.getString("Insufficient data", viewModel.selectedLanguage), color = MaterialTheme.colorScheme.onSurfaceVariant)
+                }
+            } else if (checkIns.size == 1) {
+                val current = checkIns.first().score
+                val riskLevel = com.sahay.ai.data.getDistressLevel(current).name.lowercase().replaceFirstChar { it.titlecase() }
+                Text("${current}/100", style = MaterialTheme.typography.headlineMedium, color = if(current < 50) Color(0xFF4CAF50) else MaterialTheme.colorScheme.error)
+                Text("${Localization.getString("Risk Level", viewModel.selectedLanguage)}: ${Localization.getString(riskLevel, viewModel.selectedLanguage)}", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+                Spacer(Modifier.height(8.dp))
+                Box(modifier = Modifier.fillMaxWidth().height(100.dp), contentAlignment = Alignment.Center) {
+                    Text(Localization.getString("Complete more check-ins to see your distress trend.", viewModel.selectedLanguage), color = MaterialTheme.colorScheme.onSurfaceVariant, textAlign = androidx.compose.ui.text.style.TextAlign.Center)
+                }
+            } else {
+                val current = checkIns.last().score
+                val prev = checkIns[checkIns.size - 2].score
+                val riskLevel = com.sahay.ai.data.getDistressLevel(current).name.lowercase().replaceFirstChar { it.titlecase() }
+                val trendString = if(current > prev) "Increasing" else if (current < prev) "Improving" else "Stable"
+                val trendArrow = if(current > prev) "↑ " else if (current < prev) "↓ " else "→ "
+                
+                Row(modifier = Modifier.fillMaxWidth(), horizontalArrangement = Arrangement.SpaceBetween) {
+                    Column {
+                        Text("${current}/100", style = MaterialTheme.typography.headlineMedium, color = if(current < 50) Color(0xFF4CAF50) else MaterialTheme.colorScheme.error)
+                        Text("${Localization.getString("Risk Level", viewModel.selectedLanguage)}: ${Localization.getString(riskLevel, viewModel.selectedLanguage)}", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurface)
+                    }
+                    Column(horizontalAlignment = Alignment.End) {
+                        Text(Localization.getString("Trend", viewModel.selectedLanguage) + ":", style = MaterialTheme.typography.labelSmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+                        Text(trendArrow + Localization.getString(trendString, viewModel.selectedLanguage), style = MaterialTheme.typography.bodyLarge, color = if(current > prev) MaterialTheme.colorScheme.error else MaterialTheme.colorScheme.onSurface)
+                    }
+                }
+                
+                Spacer(Modifier.height(16.dp))
+                
+                val points = checkIns.map { it.score.toFloat() }
+                androidx.compose.foundation.Canvas(modifier = Modifier.fillMaxWidth().height(120.dp)) {
+                    val maxScore = 100f
+                    val stepX = size.width / (points.size - 1).coerceAtLeast(1).toFloat()
+                    val scaleY = size.height / maxScore
+                    
+                    val path = androidx.compose.ui.graphics.Path()
+                    points.forEachIndexed { index, score ->
+                        val x = index * stepX
+                        val y = size.height - (score * scaleY)
+                        if(index == 0) path.moveTo(x, y) else path.lineTo(x, y)
+                        
+                        drawCircle(color = Color(0xFF4CAF50), radius = 6.dp.toPx(), center = androidx.compose.ui.geometry.Offset(x, y))
+                    }
+                    
+                    drawPath(path, color = Color(0xFF4CAF50), style = androidx.compose.ui.graphics.drawscope.Stroke(width = 3.dp.toPx()))
+                }
+            }
+        }
+    }
+}
+
+@Composable
+fun ScoreDetailsDialog(checkIn: CheckIn?, viewModel: MainViewModel, onDismiss: () -> Unit) {
+    if (checkIn == null) {
+        onDismiss(); return
+    }
+    val riskLevel = checkIn.answers["risk_level"] ?: "Low"
+    val concernCategory = checkIn.answers["concern_category"]?.split(",")?.joinToString(", ") ?: "None"
+    
+    val emotional = checkIn.answers["emotional"] ?: "0"
+    val fear = checkIn.answers["fear"] ?: "0"
+    val safety = checkIn.answers["safety"] ?: "0"
+    val engagement = checkIn.answers["engagement"] ?: "0"
+    val change = checkIn.answers["change"] ?: "0"
+
+    AlertDialog(
+        onDismissRequest = onDismiss,
+        title = { Text(Localization.getString("How your score was calculated", viewModel.selectedLanguage)) },
+        text = { 
+            Column(modifier = Modifier.fillMaxWidth().verticalScroll(rememberScrollState())) {
+                Text("${Localization.getString("Distress Score", viewModel.selectedLanguage)}: ${checkIn.score}/100", style = MaterialTheme.typography.headlineSmall)
+                Text("${Localization.getString("Risk Level", viewModel.selectedLanguage)}: ${Localization.getString(riskLevel, viewModel.selectedLanguage)}", color = if(checkIn.score < 50) Color(0xFF4CAF50) else MaterialTheme.colorScheme.error)
+                Spacer(Modifier.height(16.dp))
+                
+                Text(Localization.getString("Contributing indicators:", viewModel.selectedLanguage), fontWeight = FontWeight.Bold)
+                Spacer(Modifier.height(8.dp))
+                Text("• ${Localization.getString("Emotional distress", viewModel.selectedLanguage)}\t\t $emotional/40")
+                Text("• ${Localization.getString("Fear/anxiety", viewModel.selectedLanguage)}\t\t $fear/25")
+                Text("• ${Localization.getString("Safety indicators", viewModel.selectedLanguage)}\t\t $safety/15")
+                Text("• ${Localization.getString("Engagement", viewModel.selectedLanguage)}\t\t $engagement/10")
+                Text("• ${Localization.getString("Change over time", viewModel.selectedLanguage)}\t\t $change/10")
+                Divider(modifier = Modifier.padding(vertical = 8.dp))
+                Text("• ${Localization.getString("Total", viewModel.selectedLanguage)}\t\t ${checkIn.score}/100", fontWeight = FontWeight.Bold)
+                
+                Spacer(Modifier.height(16.dp))
+                
+                Text(Localization.getString("Potential concerns:", viewModel.selectedLanguage), fontWeight = FontWeight.Bold)
+                Text("✓ $concernCategory")
+                
+                Spacer(Modifier.height(16.dp))
+                
+                Text(Localization.getString("This is an AI-generated wellbeing indicator and NOT a medical diagnosis.", viewModel.selectedLanguage), style = MaterialTheme.typography.bodySmall, color = MaterialTheme.colorScheme.onSurfaceVariant)
+            }
+        },
+        confirmButton = {
+            TextButton(onClick = onDismiss) { Text("OK") }
         }
     )
 }
