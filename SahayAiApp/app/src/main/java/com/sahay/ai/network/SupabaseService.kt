@@ -40,10 +40,7 @@ data class AuthResponse(
     val user: Any?
 )
 
-object SessionManager {
-    var accessToken: String? = null
-    var victimSessionToken: String? = null
-}
+
 
 interface SupabaseService {
     @POST("auth/v1/token?grant_type=password")
@@ -129,6 +126,22 @@ interface SupabaseService {
         @Header("Authorization") auth: String = "Bearer ${SessionManager.accessToken ?: SupabaseConfig.ANON_KEY}",
         @Header("Content-Type") contentType: String = "application/json"
     ): Response<VictimDashboardResponse>
+
+    @POST("rest/v1/rpc/get_victim_checkins")
+    suspend fun getVictimCheckIns(
+        @Body request: DashboardRequest,
+        @Header("apikey") apikey: String = SupabaseConfig.ANON_KEY,
+        @Header("Authorization") auth: String = "Bearer ${SessionManager.accessToken ?: SupabaseConfig.ANON_KEY}",
+        @Header("Content-Type") contentType: String = "application/json"
+    ): Response<List<SupabaseCheckIn>>
+
+    @POST("rest/v1/rpc/get_victim_chat_history")
+    suspend fun getVictimChatHistory(
+        @Body request: DashboardRequest,
+        @Header("apikey") apikey: String = SupabaseConfig.ANON_KEY,
+        @Header("Authorization") auth: String = "Bearer ${SessionManager.accessToken ?: SupabaseConfig.ANON_KEY}",
+        @Header("Content-Type") contentType: String = "application/json"
+    ): Response<List<SupabaseChatMessage>>
 
     @POST("rest/v1/rpc/submit_victim_checkin")
     suspend fun submitVictimCheckInRpc(

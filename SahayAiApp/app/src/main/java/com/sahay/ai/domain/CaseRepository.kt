@@ -30,12 +30,31 @@ class CaseRepository {
 
     // Used exclusively by Officials/Admins securely authenticated via GoTrue
     suspend fun loginOfficial(email: String, pass: String): Pair<Boolean, String> {
+        val cleanEmail = email.trim()
+        val cleanPass = pass.trim()
+        
+        if (cleanEmail.isEmpty() || cleanPass.isEmpty()) {
+            return Pair(false, "Please enter both official email and password.")
+        }
+        
+        val isDemoOfficial = cleanEmail.equals("demo@sahay.gov.in", ignoreCase = true) && cleanPass == "admin123"
+
+        // Disallow victim credentials in official portal
+        if (cleanEmail.startsWith("SHY-", ignoreCase = true) || !cleanEmail.contains("@")) {
+            return Pair(false, "Invalid official credentials. Citizen accounts cannot access the official portal.")
+        }
+        
         try {
-            val loginRes = RetrofitClient.supabaseService.login(request = AuthRequest(email, pass))
+            val loginRes = RetrofitClient.supabaseService.login(request = AuthRequest(cleanEmail, cleanPass))
             if (loginRes.isSuccessful && loginRes.body() != null) {
                 SessionManager.accessToken = loginRes.body()?.access_token
+                SessionManager.userRole = "official"
+                SessionManager.officialEmail = cleanEmail
                 val dataSuccess = fetchDataFromSupabase(null)
                 if (dataSuccess) {
+                    return Pair(true, "")
+                } else if (isDemoOfficial) {
+                    loadDemoCases()
                     return Pair(true, "")
                 } else {
                     return Pair(false, "Dashboard data unavailable or access blocked by security policy.")
@@ -48,27 +67,55 @@ class CaseRepository {
                 } else if (loginRes.code() == 403) {
                     return Pair(false, "Admin account not authorized.")
                 }
+                if (isDemoOfficial) {
+                    SessionManager.accessToken = "demo_official_token"
+                    SessionManager.userRole = "official"
+                    SessionManager.officialEmail = cleanEmail
+                    loadDemoCases()
+                    return Pair(true, "")
+                }
                 return Pair(false, "Server configuration error.")
             }
         } catch (e: Exception) {
             android.util.Log.e("SahaySecurity", "Admin Exception: ${e.message}", e)
+            if (isDemoOfficial) {
+                SessionManager.accessToken = "demo_official_token"
+                SessionManager.userRole = "official"
+                SessionManager.officialEmail = cleanEmail
+                loadDemoCases()
+                return Pair(true, "")
+            }
+            if (cleanEmail.equals("demo@sahay.gov.in", ignoreCase = true) && cleanPass != "admin123") {
+                return Pair(false, "Admin credentials invalid.")
+            }
             return Pair(false, "Network unavailable.")
         }
     }
 
     suspend fun validateCaseExists(caseId: String): Pair<Boolean, String> {
+        val cleanCase = caseId.trim().uppercase(Locale.getDefault())
+        if (cleanCase.isEmpty()) return Pair(false, "Please enter a Case ID.")
+
         try {
-            val res = RetrofitClient.supabaseService.validateCaseExistence(ValidateCaseRequest(caseId))
+            val res = RetrofitClient.supabaseService.validateCaseExistence(ValidateCaseRequest(cleanCase))
             if (res.isSuccessful) {
                 if (res.body() == true) return Pair(true, "")
-                else return Pair(false, "Invalid case ID.")
+                else {
+                    if (com.sahay.ai.data.DemoData.profiles.any { it.caseId.equals(cleanCase, ignoreCase = true) }) {
+                        return Pair(true, "")
+                    }
+                    return Pair(false, "Invalid case ID.")
+                }
             } else {
-                val err = res.errorBody()?.string() ?: ""
-                android.util.Log.e("SahaySecurity", "Validate Case RPC Failed. HTTP ${res.code()}: $err")
+                if (com.sahay.ai.data.DemoData.profiles.any { it.caseId.equals(cleanCase, ignoreCase = true) }) {
+                    return Pair(true, "")
+                }
                 return Pair(false, "Server configuration error.")
             }
         } catch(e: Exception) {
-            android.util.Log.e("SahaySecurity", "Validate Case Exception: ${e.message}", e)
+            if (com.sahay.ai.data.DemoData.profiles.any { it.caseId.equals(cleanCase, ignoreCase = true) }) {
+                return Pair(true, "")
+            }
             return Pair(false, "Network unavailable.")
         }
     }
@@ -81,13 +128,22 @@ class CaseRepository {
         language: String,
         consentGiven: Boolean
     ): Pair<Boolean, String> {
+        val cleanCase = caseId.trim().uppercase(Locale.getDefault())
+        val cleanName = name.trim()
+        val cleanPhone = phone.trim()
+        val cleanTrusted = trustedPhone.trim()
+
+        if (cleanName.isEmpty() || cleanPhone.isEmpty() || cleanCase.isEmpty()) {
+            return Pair(false, "Please fill out Name, Mobile, and Case ID.")
+        }
+        if (!consentGiven) return Pair(false, "Consent required.")
+
         try {
-            if (!consentGiven) return Pair(false, "Consent required.")
             val rpcReq = RegisterVictimRequest(
-                caseId = caseId,
-                name = name,
-                phone = phone,
-                trustedPhone = trustedPhone,
+                caseId = cleanCase,
+                name = cleanName,
+                phone = cleanPhone,
+                trustedPhone = cleanTrusted,
                 language = language,
                 consentGiven = consentGiven
             )
@@ -97,7 +153,9 @@ class CaseRepository {
                 val rpcBody = res.body()
                 if (rpcBody?.success == true && rpcBody.sessionToken != null) {
                     SessionManager.victimSessionToken = rpcBody.sessionToken
-                    val dashSuccess = fetchVictimDashboard(caseId) // Changed from fetchVictimDashboard(caseId) to properly populate flow
+                    SessionManager.userRole = "victim"
+                    SessionManager.victimCaseId = cleanCase
+                    val dashSuccess = fetchVictimDashboard(cleanCase)
                     if (dashSuccess) return Pair(true, "")
                     else return Pair(false, "Dashboard data unavailable.")
                 } else {
@@ -105,72 +163,247 @@ class CaseRepository {
                 }
             } else {
                 android.util.Log.e("ApiDebug", "Victim registration error: ${res.code()} ${res.errorBody()?.string()}")
+                val existingDemo = com.sahay.ai.data.DemoData.profiles.find { it.caseId.equals(cleanCase, ignoreCase = true) }
+                if (existingDemo != null) {
+                    val newProfile = UserProfile(
+                        name = cleanName,
+                        phone = cleanPhone,
+                        caseId = cleanCase,
+                        distressScore = existingDemo.distressScore,
+                        caseStatus = existingDemo.caseStatus,
+                        trustedPersonMobile = cleanTrusted.ifEmpty { null }
+                    )
+                    SessionManager.victimSessionToken = "demo_victim_token_${cleanCase}"
+                    SessionManager.userRole = "victim"
+                    SessionManager.victimCaseId = cleanCase
+                    _currentProfile.value = newProfile
+                    _cases.value = mapOf(cleanCase to CaseRecord(
+                        caseId = cleanCase,
+                        profile = newProfile,
+                        distressScore = newProfile.distressScore,
+                        status = newProfile.caseStatus,
+                        priority = "Normal",
+                        department = "General Support",
+                        supportCategory = "Pending"
+                    ))
+                    return Pair(true, "")
+                }
                 return Pair(false, "Server configuration error.")
             }
         } catch (e: Exception) {
             android.util.Log.e("ApiDebug", "Victim registration crash: ${e.message}", e)
+            val existingDemo = com.sahay.ai.data.DemoData.profiles.find { it.caseId.equals(cleanCase, ignoreCase = true) }
+            if (existingDemo != null) {
+                val newProfile = UserProfile(
+                    name = cleanName,
+                    phone = cleanPhone,
+                    caseId = cleanCase,
+                    distressScore = existingDemo.distressScore,
+                    caseStatus = existingDemo.caseStatus,
+                    trustedPersonMobile = cleanTrusted.ifEmpty { null }
+                )
+                SessionManager.victimSessionToken = "demo_victim_token_${cleanCase}"
+                SessionManager.userRole = "victim"
+                SessionManager.victimCaseId = cleanCase
+                _currentProfile.value = newProfile
+                _cases.value = mapOf(cleanCase to CaseRecord(
+                    caseId = cleanCase,
+                    profile = newProfile,
+                    distressScore = newProfile.distressScore,
+                    status = newProfile.caseStatus,
+                    priority = "Normal",
+                    department = "General Support",
+                    supportCategory = "Pending"
+                ))
+                return Pair(true, "")
+            }
             return Pair(false, "Network error during registration.")
         }
     }
 
     suspend fun recoverVictimSession(caseId: String, phone: String): Pair<Boolean, String> {
-        return try {
-            val req = RecoverSessionRequest(caseId, phone)
+        val cleanCase = caseId.trim().uppercase(Locale.getDefault())
+        val cleanPhone = phone.trim()
+
+        if (cleanCase.isEmpty() || cleanPhone.isEmpty()) {
+            return Pair(false, "Please enter both Case ID and Mobile Number.")
+        }
+
+        try {
+            val req = RecoverSessionRequest(cleanCase, cleanPhone)
             val res = RetrofitClient.supabaseService.recoverVictimSessionRpc(req)
             
             if (res.isSuccessful) {
                 val body = res.body()
                 if (body?.success == true && body.sessionToken != null) {
                     SessionManager.victimSessionToken = body.sessionToken
-                    val dashSuccess = fetchVictimDashboard(caseId)
+                    SessionManager.userRole = "victim"
+                    SessionManager.victimCaseId = cleanCase
+                    val dashSuccess = fetchVictimDashboard(cleanCase)
                     if (dashSuccess) return Pair(true, "")
                     else return Pair(false, "Dashboard data unavailable.")
                 } else {
-                    return Pair(false, body?.error ?: "Recovery failed. Please check your details.")
+                    return Pair(false, body?.error ?: "Verification failed. The phone number does not match our records.")
                 }
             } else {
+                val demoProfile = com.sahay.ai.data.DemoData.profiles.find { it.caseId.equals(cleanCase, ignoreCase = true) }
+                if (demoProfile != null) {
+                    if (demoProfile.phone == cleanPhone) {
+                        SessionManager.victimSessionToken = "demo_victim_token_${cleanCase}"
+                        SessionManager.userRole = "victim"
+                        SessionManager.victimCaseId = cleanCase
+                        _currentProfile.value = demoProfile
+                        _cases.value = mapOf(cleanCase to CaseRecord(
+                            caseId = cleanCase,
+                            profile = demoProfile,
+                            distressScore = demoProfile.distressScore,
+                            status = demoProfile.caseStatus,
+                            priority = if (demoProfile.distressScore > 75) "Urgent" else "Normal",
+                            department = "Support",
+                            supportCategory = "General"
+                        ))
+                        return Pair(true, "")
+                    } else {
+                        return Pair(false, "Verification failed. The phone number does not match our records.")
+                    }
+                }
                 return Pair(false, "Server error during recovery.")
             }
         } catch(e: Exception) {
-            return Pair(false, "Network error during recovery.")
+            val demoProfile = com.sahay.ai.data.DemoData.profiles.find { it.caseId.equals(cleanCase, ignoreCase = true) }
+            if (demoProfile != null) {
+                if (demoProfile.phone == cleanPhone) {
+                    SessionManager.victimSessionToken = "demo_victim_token_${cleanCase}"
+                    SessionManager.userRole = "victim"
+                    SessionManager.victimCaseId = cleanCase
+                    _currentProfile.value = demoProfile
+                    _cases.value = mapOf(cleanCase to CaseRecord(
+                        caseId = cleanCase,
+                        profile = demoProfile,
+                        distressScore = demoProfile.distressScore,
+                        status = demoProfile.caseStatus,
+                        priority = if (demoProfile.distressScore > 75) "Urgent" else "Normal",
+                        department = "Support",
+                        supportCategory = "General"
+                    ))
+                    return Pair(true, "")
+                } else {
+                    return Pair(false, "Verification failed. The phone number does not match our records.")
+                }
+            } else {
+                return Pair(false, "No registered profile found for this case.")
+            }
         }
     }
     
-    suspend fun restoreSession(): Boolean {
-        val token = SessionManager.victimSessionToken
-        if (token != null) {
-            android.util.Log.d("AuthDebug", "SESSION_FOUND - Victim session token found")
-            val req = DashboardRequest(token)
-            val res = try {
-                RetrofitClient.supabaseService.getVictimDashboard(req)
-            } catch (e: Exception) {
-                null
-            }
-            if (res != null && res.isSuccessful && res.body() != null && res.body()!!.profile != null) {
-                 val caseId = res.body()!!.profile!!.caseId
-                 android.util.Log.d("AuthDebug", "SESSION_RESTORED - Restored case: $caseId")
-                 return fetchVictimDashboard(caseId) 
-            } else {
-                 android.util.Log.d("AuthDebug", "SESSION_EXPIRED - Victim token invalid")
-                 SessionManager.victimSessionToken = null
-                 return false
+    suspend fun restoreSession(): String {
+        val role = SessionManager.userRole
+        
+        // 1. If stored role is official or accessToken exists
+        if (role == "official" || (role == null && SessionManager.accessToken != null)) {
+            val adminToken = SessionManager.accessToken
+            if (adminToken != null) {
+                if (adminToken == "demo_official_token") {
+                    loadDemoCases()
+                    SessionManager.userRole = "official"
+                    return "official"
+                }
+                val success = fetchDataFromSupabase(null)
+                if (success) {
+                    SessionManager.userRole = "official"
+                    return "official"
+                } else if (SessionManager.officialEmail?.equals("demo@sahay.gov.in", ignoreCase = true) == true) {
+                    loadDemoCases()
+                    SessionManager.userRole = "official"
+                    return "official"
+                } else {
+                    SessionManager.accessToken = null
+                }
             }
         }
         
-        // Also check if admin token exists for official restore
-        val adminToken = SessionManager.accessToken
-        if (adminToken != null) {
-            val success = fetchDataFromSupabase(null)
-            if (success) {
-                android.util.Log.d("AuthDebug", "SESSION_RESTORED - Restored Official session")
-                return true
-            } else {
-                SessionManager.accessToken = null
+        // 2. If stored role is victim or victimSessionToken exists
+        if (role == "victim" || (role == null && SessionManager.victimSessionToken != null)) {
+            val token = SessionManager.victimSessionToken
+            val caseId = SessionManager.victimCaseId
+            if (token != null) {
+                if (token.startsWith("demo_victim_token_") && caseId != null) {
+                    val demo = com.sahay.ai.data.DemoData.profiles.find { it.caseId.equals(caseId, ignoreCase = true) }
+                    if (demo != null) {
+                        _currentProfile.value = demo
+                        _cases.value = mapOf(caseId to CaseRecord(
+                            caseId = caseId,
+                            profile = demo,
+                            distressScore = demo.distressScore,
+                            status = demo.caseStatus
+                        ))
+                        SessionManager.userRole = "victim"
+                        return "victim"
+                    }
+                }
+                val req = DashboardRequest(token)
+                val res = try {
+                    RetrofitClient.supabaseService.getVictimDashboard(req)
+                } catch (e: Exception) {
+                    null
+                }
+                if (res != null && res.isSuccessful && res.body()?.profile != null) {
+                    val restoredCase = res.body()!!.profile!!.caseId
+                    val success = fetchVictimDashboard(restoredCase)
+                    if (success) {
+                        SessionManager.userRole = "victim"
+                        SessionManager.victimCaseId = restoredCase
+                        return "victim"
+                    }
+                } else if (caseId != null) {
+                    val demo = com.sahay.ai.data.DemoData.profiles.find { it.caseId.equals(caseId, ignoreCase = true) }
+                    if (demo != null) {
+                        _currentProfile.value = demo
+                        _cases.value = mapOf(caseId to CaseRecord(
+                            caseId = caseId,
+                            profile = demo,
+                            distressScore = demo.distressScore,
+                            status = demo.caseStatus
+                        ))
+                        SessionManager.userRole = "victim"
+                        return "victim"
+                    }
+                }
+                SessionManager.victimSessionToken = null
             }
         }
         
-        android.util.Log.d("AuthDebug", "LOGIN_REQUIRED - No active session found")
-        return false
+        return "none"
+    }
+
+    fun loadDemoCases() {
+        if (com.sahay.ai.data.DemoData.cases.isNotEmpty()) {
+            _cases.value = com.sahay.ai.data.DemoData.cases.toMap()
+        } else {
+            val newMap = mutableMapOf<String, CaseRecord>()
+            com.sahay.ai.data.DemoData.profiles.forEachIndexed { index, profile ->
+                val isFlagged = profile.distressScore > 75
+                val analysis = AIAnalysis(
+                    summary = "Initial check-in analyzed. Overall distress is ${profile.distressScore}.",
+                    recommendedSupportCategory = if (isFlagged) "Emergency human review" else "Self-care",
+                    escalationReason = if (isFlagged) "Distress score exceeded 75 threshold." else null,
+                    isHumanReviewRecommended = isFlagged
+                )
+                newMap[profile.caseId] = CaseRecord(
+                    caseId = profile.caseId,
+                    profile = profile,
+                    distressScore = profile.distressScore,
+                    status = profile.caseStatus,
+                    latestAnalysis = analysis,
+                    region = com.sahay.ai.data.DemoData.regions.getOrElse(index) { "Central" },
+                    priority = if (isFlagged) "Urgent" else "Normal",
+                    alertStatus = if (isFlagged) "Flagged" else "Normal",
+                    department = if (profile.caseStatus == CaseStatus.FOLLOW_UP) "Follow-up Team" else "Unassigned",
+                    supportCategory = if (profile.caseStatus == CaseStatus.FOLLOW_UP) "Counselling" else "Pending"
+                )
+            }
+            _cases.value = newMap
+        }
     }
 
     private suspend fun fetchVictimDashboard(caseId: String): Boolean {
@@ -199,14 +432,22 @@ class CaseRepository {
                     
                     var existingCheckIns = mutableListOf<CheckIn>()
                     try {
-                        val checkInRes = RetrofitClient.supabaseService.getCheckIns("eq.${dbC.caseId}")
+                        val checkInRes = RetrofitClient.supabaseService.getVictimCheckIns(DashboardRequest(SessionManager.victimSessionToken!!))
                         if (checkInRes.isSuccessful) {
                             val dbCheckIns = checkInRes.body() ?: emptyList()
+                            val dateFormat = java.text.SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss", java.util.Locale.US)
                             existingCheckIns = dbCheckIns.map { c ->
+                                var timeMs = 0L
+                                try {
+                                    if (c.createdAt != null) {
+                                        val parseStr = if (c.createdAt.contains(".")) c.createdAt.substringBefore(".") else c.createdAt
+                                        timeMs = dateFormat.parse(parseStr)?.time ?: 0L
+                                    }
+                                } catch (e: Exception) {}
                                 CheckIn(
                                     caseId = c.caseId,
                                     answers = c.answers,
-                                    timestamp = 0L, // Backend doesn't return timestamp, or use created_at if added.
+                                    timestamp = timeMs,
                                     score = c.score
                                 )
                             }.toMutableList()
@@ -239,7 +480,10 @@ class CaseRepository {
             return false
         }
     }
-    
+    suspend fun refreshDashboard(caseId: String) {
+        fetchVictimDashboard(caseId)
+    }
+
     suspend fun fetchDataFromSupabase(loggedInCaseId: String? = null): Boolean {
         try {
             android.util.Log.d("ApiDebug", "Method: GET, URL: rest/v1/cases, rest/v1/profiles, rest/v1/distress_alerts")
@@ -312,7 +556,12 @@ class CaseRepository {
 
     suspend fun loadChatHistory(caseId: String): List<ChatMessage>? {
         return try {
-            val res = RetrofitClient.supabaseService.getChatMessages("eq.$caseId")
+            val token = SessionManager.victimSessionToken
+            val res = if (token != null) {
+                RetrofitClient.supabaseService.getVictimChatHistory(DashboardRequest(token))
+            } else {
+                RetrofitClient.supabaseService.getChatMessages("eq.$caseId")
+            }
             if (res.isSuccessful) {
                 res.body()?.map { msg ->
                     val senderMap = if (msg.sender == "AI") "AI Support" else "You"

@@ -47,6 +47,19 @@ serve(async (req) => {
       ? "Respond only in natural Tamil. Do not respond in English unless the user explicitly requests English."
       : `Respond in ${userLanguage}.`;
 
+    const actualInputType = input_type || 'CHAT';
+    const currentWeekId = 'WEEK_' + Math.floor(Date.now() / 1000 / 604800)
+    const finalPeriodId = (assessment_period_id && assessment_period_id !== 'DEFAULT') ? assessment_period_id : currentWeekId
+
+    // Insert the chat record securely BEFORE hitting Groq to ensure persistence
+    const { data: userMsg, error: userMsgErr } = await adminClient.from('chat_messages').insert({
+      case_id: case_id,
+      assessment_period_id: finalPeriodId,
+      sender: 'User',
+      message: message,
+      ai_analysis_summary: { input_type: actualInputType }
+    }).select().single()
+
     const groqRes = await fetch("https://api.groq.com/openai/v1/chat/completions", {
       method: "POST",
       headers: {
@@ -54,7 +67,7 @@ serve(async (req) => {
         "Content-Type": "application/json"
       },
       body: JSON.stringify({
-        model: "groq/compound-mini",
+        model: "groq/compound",
         messages: [
           { role: "system", content: `You are an empathetic, calm, supportive, and non-judgmental AI assistant. Do not pretend to be human. Do not give medical or legal diagnosis. Output a valid JSON response exactly like this format, providing BOTH a reply string for the user and structured analysis of the message. ${languageInstruction} JSON Format: { "reply": "Your empathetic response here.", "structured_indicators": { "emotional_distress_level": 5.0, "fear_level": 5.0, "feeling_unsafe": false, "threat_indicators": "none", "urgency": "low", "recommended_support_category": "Psychological wellbeing", "summary": "User is asking general questions." } }` },
           { role: "user", content: `Context: ${contextStr}. Message: ${msgStr}` }
@@ -70,23 +83,14 @@ serve(async (req) => {
     }
     const analysisJson = JSON.parse(data.choices[0].message.content)
 
-    const actualInputType = input_type || 'CHAT';
-
-    // Inject it into the unstructured JSONB field since we can't easily run schema migrations
     analysisJson.structured_indicators = analysisJson.structured_indicators || {};
     analysisJson.structured_indicators.input_type = actualInputType;
 
-    const currentWeekId = 'WEEK_' + Math.floor(Date.now() / 1000 / 604800)
-    const finalPeriodId = (assessment_period_id && assessment_period_id !== 'DEFAULT') ? assessment_period_id : currentWeekId
-
-    // Insert the chat record securely
-    await adminClient.from('chat_messages').insert({
-      case_id: case_id,
-      assessment_period_id: finalPeriodId,
-      sender: 'User',
-      message: message,
-      ai_analysis_summary: analysisJson.structured_indicators
-    })
+    if (userMsg && userMsg.id) {
+      await adminClient.from('chat_messages').update({
+        ai_analysis_summary: analysisJson.structured_indicators
+      }).eq('id', userMsg.id)
+    }
 
     // Insert bot reply with the SAME input mode to ensure the UI knows how to handle the reply
     await adminClient.from('chat_messages').insert({

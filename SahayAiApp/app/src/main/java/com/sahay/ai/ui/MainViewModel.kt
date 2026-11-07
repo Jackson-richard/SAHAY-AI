@@ -22,7 +22,7 @@ class MainViewModel : ViewModel() {
     private val _chatMessages = MutableStateFlow<List<ChatMessage>>(emptyList())
     val chatMessages: StateFlow<List<ChatMessage>> = _chatMessages
     
-    val isSessionRestored = MutableStateFlow<Boolean?>(null)
+    val isSessionRestored = MutableStateFlow<String?>(null)
     
     init {
         checkSession()
@@ -30,14 +30,14 @@ class MainViewModel : ViewModel() {
     
     fun checkSession() {
         viewModelScope.launch {
-            val success = caseRepository.restoreSession() 
-            if (success && currentProfile.value?.caseId != null) {
+            val restoredRole = caseRepository.restoreSession() 
+            if (restoredRole == "victim" && currentProfile.value?.caseId != null) {
                 // Let's load the chat messages from DB if possible using CaseRepo
                 caseRepository.loadChatHistory(currentProfile.value!!.caseId)?.let { history ->
                     _chatMessages.value = history
                 }
             }
-            isSessionRestored.value = success
+            isSessionRestored.value = restoredRole
         }
     }
     
@@ -60,6 +60,9 @@ class MainViewModel : ViewModel() {
     fun recoverSession(caseId: String, phone: String, onResult: (Pair<Boolean, String>) -> Unit) {
         viewModelScope.launch {
             val res = caseRepository.recoverVictimSession(caseId, phone)
+            if (res.first) {
+                isSessionRestored.value = "victim"
+            }
             onResult(res)
         }
     }
@@ -81,6 +84,9 @@ class MainViewModel : ViewModel() {
                 language = selectedLanguage,
                 consentGiven = consentGiven
             )
+            if (success.first) {
+                isSessionRestored.value = "victim"
+            }
             onResult(success)
         }
     }
@@ -89,6 +95,9 @@ class MainViewModel : ViewModel() {
         android.util.Log.d("ApiDebug", "ViewModel state - Preparing Official Login for email: $email")
         viewModelScope.launch {
             val success = caseRepository.loginOfficial(email, pass)
+            if (success.first) {
+                isSessionRestored.value = "official"
+            }
             onResult(success)
         }
     }
@@ -106,42 +115,19 @@ class MainViewModel : ViewModel() {
             val analysis = response.second
             
             if (analysis != null) {
-                // 1. Calculate weighted score components individually rounded
-                val emotionalScore = kotlin.math.round((analysis.emotionalDistressLevel / 10.0) * 40.0).toInt()
-                val fearScore = kotlin.math.round((analysis.fearLevel / 10.0) * 25.0).toInt()
-                val safetyScore = if (analysis.feelingUnsafe) 15 else 0
-                val engagementScore = kotlin.math.round((kotlin.math.min(text.length, 100) / 100.0) * 10.0).toInt()
-                
-                // Base score (90%)
-                val baseScore = emotionalScore + fearScore + safetyScore + engagementScore
-                
-                // History change (10%)
-                val prevScore = currentProfile.value?.distressScore ?: 0
-                val changeScore = if (baseScore > prevScore) 10 else 0
-                
-                val finalScore = (baseScore + changeScore).coerceIn(0, 100)
-                
-                // 2. Prepare JSON metadata for explainability (stored in answers)
-                val riskLevel = com.sahay.ai.data.getDistressLevel(finalScore).name
-                val concernCategory = analysis.recommendedSupportCategory
-
                 val metadata = mapOf(
                     "text" to text,
-                    "emotional" to emotionalScore.toString(),
-                    "fear" to fearScore.toString(),
-                    "safety" to safetyScore.toString(),
-                    "engagement" to engagementScore.toString(),
-                    "change" to changeScore.toString(),
-                    "risk_level" to riskLevel,
-                    "concern_category" to concernCategory
+                    "emotional_distress_level" to analysis.emotionalDistressLevel.toString(),
+                    "fear_level" to analysis.fearLevel.toString(),
+                    "feeling_unsafe" to analysis.feelingUnsafe.toString(),
+                    "recommended_support_category" to analysis.recommendedSupportCategory
                 )
 
-                // 3. Submit check-in
                 val checkIn = CheckIn(
                     caseId = caseId,
                     answers = metadata,
                     timestamp = System.currentTimeMillis(),
-                    score = finalScore
+                    score = 0
                 )
                 caseRepository.submitCheckIn(caseId, checkIn, analysis)
             }
@@ -193,42 +179,9 @@ class MainViewModel : ViewModel() {
             
             val analysis = response.second
             if (analysis != null) {
-                android.util.Log.d("ChatFlow", "AI_ANALYSIS_SUCCESS")
-                // Trigger distress analysis based on chat!
-                val emotionalScore = kotlin.math.round((analysis.emotionalDistressLevel / 10.0) * 40.0).toInt()
-                val fearScore = kotlin.math.round((analysis.fearLevel / 10.0) * 25.0).toInt()
-                val safetyScore = if (analysis.feelingUnsafe) 15 else 0
-                val engagementScore = kotlin.math.round((kotlin.math.min(message.length, 100) / 100.0) * 10.0).toInt()
-                
-                val baseScore = emotionalScore + fearScore + safetyScore + engagementScore
-                val prevScore = currentProfile.value?.distressScore ?: 0
-                val changeScore = if (baseScore > prevScore) 10 else 0
-                val finalScore = (baseScore + changeScore).coerceIn(0, 100)
-                
-                val riskLevel = com.sahay.ai.data.getDistressLevel(finalScore).name
-                val concernCategory = analysis.recommendedSupportCategory
-
-                val metadata = mapOf(
-                    "text" to message,
-                    "input_type" to inputMode.name,
-                    "emotional" to emotionalScore.toString(),
-                    "fear" to fearScore.toString(),
-                    "safety" to safetyScore.toString(),
-                    "engagement" to engagementScore.toString(),
-                    "change" to changeScore.toString(),
-                    "risk_level" to riskLevel,
-                    "concern_category" to concernCategory
-                )
-
-                val checkIn = CheckIn(
-                    caseId = caseId,
-                    answers = metadata,
-                    timestamp = System.currentTimeMillis(),
-                    score = finalScore
-                )
-                // Submit this silent checkin to update the dataset securely!
-                caseRepository.submitCheckIn(caseId, checkIn, analysis)
-                android.util.Log.d("DistressEngine", "DISTRESS_SCORE_CALCULATED: $finalScore SAVED.")
+                android.util.Log.d("ChatFlow", "AI_ANALYSIS_SUCCESS - Analysis persisted on backend, NO fake check-in created.")
+                // Refresh dashboard to pull the officially computed score from DB
+                caseRepository.refreshDashboard(caseId)
             } else {
                 android.util.Log.d("ChatFlow", "AI_ANALYSIS_FAILED")
             }
@@ -249,5 +202,6 @@ class MainViewModel : ViewModel() {
         _chatMessages.value = emptyList()
         selectedLanguage = "English"
         consentGiven = false
+        isSessionRestored.value = "none"
     }
 }

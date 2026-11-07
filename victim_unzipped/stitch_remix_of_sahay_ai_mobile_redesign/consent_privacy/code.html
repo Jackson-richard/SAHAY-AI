@@ -1,0 +1,196 @@
+<!DOCTYPE html><html lang="en"><head>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1.0" name="viewport">
+<title>SAHAY-AI Consent</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet">
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#76d6d5",
+                        "inverse-on-surface": "#edf2f1",
+                        "on-surface": "#181c1c",
+                        "inverse-surface": "#2c3131",
+                        "surface-tint": "#006a6a",
+                        "secondary-container": "#9fc2fe",
+                        "primary": "#006565",
+                        "on-tertiary-container": "#f9fafb",
+                        "on-primary-fixed-variant": "#004f4f",
+                        "surface-dim": "#d7dbda",
+                        "on-secondary-fixed-variant": "#1f477b",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#f6faf9",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#3a5f94",
+                        "on-background": "#181c1c",
+                        "outline-variant": "#bdc9c8",
+                        "on-error-container": "#93000a",
+                        "on-surface-variant": "#3e4949",
+                        "on-secondary-fixed": "#001b3c",
+                        "tertiary-fixed": "#e1e3e4",
+                        "surface-container": "#ebefee",
+                        "on-secondary-container": "#294f83",
+                        "outline": "#6e7979",
+                        "surface-container-low": "#f0f4f3",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#76d6d5",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#dfe3e2",
+                        "primary-container": "#008080",
+                        "secondary-fixed-dim": "#a7c8ff",
+                        "surface": "#f6faf9",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#d5e3ff",
+                        "background": "#f6faf9",
+                        "on-primary-container": "#e3fffe",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#585b5c",
+                        "on-tertiary-fixed": "#191c1d",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-high": "#e5e9e8",
+                        "on-primary-fixed": "#002020",
+                        "tertiary-container": "#717374",
+                        "primary-fixed": "#93f2f2",
+                        "on-tertiary-fixed-variant": "#454748",
+                        "surface-container-highest": "#dfe3e2",
+                        "tertiary-fixed-dim": "#c5c7c8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-lg": "24px",
+                        "touch-target-min": "48px",
+                        "stack-sm": "8px",
+                        "gutter-mobile": "16px",
+                        "margin-mobile": "20px",
+                        "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-surface text-on-surface min-h-screen flex flex-col">
+<!-- Top App Bar (Transactional, so standard nav shell is suppressed, but brand presence is needed) -->
+<header class="bg-surface w-full z-50 shadow-sm flex items-center px-margin-mobile h-touch-target-min sticky top-0 md:px-8 md:h-16">
+<div class="flex items-center">
+<img alt="SAHAY-AI Logo" class="h-8 md:h-10 w-auto object-contain" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAXWxtD8wGCgvYGTlKRHSWlV1KiYQ8YeWgocUETTa4jlJQo81IwcWO3kqz4GoY5APngosTBeZYEikyjTTnoUTLKsFPgHWhANeV7kw_fv92EY6trgoFN42kjvqEr8g335cj3SV4gv4sUp-14zn46Q4qPDA9oT0rA_Cij3ErHjLDItU6eDNzJgaEqW08ELf8nnjFlPWiqoFlIwtMzO4KNQ5JPFL2Umm160yKRwjNlf1i-okNtTZ1L6QnajesMM8rvQZCOfg">
+</div>
+</header>
+<!-- Main Content Canvas -->
+<main class="flex-grow flex flex-col items-center justify-center px-margin-mobile py-8 md:py-12">
+<div class="w-full max-w-lg flex flex-col gap-stack-lg">
+<!-- Header Section -->
+<div class="text-center md:text-left flex flex-col gap-stack-sm mb-4">
+<h1 class="font-headline-lg-mobile text-headline-lg-mobile md:font-headline-lg md:text-headline-lg text-on-surface">
+                    Your choice. Your control.
+                </h1>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                    SAHAY-AI uses your check-ins to monitor changes in wellbeing-related signals. Your information is protected and accessed only by authorized personnel.
+                </p>
+</div>
+<!-- Value Proposition / Consent Cards -->
+<div class="flex flex-col gap-stack-md">
+<!-- Card 1 -->
+<div class="bg-surface-container-lowest p-5 rounded-[16px] border border-surface-variant shadow-[0_2px_4px_0_rgba(0,0,0,0.05)] flex items-start gap-4">
+<div class="bg-primary-container/10 p-2 rounded-full text-primary shrink-0 mt-1">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">how_to_reg</span>
+</div>
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface mb-1">CONSENT-BASED</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm md:text-base">You choose whether to participate.</p>
+</div>
+</div>
+<!-- Card 2 -->
+<div class="bg-surface-container-lowest p-5 rounded-[16px] border border-surface-variant shadow-[0_2px_4px_0_rgba(0,0,0,0.05)] flex items-start gap-4">
+<div class="bg-primary-container/10 p-2 rounded-full text-primary shrink-0 mt-1">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">lock</span>
+</div>
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface mb-1">PRIVATE</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm md:text-base">Your information is protected.</p>
+</div>
+</div>
+<!-- Card 3 -->
+<div class="bg-surface-container-lowest p-5 rounded-[16px] border border-surface-variant shadow-[0_2px_4px_0_rgba(0,0,0,0.05)] flex items-start gap-4">
+<div class="bg-primary-container/10 p-2 rounded-full text-primary shrink-0 mt-1">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">support_agent</span>
+</div>
+<div>
+<h3 class="font-label-lg text-label-lg text-on-surface mb-1">HUMAN SUPPORT</h3>
+<p class="font-body-md text-body-md text-on-surface-variant text-sm md:text-base">AI signals are reviewed by authorized people.</p>
+</div>
+</div>
+</div>
+<!-- Interactive Consent Checkbox -->
+<label class="flex items-start gap-3 mt-4 cursor-pointer group">
+<div class="relative flex items-center justify-center mt-1">
+<input class="peer appearance-none w-6 h-6 border-2 border-outline rounded bg-surface-container-lowest checked:bg-primary checked:border-primary focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2 transition-all cursor-pointer" id="consent-checkbox" type="checkbox">
+<span class="material-symbols-outlined absolute text-on-primary pointer-events-none opacity-0 peer-checked:opacity-100 text-lg font-bold" style="font-variation-settings: 'FILL' 1;">check</span>
+</div>
+<span class="font-body-md text-body-md text-on-surface leading-snug select-none group-hover:text-on-background transition-colors">
+                    I understand and consent to wellbeing monitoring.
+                </span>
+</label>
+<!-- Actions -->
+<div class="flex flex-col gap-3 mt-4 w-full">
+<button class="h-touch-target-min w-full bg-primary text-on-primary font-label-lg text-label-lg rounded-full shadow-sm disabled:opacity-50 disabled:cursor-not-allowed hover:bg-primary-fixed-variant transition-colors flex items-center justify-center" disabled="" id="btn-consent">
+                    Give Consent
+                </button>
+<button class="h-touch-target-min w-full bg-transparent text-secondary border-2 border-secondary font-label-lg text-label-lg rounded-full hover:bg-secondary/5 transition-colors flex items-center justify-center">
+                    Not Now
+                </button>
+</div>
+</div>
+</main>
+<script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const checkbox = document.getElementById('consent-checkbox');
+            const submitBtn = document.getElementById('btn-consent');
+
+            checkbox.addEventListener('change', (e) => {
+                if(e.target.checked) {
+                    submitBtn.removeAttribute('disabled');
+                    submitBtn.classList.add('shadow-[0_4px_8px_0_rgba(0,0,0,0.08)]'); // Add level 2 elevation when active
+                } else {
+                    submitBtn.setAttribute('disabled', 'true');
+                    submitBtn.classList.remove('shadow-[0_4px_8px_0_rgba(0,0,0,0.08)]');
+                }
+            });
+        });
+    </script>
+</body></html>

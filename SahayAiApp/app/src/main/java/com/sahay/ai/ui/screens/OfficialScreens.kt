@@ -34,41 +34,85 @@ import com.sahay.ai.ui.MainViewModel
 
 @Composable
 fun OfficialLoginScreen(navController: NavController, viewModel: MainViewModel) {
-    // Basic standard layout for admin login since the primary directive targets the dashboard
     var email by remember { mutableStateOf("demo@sahay.gov.in") }
     var password by remember { mutableStateOf("admin123") }
     var errorMsg by remember { mutableStateOf("") }
+    var isLoading by remember { mutableStateOf(false) }
 
     Column(
         modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.background).padding(24.dp),
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Icon(Icons.Filled.AdminPanelSettings, contentDescription = null, tint = MaterialTheme.colorScheme.primary, modifier = Modifier.size(64.dp))
+        Box(modifier = Modifier.size(80.dp).clip(CircleShape).background(MaterialTheme.colorScheme.primaryContainer), contentAlignment = Alignment.Center) {
+            Icon(Icons.Filled.AdminPanelSettings, contentDescription = null, tint = MaterialTheme.colorScheme.onPrimaryContainer, modifier = Modifier.size(44.dp))
+        }
         Spacer(Modifier.height(16.dp))
         Text("SAHAY-AI Officer Portal", style = MaterialTheme.typography.headlineMedium, color = MaterialTheme.colorScheme.primary)
+        Text("Authorized Personnel Access Only", style = MaterialTheme.typography.bodyMedium, color = MaterialTheme.colorScheme.onSurfaceVariant)
         Spacer(Modifier.height(32.dp))
-        OutlinedTextField(value = email, onValueChange = { email = it }, label = { Text("Govt Email") }, modifier = Modifier.fillMaxWidth())
+        
+        OutlinedTextField(
+            value = email, 
+            onValueChange = { email = it; errorMsg = "" }, 
+            label = { Text("Govt Email") },
+            placeholder = { Text("e.g. demo@sahay.gov.in") },
+            singleLine = true,
+            modifier = Modifier.fillMaxWidth()
+        )
         Spacer(Modifier.height(16.dp))
-        OutlinedTextField(value = password, onValueChange = { password = it }, label = { Text("Password") }, modifier = Modifier.fillMaxWidth())
-        if (errorMsg.isNotEmpty()) Text(errorMsg, color = MaterialTheme.colorScheme.error, modifier = Modifier.padding(top = 8.dp))
+        OutlinedTextField(
+            value = password, 
+            onValueChange = { password = it; errorMsg = "" }, 
+            label = { Text("Password") },
+            singleLine = true,
+            visualTransformation = androidx.compose.ui.text.input.PasswordVisualTransformation(),
+            modifier = Modifier.fillMaxWidth()
+        )
+        if (errorMsg.isNotEmpty()) {
+            Text(errorMsg, color = MaterialTheme.colorScheme.error, style = MaterialTheme.typography.bodySmall, modifier = Modifier.padding(top = 8.dp))
+        }
         Spacer(Modifier.height(24.dp))
         Button(
             onClick = {
-                viewModel.loginOfficial(email, password) { loginRes ->
+                val cleanEmail = email.trim()
+                val cleanPassword = password.trim()
+                if (cleanEmail.isEmpty() || cleanPassword.isEmpty()) {
+                    errorMsg = "Please enter both official email and password."
+                    return@Button
+                }
+                isLoading = true
+                errorMsg = ""
+                viewModel.loginOfficial(cleanEmail, cleanPassword) { loginRes ->
+                    isLoading = false
                     if (loginRes.first) {
                         android.util.Log.d("ApiDebug", "Navigation Event: Navigate to official_dashboard")
-                        navController.navigate("official_dashboard") { popUpTo("role_selection") }
+                        navController.navigate("official_dashboard") { 
+                            popUpTo("role_selection") { inclusive = true } 
+                        }
                     } else {
                         android.util.Log.e("SahaySecurity", "Login failed inside UI: ${loginRes.second}")
                         errorMsg = loginRes.second
                     }
                 }
             },
+            enabled = !isLoading,
             modifier = Modifier.fillMaxWidth().height(48.dp),
             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
         ) {
-            Text("Login to Dashboard")
+            if (isLoading) {
+                CircularProgressIndicator(color = MaterialTheme.colorScheme.onPrimary, modifier = Modifier.size(24.dp))
+            } else {
+                Text("Login to Dashboard")
+            }
+        }
+        
+        Spacer(Modifier.height(16.dp))
+        TextButton(
+            onClick = { navController.popBackStack() },
+            modifier = Modifier.fillMaxWidth()
+        ) {
+            Text("Back to Role Selection", color = MaterialTheme.colorScheme.onSurfaceVariant)
         }
     }
 }
@@ -77,6 +121,16 @@ fun OfficialLoginScreen(navController: NavController, viewModel: MainViewModel) 
 @Composable
 fun OfficialDashboardScreen(navController: NavController, viewModel: MainViewModel) {
     var selectedTab by remember { mutableStateOf("OVERVIEW") }
+    
+    // Security check: ensure only authenticated official can stay on this dashboard
+    LaunchedEffect(Unit) {
+        if (com.sahay.ai.network.SessionManager.userRole != "official" && 
+            com.sahay.ai.network.SessionManager.accessToken == null) {
+            navController.navigate("role_selection") {
+                popUpTo(0) { inclusive = true }
+            }
+        }
+    }
     
     Scaffold(
         topBar = {
@@ -93,7 +147,7 @@ fun OfficialDashboardScreen(navController: NavController, viewModel: MainViewMod
                     }
                 },
                 actions = {
-                    Box(modifier = Modifier.padding(end=16.dp)) {
+                    Box(modifier = Modifier.padding(end=8.dp)) {
                         Icon(Icons.Filled.Notifications, contentDescription = null, tint = MaterialTheme.colorScheme.onSurfaceVariant)
                         // Alert Badge
                         Box(
@@ -102,6 +156,16 @@ fun OfficialDashboardScreen(navController: NavController, viewModel: MainViewMod
                         ) {
                             Text("3", color = MaterialTheme.colorScheme.onError, fontSize = 10.sp, fontWeight = FontWeight.Bold)
                         }
+                    }
+                    IconButton(
+                        onClick = {
+                            viewModel.logout()
+                            navController.navigate("role_selection") {
+                                popUpTo(0) { inclusive = true }
+                            }
+                        }
+                    ) {
+                        Icon(Icons.Filled.Logout, contentDescription = "Sign Out", tint = MaterialTheme.colorScheme.error)
                     }
                 },
                 colors = TopAppBarDefaults.topAppBarColors(containerColor = MaterialTheme.colorScheme.surface.copy(alpha=0.9f))

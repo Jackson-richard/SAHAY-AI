@@ -11,7 +11,8 @@ data class SupabaseCheckIn(
     @SerializedName("answers") val answers: Map<String, String>,
     @SerializedName("mood_level") val moodLevel: Int? = null,
     @SerializedName("fear_level") val fearLevel: Int? = null,
-    @SerializedName("safety_level") val safetyLevel: Int? = null
+    @SerializedName("safety_level") val safetyLevel: Int? = null,
+    @SerializedName("created_at") val createdAt: String? = null
 )
 
 data class SupabaseCase(

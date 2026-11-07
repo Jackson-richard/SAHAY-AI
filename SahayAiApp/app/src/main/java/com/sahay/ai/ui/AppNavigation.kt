@@ -1,6 +1,10 @@
 package com.sahay.ai.ui
 
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.compose.NavHost
@@ -21,9 +25,9 @@ fun SahayApp(modifier: Modifier = Modifier) {
     val navController = rememberNavController()
     val viewModel: MainViewModel = viewModel()
     
-    val isRestored = viewModel.isSessionRestored.collectAsState().value
+    val restoredRole = viewModel.isSessionRestored.collectAsState().value
 
-    if (isRestored == null) {
+    if (restoredRole == null) {
         // Splash screen while checking session
         Box(modifier = Modifier.fillMaxSize(), contentAlignment = androidx.compose.ui.Alignment.Center) {
             CircularProgressIndicator()
@@ -31,7 +35,11 @@ fun SahayApp(modifier: Modifier = Modifier) {
         return
     }
     
-    val startDest = if (isRestored) "victim_dashboard" else "role_selection"
+    val startDest = when (restoredRole) {
+        "official" -> "official_dashboard"
+        "victim" -> "victim_dashboard"
+        else -> "role_selection"
+    }
 
     NavHost(navController = navController, startDestination = startDest, modifier = modifier) {
         composable("role_selection") {

@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+
+<html lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>SAHAY-AI Chat</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-primary": "#76d6d5",
+                        "inverse-on-surface": "#edf2f1",
+                        "on-surface": "#181c1c",
+                        "inverse-surface": "#2c3131",
+                        "surface-tint": "#006a6a",
+                        "secondary-container": "#9fc2fe",
+                        "primary": "#006565",
+                        "on-tertiary-container": "#f9fafb",
+                        "on-primary-fixed-variant": "#004f4f",
+                        "surface-dim": "#d7dbda",
+                        "on-secondary-fixed-variant": "#1f477b",
+                        "surface-container-lowest": "#ffffff",
+                        "surface-bright": "#f6faf9",
+                        "on-secondary": "#ffffff",
+                        "secondary": "#3a5f94",
+                        "on-background": "#181c1c",
+                        "outline-variant": "#bdc9c8",
+                        "on-error-container": "#93000a",
+                        "on-surface-variant": "#3e4949",
+                        "on-secondary-fixed": "#001b3c",
+                        "tertiary-fixed": "#e1e3e4",
+                        "surface-container": "#ebefee",
+                        "on-secondary-container": "#294f83",
+                        "outline": "#6e7979",
+                        "surface-container-low": "#f0f4f3",
+                        "error": "#ba1a1a",
+                        "primary-fixed-dim": "#76d6d5",
+                        "on-error": "#ffffff",
+                        "surface-variant": "#dfe3e2",
+                        "primary-container": "#008080",
+                        "secondary-fixed-dim": "#a7c8ff",
+                        "surface": "#f6faf9",
+                        "error-container": "#ffdad6",
+                        "secondary-fixed": "#d5e3ff",
+                        "background": "#f6faf9",
+                        "on-primary-container": "#e3fffe",
+                        "on-primary": "#ffffff",
+                        "tertiary": "#585b5c",
+                        "on-tertiary-fixed": "#191c1d",
+                        "on-tertiary": "#ffffff",
+                        "surface-container-high": "#e5e9e8",
+                        "on-primary-fixed": "#002020",
+                        "tertiary-container": "#717374",
+                        "primary-fixed": "#93f2f2",
+                        "on-tertiary-fixed-variant": "#454748",
+                        "surface-container-highest": "#dfe3e2",
+                        "tertiary-fixed-dim": "#c5c7c8"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "stack-lg": "24px",
+                        "touch-target-min": "48px",
+                        "stack-sm": "8px",
+                        "gutter-mobile": "16px",
+                        "margin-mobile": "20px",
+                        "stack-md": "16px"
+                    },
+                    "fontFamily": {
+                        "headline-lg": ["Inter"],
+                        "body-md": ["Inter"],
+                        "headline-lg-mobile": ["Inter"],
+                        "body-lg": ["Inter"],
+                        "label-lg": ["Inter"],
+                        "headline-md": ["Inter"],
+                        "label-md": ["Inter"]
+                    },
+                    "fontSize": {
+                        "headline-lg": ["32px", { "lineHeight": "40px", "letterSpacing": "-0.02em", "fontWeight": "700" }],
+                        "body-md": ["16px", { "lineHeight": "24px", "fontWeight": "400" }],
+                        "headline-lg-mobile": ["28px", { "lineHeight": "36px", "fontWeight": "700" }],
+                        "body-lg": ["18px", { "lineHeight": "28px", "fontWeight": "400" }],
+                        "label-lg": ["14px", { "lineHeight": "20px", "letterSpacing": "0.01em", "fontWeight": "600" }],
+                        "headline-md": ["24px", { "lineHeight": "32px", "letterSpacing": "-0.01em", "fontWeight": "600" }],
+                        "label-md": ["12px", { "lineHeight": "16px", "fontWeight": "500" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { -webkit-tap-highlight-color: transparent; }
+        .hide-scrollbar::-webkit-scrollbar { display: none; }
+        .hide-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+</head>
+<body class="bg-background text-on-background font-body-md h-screen flex flex-col overflow-hidden">
+<!-- TopAppBar Shell -->
+<header class="fixed top-0 w-full z-50 bg-surface shadow-sm flex items-center justify-between px-margin-mobile h-touch-target-min">
+<div class="flex items-center gap-3">
+<img alt="SAHAY-AI Logo" class="h-8 w-8 object-contain rounded-full" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmB7-UU66QtGjxoD8zDh_wIOjWyFScHCJ8MDyBFTDIBKYLIufbvNJuVmZNl7o8DD4kHB0A3clh5jtG7OKquq84waTLcAByKandTiJfdk0APAocI-EfUqCpNL11qeccnX4pRC9lgUOy12PC4yyxEZR-D7aylrtf9Qsvv9cHN9NvkBpYHsy2uSko2zAl7qlzUe-RtSCeAr52QB4uOOCOwiAMgG4J-wM3YqYQagaxnWGeGG08hjjiKNO5cAfnLJrvwNDvsw"/>
+<h1 class="font-headline-md-mobile text-headline-md-mobile font-bold text-primary tracking-tight">SAHAY-AI</h1>
+</div>
+<button class="bg-error text-on-error px-4 py-1.5 rounded-full font-label-md flex items-center gap-1 active:opacity-80 transition-opacity shadow-sm">
+<span class="material-symbols-outlined text-[16px]">exit_to_app</span>
+            Exit Safely
+        </button>
+</header>
+<!-- Main Chat Canvas -->
+<main class="flex-1 overflow-y-auto pt-16 pb-48 px-gutter-mobile flex flex-col">
+<!-- Context Header -->
+<div class="py-stack-md text-center">
+<h2 class="font-body-lg text-body-lg text-on-surface-variant font-medium">Check-in with SAHAY</h2>
+<div class="inline-flex items-center gap-1 mt-1 bg-surface-variant px-3 py-1 rounded-full">
+<span class="material-symbols-outlined text-[14px] text-primary">verified_user</span>
+<span class="font-label-md text-label-md text-on-surface-variant">Secure &amp; Confidential</span>
+</div>
+</div>
+<!-- Conversation Thread -->
+<div class="flex flex-col gap-stack-md mt-2">
+<!-- SAHAY Message -->
+<div class="flex w-full justify-start max-w-[85%]">
+<div class="flex flex-col gap-1">
+<span class="font-label-md text-label-md text-on-surface-variant ml-2">SAHAY</span>
+<div class="bg-primary-container text-on-primary-container p-4 rounded-2xl rounded-tl-sm shadow-sm">
+<p class="font-body-md text-body-md">Hello. How have you been feeling recently?</p>
+</div>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex w-full justify-end">
+<div class="flex flex-col gap-1 items-end max-w-[85%]">
+<span class="font-label-md text-label-md text-on-surface-variant mr-2">You</span>
+<div class="bg-on-secondary-fixed text-on-primary p-4 rounded-2xl rounded-tr-sm shadow-sm">
+<p class="font-body-md text-body-md">I am worried about the upcoming hearing. I haven't been sleeping properly.</p>
+</div>
+</div>
+</div>
+<!-- SAHAY Message -->
+<div class="flex w-full justify-start max-w-[85%]">
+<div class="flex flex-col gap-1">
+<span class="font-label-md text-label-md text-on-surface-variant ml-2">SAHAY</span>
+<div class="bg-primary-container text-on-primary-container p-4 rounded-2xl rounded-tl-sm shadow-sm">
+<p class="font-body-md text-body-md">I understand. Has anything recently made you feel unsafe or especially worried?</p>
+</div>
+</div>
+</div>
+<!-- User Message -->
+<div class="flex w-full justify-end">
+<div class="flex flex-col gap-1 items-end max-w-[85%]">
+<span class="font-label-md text-label-md text-on-surface-variant mr-2">You</span>
+<div class="bg-on-secondary-fixed text-on-primary p-4 rounded-2xl rounded-tr-sm shadow-sm">
+<p class="font-body-md text-body-md">Yes. I am worried they may threaten my family again.</p>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- Input Area -->
+<div class="fixed bottom-20 w-full bg-surface-container-lowest px-gutter-mobile py-stack-sm shadow-[0_-8px_16px_-8px_rgba(0,0,0,0.05)] flex flex-col gap-2 z-40">
+<!-- Language & Status Row -->
+<div class="flex justify-between items-center w-full overflow-x-auto hide-scrollbar gap-4">
+<div class="flex gap-3 text-on-surface-variant whitespace-nowrap">
+<button class="font-label-md text-label-md text-primary font-bold">English</button>
+<button class="font-label-md text-label-md hover:text-primary transition-colors">தமிழ்</button>
+<button class="font-label-md text-label-md hover:text-primary transition-colors">हिन्दी</button>
+<button class="font-label-md text-label-md hover:text-primary transition-colors">മലയാളം</button>
+<button class="font-label-md text-label-md hover:text-primary transition-colors">తెలుగు</button>
+</div>
+<div class="flex items-center gap-1 bg-surface-container px-2 py-0.5 rounded text-on-surface-variant whitespace-nowrap shrink-0">
+<span class="material-symbols-outlined text-[12px]">tune</span>
+<span class="font-label-md text-[10px] uppercase tracking-wider">Adaptive check-in</span>
+</div>
+</div>
+<!-- Input Box -->
+<div class="flex items-end gap-2 mt-1">
+<div class="flex-1 bg-surface-container-low rounded-[24px] min-h-[48px] flex items-center px-4 border border-outline-variant focus-within:border-primary transition-colors">
+<input class="w-full bg-transparent border-none focus:ring-0 p-0 font-body-md text-on-surface placeholder:text-outline h-full py-3" placeholder="Type a message..." type="text"/>
+</div>
+<button class="w-[48px] h-[48px] rounded-full bg-primary text-on-primary flex items-center justify-center shadow-sm active:scale-95 transition-transform shrink-0">
+<span class="material-symbols-outlined text-[24px]" style="font-variation-settings: 'FILL' 1;">mic</span>
+</button>
+</div>
+</div>
+<!-- BottomNavBar Shell -->
+<nav class="fixed bottom-0 w-full z-50 bg-surface shadow-[0_-4px_8px_0_rgba(0,0,0,0.08)] flex justify-around items-center px-2 py-stack-sm h-20">
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-all active:scale-95 w-16">
+<span class="material-symbols-outlined">home</span>
+<span class="font-label-md text-label-md mt-1">HOME</span>
+</button>
+<!-- Active CHAT Tab -->
+<button class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-xl px-4 py-1 hover:bg-surface-container-high transition-all active:scale-95 w-20">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">chat_bubble</span>
+<span class="font-label-md text-label-md mt-1">CHAT</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-all active:scale-95 w-16">
+<span class="material-symbols-outlined">auto_graph</span>
+<span class="font-label-md text-label-md mt-1">JOURNEY</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-all active:scale-95 w-16">
+<span class="material-symbols-outlined">support_agent</span>
+<span class="font-label-md text-label-md mt-1">SUPPORT</span>
+</button>
+<button class="flex flex-col items-center justify-center text-on-surface-variant p-2 hover:bg-surface-container-high transition-all active:scale-95 w-16">
+<span class="material-symbols-outlined">person</span>
+<span class="font-label-md text-label-md mt-1">PROFILE</span>
+</button>
+</nav>
+</body></html>

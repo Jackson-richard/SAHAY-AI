@@ -35,6 +35,16 @@ import java.util.*
 fun VictimDashboardScreen(navController: NavController, viewModel: MainViewModel) {
     var selectedTab by remember { mutableStateOf(Localization.getString("HOME", viewModel.selectedLanguage)) }
     
+    // Security check: ensure only authenticated victim can access this dashboard
+    LaunchedEffect(Unit) {
+        if (com.sahay.ai.network.SessionManager.userRole != "victim" && 
+            com.sahay.ai.network.SessionManager.victimSessionToken == null) {
+            navController.navigate("role_selection") {
+                popUpTo(0) { inclusive = true }
+            }
+        }
+    }
+    
     Scaffold(
         topBar = {
             TopAppBar(
@@ -312,9 +322,12 @@ fun VictimChatTab(viewModel: MainViewModel) {
                     if (result == android.speech.tts.TextToSpeech.LANG_MISSING_DATA || result == android.speech.tts.TextToSpeech.LANG_NOT_SUPPORTED) {
                         it.language = java.util.Locale.getDefault()
                     }
+                    android.util.Log.d("VoiceMode", "TTS_STARTED")
                     it.speak(text, android.speech.tts.TextToSpeech.QUEUE_FLUSH, null, "AI_REPLY")
                 }
             }
+        } else if (lastMsg != null && lastMsg.sender == "AI Support" && lastMsg.inputMode == com.sahay.ai.data.InputMode.CHAT) {
+            android.util.Log.d("VoiceMode", "TTS_SKIPPED_CHAT_MODE")
         }
     }
     
@@ -447,7 +460,7 @@ fun VictimProfileTab(viewModel: MainViewModel, navController: NavController) {
         Spacer(Modifier.weight(1f))
         
         Button(
-            onClick = { viewModel.logout(); navController.navigate("role_selection") { popUpTo(0) } },
+            onClick = { viewModel.logout(); navController.navigate("role_selection") { popUpTo(0) { inclusive = true } } },
             modifier = Modifier.fillMaxWidth().height(48.dp),
             colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.error)
         ) {
